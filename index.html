@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="google-site-verification" content="googlece6981a2162fe0b8" />
+    <title>THE AI HUB | Harshwardhan Singh Lodhi</title>
+    <script src="https://unpkg.com/html5-qrcode"></script>
+    <style>
+        :root {
+            --gold: #ffd700;
+            --dark: #050505;
+            --card: #121212;
+            --green: #44ff44;
+            --red: #ff4444;
+        }
+
+        body {
+            background: var(--dark);
+            color: white;
+            font-family: sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 10px;
+        }
+
+        .box {
+            background: var(--card);
+            padding: 20px;
+            border-radius: 20px;
+            border: 1.5px solid var(--gold);
+            margin-top: 10px;
+        }
+
+        input,
+        select,
+        button {
+            width: 100%;
+            padding: 14px;
+            margin: 6px 0;
+            border-radius: 10px;
+            border: none;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background: var(--gold);
+            color: #000;
+            font-weight: 900;
+            cursor: pointer;
+        }
+
+        #reader {
+            width: 100%;
+            border-radius: 15px;
+            display: none;
+            margin-bottom: 10px;
+            border: 2px solid var(--gold);
+            overflow: hidden;
+        }
+
+        .log {
+            text-align: left;
+            background: #1a1a1a;
+            padding: 12px;
+            margin-top: 10px;
+            border-radius: 12px;
+            border-left: 5px solid var(--gold);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .p-text {
+            color: var(--green);
+        }
+
+        .l-text {
+            color: var(--red);
+        }
+    </style>
+</head>
+
+<body onload="loadData()">
+
+    <h2 style="color:var(--gold); margin:10px 0;">THE AI HUB</h2>
+    <p style="font-size:12px; opacity:0.7;">FOUNDER: HARSHWARDHAN SINGH LODHI</p>
+
+    <div class="box">
+        <h1 id="totalBal" style="font-size:45px; margin:10px 0;">₹0</h1>
+
+        <div id="reader"></div>
+        <button onclick="startScan()" style="background:#222; color:var(--gold); border:1px solid var(--gold);">📷 SCAN
+            PHOTO</button>
+        <input id="pName" placeholder="Item Name">
+        <input type="number" id="pAmt" placeholder="Amount (₹)">
+
+        <select id="pType">
+            <option value="plus">PROFIT (+)</option>
+            <option value="minus">LOSS (-)</option>
+        </select>
+
+        <button onclick="saveData()">SAVE ENTRY</button>
+        <button onclick="clearStorage()" style="background:#330000; color:#fff; font-size:10px; margin-top:15px;">RESET
+            SYSTEM</button>
+    </div>
+
+    <div id="historyList" style="margin-top:20px; padding-bottom:50px;"></div>
+
+    <script>
+        let balance = 0;
+        let history = [];
+        const scanner = new Html5Qrcode("reader");
+
+        function saveData() {
+            let name = document.getElementById('pName').value;
+            let amt = parseInt(document.getElementById('pAmt').value);
+            let type = document.getElementById('pType').value;
+            if (!name || isNaN(amt)) { alert("Poori detail bharein!"); return; }
+
+            // Calculation
+            if (type === 'plus') balance += amt; else balance -= amt;
+
+            // Add to History
+            history.unshift({ name, amt, type, time: new Date().toLocaleTimeString() });
+
+            // STORAGE SAVING (Fixed)
+            localStorage.setItem('hub_v4_balance', balance);
+            localStorage.setItem('hub_v4_history', JSON.stringify(history));
+
+            // Refresh UI
+            renderUI();
+
+            // Clear Fields
+            document.getElementById('pName').value = "";
+            document.getElementById('pAmt').value = "";
+            alert("Record Saved!");
+        }
+
+        function renderUI() {
+            const balDisplay = document.getElementById('totalBal');
+            balDisplay.innerText = "₹" + balance;
+            balDisplay.style.color = balance >= 0 ? "var(--green)" : "var(--red)";
+            let html = "";
+            history.forEach(item => {
+                html += `<div class="log">
+                    <span><b>${item.name}</b><br><small style="color:#666">${item.time}</small></span>
+                    <span class="${item.type == 'plus' ? 'p-text' : 'l-text'}">${item.type == 'plus' ? '+' : '-'} ₹${item.amt}</span>
+                </div>`;
+            });
+            document.getElementById('historyList').innerHTML = html;
+        }
+
+        function loadData() {
+            const sBal = localStorage.getItem('hub_v4_balance');
+            const sHis = localStorage.getItem('hub_v4_history');
+            if (sBal) balance = parseInt(sBal);
+            if (sHis) history = JSON.parse(sHis);
+            renderUI();
+        }
+
+        function startScan() {
+            document.getElementById('reader').style.display = 'block';
+            scanner.start({ facingMode: "environment" }, { fps: 15, qrbox: 250 }, (res) => {
+                document.getElementById('pName').value = res;
+                scanner.stop(); document.getElementById('reader').style.display = 'none';
+            }).catch(err => alert("Camera permission dein!"));
+        }
+
+        function clearStorage() {
+            if (confirm("Kya aap sara data delete karke system reset karna chahte hain?")) {
+                localStorage.clear();
+                location.reload();
+            }
+        }
+    </script>
+</body>
+
+</html>
