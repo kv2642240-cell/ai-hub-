@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,26 +8,65 @@
     <meta name="google-site-verification" content="googlece6981a2162fe0b8">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { background-color: #000; color: #d4af37; font-family: 'Inter', sans-serif; }
-        .gold-gradient { background: linear-gradient(135deg, #d4af37 0%, #f2d06b 100%); }
-        .scanner-line { height: 2px; background: #d4af37; box-shadow: 0 0 15px #d4af37; position: absolute; width: 100%; top: 0; animation: scan 3s linear infinite; }
-        @keyframes scan { 0% { top: 0; } 100% { top: 100%; } }
+        body {
+            background-color: #000;
+            color: #d4af37;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .gold-gradient {
+            background: linear-gradient(135deg, #d4af37 0%, #f2d06b 100%);
+        }
+
+        .scanner-line {
+            height: 2px;
+            background: #d4af37;
+            box-shadow: 0 0 15px #d4af37;
+            position: absolute;
+            width: 100%;
+            top: 0;
+            animation: scan 3s linear infinite;
+        }
+
+        @keyframes scan {
+            0% {
+                top: 0;
+            }
+
+            100% {
+                top: 100%;
+            }
+        }
     </style>
 </head>
-<body class="min-h-screen flex flex-col items-center justify-center p-4">
-    <div class="max-w-md w-full text-center space-y-8 bg-zinc-900/50 p-8 rounded-3xl border border-zinc-800 backdrop-blur-sm">
+
+<body class="min-h-screen flex flex-col items-center justify-center p-4 text-center">
+    <div class="max-w-md w-full space-y-8 bg-zinc-900/50 p-8 rounded-3xl border border-zinc-800 backdrop-blur-sm">
         <h1 class="text-4xl font-extrabold tracking-tighter text-transparent bg-clip-text gold-gradient">THE AI HUB</h1>
         <p class="text-zinc-400 font-medium tracking-wide">OWNER: HARSHWARDHAN</p>
+
         <div class="relative h-64 w-full bg-black rounded-2xl border-2 border-zinc-800 overflow-hidden group">
             <div class="scanner-line"></div>
-            <div class="absolute inset-0 flex items-center justify-center opacity-20 group-hover:opacity-40 transition-opacity">
-                <svg width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="1"><path d="M3 7V5a2 2 0 0 1 2-2h2m10 0h2a2 2 0 0 1 2 2v2m0 10v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2"/></svg>
+            <div
+                class="absolute inset-0 flex items-center justify-center opacity-20 group-hover:opacity-40 transition-opacity">
+                <svg width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="1">
+                    <path
+                        d="M3 7V5a2 2 0 0 1 2-2h2m10 0h2a2 2 0 0 1 2 2v2m0 10v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2" />
+                </svg>
             </div>
-            <div class="absolute inset-0 flex items-center justify-center text-zinc-600 text-sm font-mono">SYSTEM READY</div>
+            <div class="absolute inset-0 flex items-center justify-center text-zinc-600 text-sm font-mono uppercase">
+                System Ready</div>
         </div>
-        <button onclick="alert('Starting
-            AI Scan...')" class="w-full gold-gradient text-black font-bold py-4 rounded-xl shadow-lg shadow-yellow-900/20 active:scale-95 transition-transform uppercase tracking-widest">Start AI Scan</button>
-        <p class="text-[10px] text-zinc-600 uppercase tracking-[0.2em]">Verified by Google Search Console</p>
+        <div class="absolute inset-0 flex items-center justify-center text-zinc-600 text-sm font-mono uppercase">System
+            Ready</div>
+    </div>
+
+    <button onclick="alert('Starting AI Scan...')"
+        class="w-full gold-gradient text-black font-bold py-4 rounded-xl shadow-lg shadow-yellow-900/20 active:scale-95 transition-transform uppercase tracking-widest">Start
+        AI Scan</button>
+
+    <p class="text-[10px] text-zinc-600 uppercase tracking-[0.2em] mt-4">Verified by Google Search Console</p>
     </div>
 </body>
+
 </html>
