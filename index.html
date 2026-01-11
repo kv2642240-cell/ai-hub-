@@ -3,59 +3,97 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>THE AI HUB | Harshwardhan</title>
+    <title>THE AI HUB | Harshwardhan (CEO)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { font-family: 'Segoe UI', sans-serif; background: #020617; color: white; text-align: center; margin: 0; padding: 0; }
-        header { background: linear-gradient(135deg, #1e3a8a, #3b82f6); padding: 60px 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
-        .container { padding: 20px; }
-        .card { background: #0f172a; border-radius: 20px; padding: 25px; margin: 20px auto; max-width: 450px; border: 1px solid #1e293b; box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
-        h1 { margin: 0; font-size: 2.8rem; letter-spacing: 2px; }
-        h2 { color: #3b82f6; font-size: 1.5rem; margin-bottom: 15px; }
-        p { color: #94a3b8; line-height: 1.6; }
-        .app-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 15px; }
-        .app-tag { background: #1e40af; color: #f8fafc; padding: 8px 15px; border-radius: 12px; font-size: 0.8rem; font-weight: 600; border: 1px solid #3b82f6; }
-        .btn-group { display: flex; flex-direction: column; gap: 10px; align-items: center; }
-        .btn { width: 80%; display: inline-block; padding: 15px; text-decoration: none; border-radius: 50px; font-weight: bold; transition: 0.3s; }
-        .btn-email { background: #2563eb; color: white; }
-        .btn-insta { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); color: white; }
-        .btn:hover { transform: scale(1.05); opacity: 0.9; }
+        body { background: #020617; color: #f8fafc; font-family: sans-serif; padding: 15px; }
+        .card { background: #0f172a; border: 1px solid #1e293b; border-radius: 16px; padding: 15px; margin-bottom: 15px; }
+        input { width: 100%; background: #1e293b; border: 1px solid #334155; padding: 12px; color: #fff; margin-bottom: 10px; border-radius: 10px; outline: none; }
+        .list-item { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #1e293b; font-size: 13px; }
+        .delete-btn { color: #ef4444; font-weight: bold; margin-left: 8px; cursor: pointer; }
+        .btn-insta { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
+        .ceo-badge { background: linear-gradient(90deg, #ca8a04, #eab308); color: #000; padding: 2px 10px; border-radius: 50px; font-size: 12px; font-weight: 900; }
     </style>
 </head>
 <body>
-    <header>
-        <h1>THE AI HUB</h1>
-        <p>Mastering AI Applications for the Future</p>
+
+    <header class="text-center py-8 mb-4 bg-blue-900/20 rounded-2xl border border-blue-800 relative overflow-hidden">
+        <h1 class="text-3xl font-black tracking-widest text-blue-400 mb-1">THE AI HUB</h1>
+        <div class="flex flex-col items-center gap-2">
+            <span class="ceo-badge">FOUNDER & CEO</span>
+            <p class="text-xl font-bold text-white tracking-tight">Harshwardhan</p>
+        </div>
     </header>
-
-    <div class="container">
-        <div class="card">
-            <h2>Vision 👑</h2>
-            <p>Main Harshwardhan hoon. Maine "THE AI HUB" banaya hai AI tools aur applications se video creation ko transform karne ke liye.</p>
+    <div class="grid grid-cols-2 gap-3 mb-4">
+        <div class="bg-green-900/20 border border-green-800 p-4 rounded-2xl text-center">
+            <p class="text-green-500 text-[10px] font-bold tracking-tighter">TOTAL PROFIT</p>
+            <h2 id="totalP" class="text-xl font-black text-green-400">₹0</h2>
         </div>
-
-        <div class="card">
-            <h2>AI Tools & Apps 🚀</h2>
-            <div class="app-grid">
-                <div class="app-tag">ChatGPT</div>
-                <div class="app-tag">Midjourney</div>
-                <div class="app-tag">CapCut AI</div>
-                <div class="app-tag">Runway</div>
-                <div class="app-tag">HeyGen</div>
-                <div class="app-tag">ElevenLabs</div>
-            </div>
-        </div>
-        <div class="card">
-            <h2>Let's Connect</h2>
-            <div class="btn-group">
-                <a href="https://www.instagram.com/mr__.karan08?igsh=MWt5aDRycTdydWdvcA==" class="btn btn-insta" target="_blank">Follow on Instagram</a>
-                <a href="mailto:bidranker@gmail.com" class="btn btn-email">Email for Business</a>
-            </div>
+        <div class="bg-red-900/20 border border-red-800 p-4 rounded-2xl text-center">
+            <p class="text-red-500 text-[10px] font-bold tracking-tighter">TOTAL LOSS</p>
+            <h2 id="totalL" class="text-xl font-black text-red-400">₹0</h2>
         </div>
     </div>
 
-    <footer style="padding: 30px; font-size: 0.8rem; color: #475569;">
-        © 2026 THE AI HUB | Developed by Harshwardhan
-    </footer>
+    <div class="card">
+        <input type="text" id="itemName" placeholder="Detail (e.g. Salary, Food)">
+        <input type="number" id="amount" placeholder="Amount ₹">
+        <div class="flex gap-2">
+            <button onclick="addData('P')" class="flex-1 bg-green-600 text-white font-bold py-3 rounded-xl shadow-lg shadow-green-900/20">+ PROFIT</button>
+            <button onclick="addData('L')" class="flex-1 bg-red-600 text-white font-bold py-3 rounded-xl shadow-lg shadow-red-900/20">- LOSS</button>
+        </div>
+    </div>
 
+    <div class="grid grid-cols-2 gap-3 mb-6">
+        <div>
+            <p class="text-green-500 text-[10px] font-bold mb-2 ml-1">PROFIT HISTORY</p>
+            <div id="pList" class="bg-black/30 p-2 rounded-lg min-h-[50px]"></div>
+        </div>
+        <div>
+            <p class="text-red-500 text-[10px] font-bold mb-2 ml-1">LOSS HISTORY</p>
+            <div id="lList" class="bg-black/30 p-2 rounded-lg min-h-[50px]"></div>
+        </div>
+    </div>
+    <a href="https://www.instagram.com/mr__.karan08?igsh=MWt5aDRycTdydWdvcA==" class="btn-insta block w-full text-center py-4 rounded-xl font-bold text-white mb-6 shadow-lg shadow-pink-900/20">
+        Contact Founder on Instagram
+    </a>
+
+    <script>
+        let data = JSON.parse(localStorage.getItem('ai_hub_accounts')) || [];
+        function addData(type) {
+            const name = document.getElementById('itemName').value;
+            const amt = document.getElementById('amount').value;
+            if(name && amt) {
+                data.push({ name, amt: Number(amt), type, id: Date.now() });
+                saveAndRefresh();
+            }
+        }
+        function deleteItem(id) {
+            data = data.filter(item => item.id !== id);
+            saveAndRefresh();
+        }
+        function saveAndRefresh() {
+            localStorage.setItem('ai_hub_accounts', JSON.stringify(data));
+            document.getElementById('itemName').value = '';
+            document.getElementById('amount').value = '';
+            render();
+        }
+        function render() {
+            let tp = 0, tl = 0, ph = '', lh = '';
+            data.slice().reverse().forEach(item => {
+                let html = `<div class="list-item animate-in fade-in duration-300">
+                    <span>${item.name}</span>
+                    <span class="${item.type=='P'?'text-green-400':'text-red-400'}">₹${item.amt}<b onclick="deleteItem(${item.id})" class="delete-btn">×</b></span>
+                </div>`;
+                if(item.type === 'P') { ph += html; tp += item.amt; }
+                else { lh += html; tl += item.amt; }
+            });
+            document.getElementById('pList').innerHTML = ph;
+            document.getElementById('lList').innerHTML = lh;
+            document.getElementById('totalP').innerText = '₹' + tp;
+            document.getElementById('totalL').innerText = '₹' + tl;
+        }
+        render();
+    </script>
 </body>
 </html>
