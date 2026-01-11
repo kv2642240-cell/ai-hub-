@@ -4,29 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>THE AI HUB - CEO Dashboard</title>
-    <meta name="google-site-verification" content="ryKoSefcaCa9KErr-c6IOf-F3o_E1A-Yv-xXpB0F_4s">
+    <meta name="google-site-verification" content="Apib7-x98H0j5cPqHWwSMm6dNU4GmODRoqxLiDzdx9I">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body { background-color: #000; color: #d4af37; font-family: sans-serif; margin: 0; padding: 15px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
         .gold-gradient { background: linear-gradient(135deg, #d4af37 0%, #f2d06b 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .main-card { width: 100%; max-width: 500px; background: #111; padding: 20px; border-radius: 25px; border: 1px solid #222; text-align: center; margin-bottom: 20px; }
-        .input-box { width: 100%; background: #1a1a1a; border: 1px solid #333; border-radius: 10px; padding: 10px; color: #fff; margin-bottom: 10px; outline: none; border-left: 3px solid #d4af37; }
+        .main-card { width: 100%; max-width: 500px; background: #111; padding: 20px;
+                    .input-box { width: 100%; background: #1a1a1a; border: 1px solid #333; border-radius: 10px; padding: 12px; color: #fff; margin-bottom: 10px; outline: none; border-left: 3px solid #d4af37; }
         .btn-flex { display: flex; gap: 10px; }
-        .btn-p { background: #00ff00; color: #000; font-weight: bold; padding: 10px; border-radius: 8px; flex: 1; border: none; cursor: pointer; }
-        .btn-l { background: #ff0000; color: #fff; font-weight: bold; padding: 10px; border-radius: 8px; flex: 1; border: none; cursor: pointer; }
-        
+        .btn-p { background: #00ff00; color: #000; font-weight: bold; padding: 12px; border-radius: 8px; flex: 1; border: none; cursor: pointer; }
+        .btn-l { background: #ff0000; color: #fff; font-weight: bold; padding: 12px; border-radius: 8px; flex: 1; border: none; cursor: pointer; }
         .split-view { display: flex; width: 100%; max-width: 600px; gap: 10px; }
-        .column { flex: 1; background: #080808; border-radius: 15px; border: 1px solid #222; padding: 10px; min-height: 200px; }
-        .col-title { font-size: 12px; font-weight: bold; text-align: center; margin-bottom: 10px; padding-bottom: 5px; border-bottom: 1px solid #222; }
-        .item-row { display: flex;
-                   justify-content: space-between; font-size: 12px; padding: 5px 0; border-bottom: 1px solid #111; }
+        .column { flex: 1; background: #080808; border-radius: 15px; border: 1px solid #222; padding: 15px; min-height: 250px; }
+        .col-title { font-size: 14px; font-weight: bold; text-align: center; margin-bottom: 10px; border-bottom: 1px solid #222; padding-bottom: 5px; }
+                    .item-row { display: flex; justify-content: space-between; font-size: 13px; padding: 5px 0; border-bottom: 1px solid #111; }
     </style>
 </head>
 <body>
     <div class="main-card">
-        <h1 class="text-2xl font-black gold-gradient italic">THE AI HUB</h1>
-        <p style="font-size: 10px; font-weight: bold; letter-spacing: 2px;">CEO: HARSHWARDHAN</p>
-        <div style="margin-top: 15px;">
+        <h1 class="text-3xl font-black gold-gradient italic">THE AI HUB</h1>
+        <p style="font-size: 10px; font-weight: bold; letter-spacing: 3px;">CEO: HARSHWARDHAN</p>
+        <div style="margin-top: 20px;">
             <input type="text" id="name" class="input-box" placeholder="Kaam ka naam">
             <input type="number" id="cost" class="input-box" placeholder="Amount (₹)">
             <div class="btn-flex">
@@ -35,27 +33,23 @@
             </div>
         </div>
     </div>
-
     <div class="split-view">
         <div class="column">
-            <div class="col-title" style="color: #00ff00;">PROFIT LIST</div>
+            <div class="col-title" style="color: #00ff00;">PROFIT</div>
             <div id="pList"></div>
         </div>
-        </div>
         <div class="column">
-            <div class="col-title" style="color: #ff0000;">LOSS LIST</div>
+            <div class="col-title" style="color: #ff0000;">LOSS</div>
             <div id="lList"></div>
         </div>
     </div>
-
     <script>
         window.onload = function() { loadData(); };
-
         function saveData(type) {
             const n = document.getElementById('name').value;
             const c = document.getElementById('cost').value;
             if(n && c) {
-                const item = { n, c, type, d: new Date().toLocaleDateString() };
+                const item = { n, c, type };
                 const data = JSON.parse(localStorage.getItem('hubData')) || [];
                 data.push(item);
                 localStorage.setItem('hubData', JSON.stringify(data));
@@ -63,14 +57,12 @@
                 document.getElementById('cost').value = '';
                 loadData();
             }
-        }
-        function loadData() {
+            function loadData() {
             const data = JSON.parse(localStorage.getItem('hubData')) || [];
             const pDiv = document.getElementById('pList');
             const lDiv = document.getElementById('lList');
             pDiv.innerHTML = ''; lDiv.innerHTML = '';
-            
-            data.reverse().forEach(i => {
+            data.slice().reverse().forEach(i => {
                 const row = `<div class="item-row"><span>${i.n}</span><span style="color:${i.type=='P'?'#00ff00':'#ff0000'}">₹${i.c}</span></div>`;
                 if(i.type == 'P') pDiv.innerHTML += row;
                 else lDiv.innerHTML += row;
