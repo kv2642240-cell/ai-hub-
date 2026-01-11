@@ -3,37 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>THE AI HUB - Harshwardhan</title>
+    <title>THE AI HUB - CEO Harshwardhan</title>
     <meta name="google-site-verification" content="googlece6981a2162fe0b8">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { background-color: #000; color: #d4af37; font-family: 'Inter', sans-serif; margin: 0; display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+        body { background-color: #000; color: #d4af37; font-family: sans-serif; margin: 0; display: flex; align-items: center; justify-content: center; min-height: 100vh; }
         .gold-gradient { background: linear-gradient(135deg, #d4af37 0%, #f2d06b 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .scanner-window { position: relative; width: 100%; height: 240px; background: #080808; border: 1px solid #1a1a1a;
-                      border-radius: 20px; overflow: hidden; display: flex; align-items: center; justify-content: center; margin: 20px 0; }
-        .scanner-line { height: 2px; background: #d4af37; box-shadow: 0 0 15px #d4af37; position: absolute; width: 100%; top: 0; animation: scan 3s linear infinite; z-index: 10; }
+        .scanner-window { position: relative; width: 100%; height: 230px; background: #0a0a0a; border: 1px solid #1a1a1a; border-radius: 20px; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 20px 0; }
+        .scanner-line { height: 2px;
+                       background: #d4af37; box-shadow: 0 0 15px #d4af37; position: absolute; width: 100%; top: 0; animation: scan 3s linear infinite; }
         @keyframes scan { 0% { top: 0; } 100% { top: 100%; } }
-        .btn-gold { background: linear-gradient(135deg, #d4af37 0%, #f2d06b 100%); color: #000; font-weight: bold; padding: 16px; border-radius: 12px; width: 100%; cursor: pointer; text-transform: uppercase; letter-spacing: 2px; border: none; transition: 0.3s; }
-        .btn-gold:hover { transform: scale(1.02); opacity: 0.9; }
+        .btn-gold { background: linear-gradient(135deg, #d4af37 0%, #f2d06b 100%); color: #000; font-weight: bold; padding: 15px; border-radius: 12px; width: 100%; border: none; text-transform: uppercase; cursor: pointer; transition: 0.3s; }
+        .btn-gold:hover { transform: scale(1.05); }
     </style>
 </head>
 <body>
-    <div class="w-[90%] max-w-[400px] bg-zinc-900/40 p-8 rounded-[40px] border border-zinc-800 backdrop-blur-md text-center shadow-2xl">
-        <h1 class="text-4xl font-black gold-gradient tracking-tighter italic">THE AI HUB</h1>   
-        <p class="text-zinc-500 text-[10px] tracking-[0.4em] uppercase mb-4">Owner: Harshwardhan</p>
+    <div style="width: 90%; max-width: 380px; background: #111; padding: 35px; border-radius: 40px; border: 1px solid #222; text-align: center; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);">
+        <h1 class="text-4xl font-black gold-gradient italic tracking-tighter">THE AI HUB</h1>
+        <p style="color: #d4af37; font-size: 11px; letter-spacing: 4px; margin-top: 8px; font-weight: bold; text-transform: uppercase;">CEO: HARSHWARDHAN</p>
 
         <div class="scanner-window">
             <div class="scanner-line"></div>
-            <div class="opacity-20 flex flex-col items-center">
-                <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="1"><path d="M3 7V5a2 2 0 0 1 2-2h2m10 0h2a2 2 0 0 1 2 2v2m0 10v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2"/></svg>
-                <p class="text-[10px] mt-4 tracking-[0.3em] font-mono text-zinc-400 uppercase">System Ready</p>
-            </div>
+            <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="1.2" style="opacity: 0.4;"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+            <p style="color: #444; font-size: 10px; margin-top: 20px; letter-spacing: 3px;">INITIALIZING CORE AI...</p>
         </div>
 
-        <button onclick="alert('AI System Initializing...')" class="btn-gold shadow-lg shadow-yellow-900/20 active:scale-95">Start AI Scan</button>
+        <button onclick="alert('Welcome CEO Harshwardhan. System Access Granted.')" class="btn-gold">Access AI Mainframe</button>
         
-        <div class="mt-8 pt-4 border-t border-zinc-800/60">
-            <p class="text-[9px] text-zinc-600 tracking-widest uppercase">Verified by Google Search Console</p>
+        <div style="margin-top: 30px; border-top: 1px solid #1a1a1a; padding-top: 15px;">
+            <p style="color: #222; font-size: 8px; letter-spacing: 2px;">GOOGLE VERIFIED PROPERTY</p>
         </div>
     </div>
 </body>
