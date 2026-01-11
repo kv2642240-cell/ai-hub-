@@ -3,36 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>THE AI HUB - CEO Harshwardhan</title>
+    <title>THE AI HUB - Search Engine</title>
     <meta name="google-site-verification" content="googlece6981a2162fe0b8">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { background-color: #000; color: #d4af37; font-family: sans-serif; margin: 0; display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+        body { background-color: #000; color: #d4af37; font-family: sans-serif; margin: 0; display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 15px; }
         .gold-gradient { background: linear-gradient(135deg, #d4af37 0%, #f2d06b 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .scanner-window { position: relative; width: 100%; height: 230px; background: #0a0a0a; border: 1px solid #1a1a1a; border-radius: 20px; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 20px 0; }
-        .scanner-line { height: 2px;
-                       background: #d4af37; box-shadow: 0 0 15px #d4af37; position: absolute; width: 100%; top: 0; animation: scan 3s linear infinite; }
+        .scanner-window { position: relative; width: 100%; height: 100px; background: #0a0a0a; border: 1px solid #1a1a1a; border-radius: 20px; overflow: hidden; display: flex; align-items: center; justify-content: center; margin: 15px 0; }
+        .scanner-line { height: 2px; background: #d4af37; box-shadow: 0 0 15px #d4af37; position: absolute; width: 100%; top: 0; animation: scan 3s linear infinite; }
         @keyframes scan { 0% { top: 0; } 100% { top: 100%; } }
-        .btn-gold { background: linear-gradient(135deg, #d4af37 0%, #f2d06b 100%); color: #000; font-weight: bold; padding: 15px; border-radius: 12px; width: 100%; border: none; text-transform: uppercase; cursor: pointer; transition: 0.3s; }
-        .btn-gold:hover { transform: scale(1.05); }
+        .input-box { width: 100%; background: #1a1a1a; border: 1px solid #333; border-radius: 12px; padding: 12px; color: #fff; margin-bottom: 10px; outline: none; border-left: 3px solid #d4af37; }
+        .btn-gold { background: linear-gradient(135deg, #d4af37 0%, #f2d06b 100%); color: #000; font-weight: bold; padding: 14px; border-radius: 12px; width: 100%; border: none; text-transform: uppercase; cursor: pointer; }
+        .result-box { margin-top: 15px; padding: 15px; background: #080808; border-radius: 15px; display: none; border: 1px solid #222; text-align: left; animation: fadeIn 0.5s; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 <body>
-    <div style="width: 90%; max-width: 380px; background: #111; padding: 35px; border-radius: 40px; border: 1px solid #222; text-align: center; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);">
-        <h1 class="text-4xl font-black gold-gradient italic tracking-tighter">THE AI HUB</h1>
-        <p style="color: #d4af37; font-size: 11px; letter-spacing: 4px; margin-top: 8px; font-weight: bold; text-transform: uppercase;">CEO: HARSHWARDHAN</p>
+    <div style="width: 100%; max-width: 400px; background: #111; padding: 25px; border-radius: 35px; border: 1px solid #222; text-align: center;">
+        <h1 class="text-3xl font-black gold-gradient italic">THE AI HUB</h1>
+        <p style="color: #d4af37; font-size: 10px; letter-spacing: 4px; font-weight: bold;">CEO: HARSHWARDHAN</p>
 
         <div class="scanner-window">
             <div class="scanner-line"></div>
-            <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="1.2" style="opacity: 0.4;"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-            <p style="color: #444; font-size: 10px; margin-top: 20px; letter-spacing: 3px;">INITIALIZING CORE AI...</p>
+            <p style="color: #444; font-size: 10px; letter-spacing: 2px;">AI SEARCH ENGINE ONLINE</p>
         </div>
 
-        <button onclick="alert('Welcome CEO Harshwardhan. System Access Granted.')" class="btn-gold">Access AI Mainframe</button>
-        
-        <div style="margin-top: 30px; border-top: 1px solid #1a1a1a; padding-top: 15px;">
-            <p style="color: #222; font-size: 8px; letter-spacing: 2px;">GOOGLE VERIFIED PROPERTY</p>
+        <div style="margin-top: 10px;">
+            <p style="color: #666; font-size: 11px; margin-bottom: 8px; text-align: left;">Search Company or Item Name:</p>
+            <input type="text" id="searchName" class="input-box" placeholder="e.g. Tata, Apple, Reliance...">
+            <button onclick="searchData()" class="btn-gold">Search Database</button>
         </div>
+
+        <div id="result" class="result-box">
+            <div id="calcText"></div>
+        </div>
+
+        <p style="color: #222; font-size: 8px; margin-top: 25px; border-top: 1px solid #1a1a1a; padding-top: 15px;">DATA POWERED BY HARSHWARDHAN AI</p>
     </div>
+
+    <script>
+        function searchData() {
+            const name = document.getElementById('searchName').value.toLowerCase();
+            const resBox = document.getElementById('result');
+            const text = document.getElementById('calcText');
+            
+            // Database
+            const db = {
+                "tata": {p: "12%", status: "Profit", color: "#00ff00"},
+                "reliance": {p: "8%", status: "Profit", color: "#00ff00"},
+                "apple": {p: "15%", status: "Profit", color: "#00ff00"},
+                "zomato": {p: "5%", status: "Loss", color: "#ff0000"},
+                "bitcoin": {p: "25%", status: "Profit", color: "#00ff00"}
+            };
+            resBox.style.display = 'block';
+            if(db[name]) {
+                text.innerHTML = `<p style='color:#666; font-size:12px;'>Result for: <span style='color:#d4af37;'>${name.toUpperCase()}</span></p>
+                                  <h2 style='color:${db[name].color}; font-size:20px; font-weight:bold;'>${db[name].status}: ${db[name].p}</h2>
+                                  <p style='color:#444; font-size:10px;'>Status: Market Verified</p>`;
+            } else {
+                text.innerHTML = `<p style='color:#ff0000;'>No data found for "${name}"</p>
+                                  <p style='color:#666; font-size:11px;'>Try: Tata, Apple, or Reliance</p>`;
+            }
+        }
+    </script>
 </body>
 </html>
