@@ -1,5 +1,6 @@
-!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,36 +8,86 @@
     <meta name="google-site-verification" content="googlece6981a2162fe0b8">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { background-color: #0c0c0c; color: #d4af37; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; min-height: 100vh; display: flex; align-items: center; justify-content: center; margin: 0; }
-        .gold-gradient { background: linear-gradient(135deg, #d4af37 0%, #f2d06b 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .scanner-container { position: relative; width: 100%; height: 200px; background: #000; border: 1px solid #333; border-radius: 15px; overflow: hidden; margin: 20px 0; }
-        .scanner-line { height: 2px; background: #d4af37; box-shadow: 0 0 15px #d4af37; position: absolute; width: 100%; top: 0; animation: scan 3s linear infinite; }
-        @keyframes scan { 0% { top: 0; } 100% { top: 100%; } }
-        .main-card { background: rgba(28, 28, 28, 0.9); padding: 2rem; border-radius: 2rem; border: 1px solid #333; width: 90%; max-width: 400px; text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
-        .btn-gold { background: linear-gradient(135deg, #d4af37 0%, #f2d06b 100%); color: #000; font-weight: bold; padding: 15px; border-radius: 12px; border: none; width: 100%; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; }
-        .btn-gold:hover { transform: scale(1.02); opacity: 0.9; }
+        body {
+            background-color: #000;
+            color: #d4af37;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .gold-gradient {
+            background: linear-gradient(135deg, #d4af37 0%, #f2d06b 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .scanner-box {
+            position: relative;
+            height: 250px;
+            width: 100%;
+            background: #080808;
+            border: 1px solid #1a1a1a;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .scanner-line {
+            height: 2px;
+            background: #d4af37;
+            box-shadow: 0 0 15px #d4af37;
+            position: absolute;
+            width: 100%;
+            top: 0;
+            animation: scan 3s linear infinite;
+        }
+
+        @keyframes scan {
+            0% {
+                top: 0;
+            }
+
+            100% {
+                top: 100%;
+            }
+        }
+
+        .gold-button {
+            background: linear-gradient(135deg, #d4af37 0%, #f2d06b 100%);
+            color: #000;
+            font-weight: bold;
+            width: 100%;
+            padding: 15px;
+            border-radius: 12px;
+            transition: 0.3s;
+        }
     </style>
 </head>
+
 <body>
+    <div
+        class="max-w-md w-[90%] text-center space-y-6 bg-zinc-900/40 p-8 rounded-[35px] border border-zinc-800 backdrop-blur-md">
+        <h1 class="text-4xl font-black gold-gradient tracking-tighter">THE AI HUB</h1>
+        <p class="text-zinc-500 text-xs tracking-[0.3em] uppercase">Owner: Harshwardhan</p>
 
-    <div class="main-card">
-        <h1 class="text-4xl font-black gold-gradient mb-2">THE AI HUB</h1>
-        <p class="text-zinc-500 text-sm tracking-widest mb-6">OWNER: HARSHWARDHAN</p>
-        <div class="scanner-container">
+        <div class="scanner-box flex items-center justify-center">
             <div class="scanner-line"></div>
-            <div class="flex items-center justify-center h-full opacity-30">
-                <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="1">
-                    <path d="M3 7V5a2 2 0 0 1 2-2h2m10 0h2a2 2 0 0 1 2 2v2m0 10v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2"/>
-                </svg>
+            <div class="opacity-20">
+                <svg width="80" height="80" viewBox="0 0 24 24" fill="none" 7V5a2 2 0 0 1 2-2h2m10 0h2a2 2 0 0 1 2 2v2m0
+                    10v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2" /></svg>
             </div>
+            <p class="absolute bottom-4 text-[10px] text-zinc-600 font-mono tracking-widest">SYSTEM ONLINE</p>
         </div>
 
-        <button onclick="alert('AI System Online. Scanning Started...')" class="btn-gold">Start AI Scan</button>
-        
-        <div class="mt-8 pt-4 border-t border-zinc-800">
-            <p class="text-[10px] text-zinc-600 tracking-widest uppercase">Verified by Google Search Console</p>
-        </div>
+        <button onclick="alert('Scan Started...')" class="gold-button uppercase tracking-widest active:scale-95">Start
+            AI Scan</button>
+
+        <p class="text-[9px] text-zinc-700 uppercase tracking-widest pt-4 border-t border-zinc-800">Verified by Google
+            Search Console</p>
     </div>
-
 </body>
+
 </html>
