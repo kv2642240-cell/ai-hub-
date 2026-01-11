@@ -4,41 +4,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>THE AI HUB - CEO Dashboard</title>
-    <meta name="google-site-verification" content="Apib7-x98H0j5cPqHWwSMm6dNU4GmODRoqxLiDzdx9I">
+    <meta name="google-site-verification" content="ryKoSefcaCa9KEmGunISRagpfvqKzwgavcKRk7J2Njo" />
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body { background-color: #000; color: #d4af37; font-family: sans-serif; margin: 0; padding: 15px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
         .gold-gradient { background: linear-gradient(135deg, #d4af37 0%, #f2d06b 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .main-card { width: 100%; max-width: 500px; background: #111; padding: 20px; border-radius: 25px; border: 1px solid #222; text-align: center; margin-bottom: 20px; }
-        .input-box { width: 100%;
-                    background: #1a1a1a; border: 1px solid #333; border-radius: 10px; padding: 12px; color: #fff; margin-bottom: 10px; outline: none; border-left: 3px solid #d4af37; }
+        .main-card { width: 100%; max-width: 500px; background: #111; padding: 20px;
+                 .input-box { width: 100%; background: #1a1a1a; border: 1px solid #333; border-radius: 10px; padding: 12px; color: #fff; margin-bottom: 10px; outline: none; border-left: 3px solid #d4af37; font-size: 16px; }
         .btn-flex { display: flex; gap: 10px; }
         .btn-p { background: #00ff00; color: #000; font-weight: bold; padding: 12px; border-radius: 8px; flex: 1; border: none; cursor: pointer; }
         .btn-l { background: #ff0000; color: #fff; font-weight: bold; padding: 12px; border-radius: 8px; flex: 1; border: none; cursor: pointer; }
         .split-view { display: flex; width: 100%; max-width: 600px; gap: 10px; margin-top: 10px; }
         .column { flex: 1; background: #080808; border-radius: 15px; border: 1px solid #222; padding: 15px; min-height: 200px; }
-        .col-title { font-size: 14px; font-weight: bold; text-align: center; margin-bottom: 10px; border-bottom: 1px solid #222; padding-bottom: 5px; }
+        .col-title { font-size: 14px; font-weight: bold; text-align: center; margin-bottom: 15px; padding-bottom: 8px; border-bottom: 1px solid #222; }   
         .item-row { display: flex; justify-content: space-between; font-size: 13px; padding: 8px 0; border-bottom: 1px solid #111; color: #fff; }
     </style>
-    </head>
+</head>
 <body>
     <div class="main-card">
         <h1 class="text-3xl font-black gold-gradient italic">THE AI HUB</h1>
-        <p style="font-size: 10px; font-weight: bold; letter-spacing: 3px;">CEO: HARSHWARDHAN</p>
+        <p style="font-size: 10px; font-weight: bold; letter-spacing: 3px; color: #d4af37;">CEO: HARSHWARDHAN</p>
         <div style="margin-top: 20px;">
-            <input type="text" id="nameInput" class="input-box" placeholder="Kaam ka naam...">
-            <input type="number" id="costInput" class="input-box" placeholder="Amount (₹)...">
+            <input type="text" id="name" class="input-box" placeholder="Kaam ka naam...">
+            <input type="number" id="cost" class="input-box" placeholder="Amount (₹)...">
             <div class="btn-flex">
-                <button onclick="addItem('P')" class="btn-p">ADD PROFIT</button>
-                <button onclick="addItem('L')" class="btn-l">ADD LOSS</button>
+                <button onclick="saveData('P')" class="btn-p">ADD PROFIT</button>
+                <button onclick="saveData('L')" class="btn-l">ADD LOSS</button>
             </div>
         </div>
     </div>
-
     <div class="split-view">
         <div class="column">
-            <div class="col-title"
-                style="color: #00ff00;">PROFIT LIST</div>
+            <div class="col-title" style="color: #00ff00;">PROFIT LIST</div>
             <div id="pList"></div>
         </div>
         <div class="column">
@@ -48,43 +45,32 @@
     </div>
 
     <script>
-        // Load data on start
-        window.onload = function() { render(); };
+        window.onload = function() { loadData(); };
 
-        function addItem(type) {
-            const name = document.getElementById('nameInput').value;
-            const cost = document.getElementById('costInput').value;
-            
-            if (name && cost) {
-                const entry = { name, cost, type };
-                let data = JSON.parse(localStorage.getItem('aiHubRecords')) || [];
-                data.push(entry);
-                localStorage.setItem('aiHubRecords', JSON.stringify(data));
-                // Clear inputs
-                document.getElementById('nameInput').value = '';
-                document.getElementById('costInput').value = '';
-                
-                render();
-            } else {
-                alert("Bhai, naam aur amount dono daalo!");
-            }
+        function saveData(type) {
+            const n = document.getElementById('name').value;
+            const c = document.getElementById('cost').value;
+            if(n && c) {
+                const data = JSON.parse(localStorage.getItem('hubData')) || [];
+                data.push({ n, c, type });
+                localStorage.setItem('hubData', JSON.stringify(data));
+                document.getElementById('name').value = '';
+                document.getElementById('cost').value = '';
+                loadData();
+                }
         }
 
-        function render() {
-            const data = JSON.parse(localStorage.getItem('aiHubRecords')) || [];
-            const pList = document.getElementById('pList');
-            const lList = document.getElementById('lList');
-            
-            pList.innerHTML = '';
-            lList.innerHTML = '';
-            
-            data.slice().reverse().forEach(item => {
-                const html = `<div class="item-row"><span>${item.name}</span><span style="color:${item.type=='P'?'#00ff00':'#ff0000'}">₹${item.cost}</span></div>`;
-                if (item.type === 'P') pList.innerHTML += html;
-                else lList.innerHTML += html;
+        function loadData() {
+            const data = JSON.parse(localStorage.getItem('hubData')) || [];
+            const pDiv = document.getElementById('pList');
+            const lDiv = document.getElementById('lList');
+            pDiv.innerHTML = ''; lDiv.innerHTML = '';
+            data.slice().reverse().forEach(i => {
+                const row = `<div class="item-row"><span>${i.n}</span><span style="color:${i.type=='P'?'#00ff00':'#ff0000'}">₹${i.c}</span></div>`;
+                if(i.type == 'P') pDiv.innerHTML += row;
+                else lDiv.innerHTML += row;
             });
         }
     </script>
 </body>
-</html
-
+</html>
