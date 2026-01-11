@@ -1,60 +1,68 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>THE AI HUB - CEO</title>
     <meta name="google-site-verification" content="ryKoSefcaCa9KEmGunISRagpfvqKzwgavcKRk7J2Njo" />
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { background: #000; color: #d4af37; font-family: sans-serif; text-align: center; padding: 15px; }
-        .card { background: #111; padding: 20px; border-radius: 20px; border: 1px solid #222; margin-bottom: 20px; }
-        input { width: 100%; background: #1a1a1a; border: 1px solid #333; border-radius: 8px; padding: 10px; color: #fff; margin-bottom: 10px; outline: none; }
-        button { padding: 10px; border-radius: 8px; font-weight: bold; width: 48%; border: none; cursor: pointer; }
-        .row { display: flex; justify-content: space-between; padding: 8px; border-bottom: 1px solid #111; font-size: 14px; }
+        body { background: #000; color: #d4af37; font-family: sans-serif; text-align: center; padding: 10px; }
+        .box { background: #111; border: 1px solid #222; border-radius: 15px; padding: 15px; margin-bottom: 10px; }
+        input { width: 100%; background: #1a1a1a; border: 1px solid #333; padding: 10px; color: #fff; margin-bottom: 8px; border-radius: 8px; outline: none; }
     </style>
 </head>
 <body>
-    <div class="card">
-        <h1 class="text-2xl font-bold italic">THE AI HUB</h1>
-        <p class="text-[10px] tracking-widest">CEO: HARSHWARDHAN</p>
+    <div class="box">
+        <h1 class="text-xl font-bold italic">THE AI HUB</h1>
+        <div class="grid grid-cols-2 gap-2 my-3">
+            <div class="bg-green-900/30 p-2 rounded-lg border border-green-800">
+                <p class="text-[10px] text-green-500 uppercase">Total Profit</p>
+                <h2 id="totalP" class="text-xl font-bold text-green-400">₹0</h2>
+            </div>
+            <div class="bg-red-900/30 p-2 rounded-lg border border-red-800">
+                <p class="text-[10px] text-red-500 uppercase">Total Loss</p>
+                <h2 id="totalL" class="text-xl font-bold text-red-400">₹0</h2>
+            </div>
+        </div>
         
-        <div class="my-4 p-3 bg-zinc-900 rounded-xl">
-            <p class="text-xs text-gray-400">TOTAL BALANCE</p>
-            <h2 id="total" class="text-3xl font-bold">₹0</h2>
-        </div>
-
         <input type="text" id="n" placeholder="Item Name">
-        <input type="number" id="a" placeholder="Amount (₹)">
-        <div class="flex justify-between">
-            <button onclick="add('P')" class="bg-green-600 text-black">PROFIT</button>
-            <button onclick="add('L')" class="bg-red-600 text-white">LOSS</button>
+        <input type="number" id="a" placeholder="Amount ₹">
+        <div class="flex gap-2">
+            <button onclick="add('P')" class="flex-1 bg-green-600 text-black font-bold p-2 rounded">ADD PROFIT</button>
+            <button onclick="add('L')" class="flex-1 bg-red-600 text-white font-bold p-2 rounded">ADD LOSS</button>
         </div>
     </div>
 
-    <div class="flex gap-2">
-        <div class="flex-1 bg-zinc-950 p-2 rounded-lg"><p class="text-green-500 text-xs">PROFIT</p><div id="pL"></div></div>
-        <div class="flex-1 bg-zinc-950 p-2 rounded-lg"><p class="text-red-500 text-xs">LOSS</p><div id="lL"></div></div>
+    <div class="grid grid-cols-2 gap-2 text-left">
+        <div id="pL" class="bg-zinc-900 p-2 rounded text-[12px]"></div>
+        <div id="lL" class="bg-zinc-900 p-2 rounded text-[12px]"></div>
     </div>
 
     <script>
-        let db = JSON.parse(localStorage.getItem('hub_db')) || [];
+        let db = JSON.parse(localStorage.getItem('hub_v4')) || [];
         function add(t) {
             const n = document.getElementById('n').value, a = document.getElementById('a').value;
             if(n && a) { db.push({ n, a: Number(a), t, id: Date.now() }); save(); }
-        }
+            }
         function del(id) { db = db.filter(i => i.id !== id); save(); }
         function save() { 
-            localStorage.setItem('hub_db', JSON.stringify(db));
-            <div class="flex-1 bg-zinc-950 p-2 rounded-lg"><p class="text-red-500 text-xs">LOSS</p><div id="lL"></div></div>
-    </div>
-
-    <script>
-        let db = JSON.parse(localStorage.getItem('hub_db')) || [];
-        function add(t) {
-            const n = document.getElementById('n').value, a = document.getElementById('a').value;
-            if(n && a) { db.push({ n, a: Number(a), t, id: Date.now() }); save(); }
+            localStorage.setItem('hub_v4', JSON.stringify(db)); 
+            document.getElementById('n').value = ''; document.getElementById('a').value = '';
+            show(); 
         }
-        function del(id) { db = db.filter(i => i.id !== id); save(); }
-        function save() { 
-            localStorage.setItem('hub_db', JSON.stringify(db));
+        function show() {
+            let tp = 0, tl = 0, ph = '', lh = '';
+            db.slice().reverse().forEach(i => {
+                let r = `<div class="flex justify-between border-b border-zinc-800 py-1"><span>${i.n}</span><span>₹${i.a}<b onclick="del(${i.id})" class="ml-2 text-zinc-600 cursor-pointer">×</b></span></div>`;
+                if(i.t == 'P') { ph += r; tp += i.a; } else { lh += r; tl += i.a; }
+                });
+            document.getElementById('pL').innerHTML = ph; document.getElementById('lL').innerHTML = lh;
+            document.getElementById('totalP').innerText = '₹' + tp;
+            document.getElementById('totalL').innerText = '₹' + tl;
+        }
+        show();
+    </script>
+</body>
+</html>
+            
+            
