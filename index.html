@@ -1,92 +1,61 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>THE AI HUB - CEO</title>
     <meta name="google-site-verification" content="ryKoSefcaCa9KEmGunISRagpfvqKzwgavcKRk7J2Njo" />
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body { background: #000; color: #d4af37; font-family: sans-serif; text-align: center; padding: 10px; }
-        .box { background: #111; border: 1px solid #222; border-radius: 15px; padding: 15px; margin-bottom: 10px; }
-        input { width: 100%; background: #1a1a1a; border: 1px solid #333; padding: 10px; color: #fff; margin-bottom: 8px; border-radius: 8px; outline: none; }
-        .p-box { background: rgba(0, 200, 83, 0.1); border: 1px solid #00c853; }
-        .l-box { background: rgba(255, 61, 0, 0.1); border: 1px solid #ff3d00; }
-        </style>
+        input { width: 100%; background: #111; border: 1px solid #333; padding: 10px; color: #fff; margin-bottom: 5px; border-radius: 8px; }
+    </style>
 </head>
 <body>
-    <div class="box">
-        <h1 class="text-xl font-bold italic">THE AI HUB</h1>
-        <p class="text-[10px] tracking-widest mb-3">CEO: HARSHWARDHAN</p>
+    <h1 class="text-xl font-bold italic">THE AI HUB</h1>
+    <p class="text-[10px] mb-4">CEO: HARSHWARDHAN SINGH LODHI</p>
 
-        <div class="grid grid-cols-2 gap-3 mb-4">
-            <div class="p-box p-3 rounded-xl">
-                <p class="text-[9px] text-green-500 font-bold">TOTAL PROFIT</p>
-                <h2 id="totalP" class="text-xl font-bold text-green-400">₹0</h2>
-            </div>
-            <div class="l-box p-3 rounded-xl">
-                <p class="text-[9px] text-red-500 font-bold">TOTAL LOSS</p>
-                <h2 id="totalL" class="text-xl font-bold text-red-400">₹0</h2>
-            </div>
+    <div class="grid grid-cols-2 gap-2 mb-4">
+        <div class="bg-zinc-900 p-2 rounded border border-green-800">
+            <p class="text-[9px] text-green-500">PROFIT</p>
+            <h2 id="tp" class="text-xl font-bold">₹0</h2>
         </div>
-        
-        <input type="text" id="itemName" placeholder="Kaam ka naam (Momo, Maggi)">
-        <input type="number" id="itemAmt" placeholder="Paisa (₹)">
-        <div class="flex gap-2">
-            <button onclick="add('P')" class="flex-1 bg-green-600 text-black font-bold py-3 rounded-lg">PROFIT (+)</button>
-            <button onclick="add('L')" class="flex-1 bg-red-600 text-white font-bold py-3 rounded-lg">LOSS (-)</button>
+        <div class="bg-zinc-900 p-2 rounded border border-red-800">
+            <p class="text-[9px] text-red-500">LOSS</p>
+            <h2 id="tl" class="text-xl font-bold">₹0</h2>
         </div>
     </div>
 
-    <div class="grid grid-cols-2 gap-2 text-left">
-        <div class="bg-zinc-900 p-2 rounded min-h-[100px]">
-            <p class="text-[10px] text-green-500 font-bold border-b border-zinc-800 mb-2">PROFIT LIST</p>
-            <div id="pList"></div>
-        </div>
-        <div class="bg-zinc-900 p-2 rounded min-h-[100px]">
-            <p class="text-[10px] text-red-500 font-bold border-b border-zinc-800 mb-2">LOSS LIST</p>
-            <div id="lList"></div>
-        </div>
+    <input type="text" id="n" placeholder="Item Name">
+    <input type="number" id="a" placeholder="Amount ₹">
+    <div class="flex gap-2 mb-4">
+        <button onclick="add('P')" class="flex-1 bg-green-600 text-black font-bold p-2 rounded">IN (+)</button>
+        <button onclick="add('L')" class="flex-1 bg-red-600 text-white font-bold p-2 rounded">OUT (-)</button>
+    </div>
+
+    <div class="grid grid-cols-2 gap-2 text-left text-[11px]">
+        <div id="pL" class="bg-zinc-950 p-2 rounded"></div>
+        <div id="lL" class="bg-zinc-950 p-2 rounded"></div>
     </div>
     <script>
-        let data = JSON.parse(localStorage.getItem('aihub_ceo_v5')) || [];
-        
-        function add(type) {
-            const name = document.getElementById('itemName').value;
-            const amt = document.getElementById('itemAmt').value;
-            if(name && amt) {
-                data.push({ id: Date.now(), name, amt: Number(amt), type });
-                save();
-            }
+        let db = JSON.parse(localStorage.getItem('hub_v7')) || [];
+        function add(t) {
+            const n = document.getElementById('n').value, a = document.getElementById('a').value;
+            if(n && a) { db.push({ n, a: Number(a), t, id: Date.now() }); save(); }
         }
-
-        function del(id) {
-            data = data.filter(item => item.id !== id);
-            save();
+        function del(id) { db = db.filter(i => i.id !== id); save(); }
+        function save() { 
+            localStorage.setItem('hub_v7', JSON.stringify(db)); 
+            document.getElementById('n').value = ''; document.getElementById('a').value = ''; show(); 
         }
-        function save() {
-            localStorage.setItem('aihub_ceo_v5', JSON.stringify(data));
-            document.getElementById('itemName').value = '';
-            document.getElementById('itemAmt').value = '';
-            render();
-        }
-
-        function render() {
+        function show() {
             let tp = 0, tl = 0, ph = '', lh = '';
-            data.slice().reverse().forEach(item => {
-                let row = `<div class="flex justify-between py-1 text-[11px] border-b border-zinc-800 text-white">
-                    <span>${item.name}</span>
-                    <span>₹${item.amt} <b onclick="del(${item.id})" class="text-zinc-600 ml-1 cursor-pointer">×</b></span>
-                </div>`;
-                if(item.type === 'P') { ph += row; tp += item.amt; }
-                else { lh += row; tl += item.amt; }
+            db.slice().reverse().forEach(i => {
+                let r = `<div class="flex justify-between border-b border-zinc-900 py-1"><span>${i.n}</span><span>₹${i.a}<b onclick="del(${i.id})" class="ml-1 text-zinc-700">×</b></span></div>`;
+                i.t == 'P' ? (ph += r, tp += i.a) : (lh += r, tl += i.a);
             });
-            document.getElementById('pList').innerHTML = ph;
-            document.getElementById('lList').innerHTML = lh;
-            document.getElementById('totalP').innerText = '₹' + tp;
-            document.getElementById('totalL').innerText = '₹' + tl;
+            document.getElementById('pL').innerHTML = ph; document.getElementById('lL').innerHTML = lh;
+            document.getElementById('tp').innerText = '₹' + tp; document.getElementById('tl').innerText = '₹' + tl;
         }
-        render();
+        show();
     </script>
 </body>
 </html>
