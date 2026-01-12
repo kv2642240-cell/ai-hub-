@@ -15,122 +15,116 @@
     </style>
 </head>
 <body>
-    <div id="introPage" class="min-h-screen flex flex-col items-center justify-center p-6 fade-in">
-        <div class="w-20 h-20 bg-gradient-to-br from-blue-500 to-indigo-700 rounded-3xl mb-6 flex items-center justify-center text-3xl font-black shadow-2xl rotate-3">H</div>
+    <div id="introPage" class="min-h-screen flex flex-col items-center justify-center p-6 fade-in text-center">
+        <div class="w-24 h-24 bg-gradient-to-br from-blue-600 to-indigo-900 rounded-3xl mb-6 flex items-center justify-center text-4xl font-black shadow-2xl rotate-3 border border-blue-400/30">H</div>
         
-        <h2 class="text-blue-500 font-bold tracking-[0.2em] mb-2 uppercase text-xs">Executive Portfolio</h2>
-        <h1 class="text-4xl font-black mb-1 tracking-tight text-white">HARSHWARDHAN</h1>
-        <div class="bg-orange-500/10 border border-orange-500/50 text-orange-500 text-[10px] px-3 py-1 rounded-full font-bold mb-6">FOUNDER & CEO | THE AI HUB</div>
+        <h2 class="text-blue-500 font-bold tracking-[0.2em] mb-2 uppercase text-[10px]">Executive Portfolio</h2>
+        <h1 class="text-4xl font-black mb-1 tracking-tight text-white uppercase">Harshwardhan</h1>
+        <div class="bg-blue-500/10 border border-blue-500/50 text-blue-400 text-[10px] px-4 py-1 rounded-full font-bold mb-8 inline-block">FOUNDER & CEO | THE AI HUB</div>
 
-        <div class="glass p-6 rounded-3xl w-full max-w-sm mb-8 space-y-4 text-sm">
-            <div class="flex items-center gap-3">
-                <span class="text-blue-400">🎓</span>
-                <p><span class="text-gray-400">Education:</span> 12th Pass | Currently pursuing B.Com</p>
+        <div class="glass p-6 rounded-3xl w-full max-w-sm mb-8 space-y-4 text-left text-sm border-slate-800">
+            <div class="flex items-center gap-4">
+                <span class="text-xl">🎓</span>
+                <p><span class="text-gray-500">Education:</span> <span class="text-white font-medium">12th Pass | B.Com Student</span></p>
             </div>
-            <div class="flex items-center gap-3">
-                <span class="text-blue-400">📍</span>
-                <p><span class="text-gray-400">Location:</span> Bhilai, Chhattisgarh, India</p>
+            <div class="flex items-center gap-4">
+                <span class="text-xl">📍</span>
+                <p><span class="text-gray-500">Location:</span> <span class="text-white font-medium">Bhilai, Chhattisgarh</span></p>
             </div>
-            <div class="pt-2 border-t border-slate-800">
-                <p class="text-gray-300 font-semibold mb-2">About This Application:</p>
-                <p class="text-gray-400 text-xs leading-relaxed italic">
-                    "This is a high-performance Financial Management Dashboard. It helps to track real-time Profit & Loss entries, maintain digital ledger records, and manage AI-driven project accounts with precision."
+            <div class="pt-4 border-t border-slate-800">
+                <p class="text-blue-400 font-bold mb-2 uppercase text-[10px] tracking-widest">Application Purpose</p>
+                <p class="text-gray-400 text-xs leading-relaxed">
+                    A high-performance financial management dashboard for real-time Profit & Loss tracking and AI-driven asset management.
                 </p>
             </div>
         </div>
-        <button onclick="showDashboard()" class="btn-glow w-full max-w-sm bg-blue-600 hover:bg-blue-500 text-white py-4 rounded-2xl font-bold text-lg transition-all active:scale-95 mb-4">
+        <button onclick="showDashboard()" class="btn-glow w-full max-w-sm bg-blue-600 hover:bg-blue-500 text-white py-4 rounded-2xl font-bold text-lg transition-all active:scale-95 shadow-lg shadow-blue-900/40">
             Launch Dashboard 🚀
         </button>
 
-        <a href="https://www.instagram.com/mr__.karan08" class="text-gray-500 text-xs border-b border-gray-700 pb-1">Follow on Instagram @mr__.karan08</a>
+        <div class="mt-8">
+            <a href="https://www.instagram.com/mr__.karan08" class="text-gray-500 text-[11px] hover:text-white transition-colors tracking-widest uppercase">Instagram: @mr__.karan08</a>
+        </div>
     </div>
 
-    <div id="mainDashboard" class="hidden p-4 max-w-md mx-auto">
-        <header class="flex justify-between items-center py-4 mb-4">
+    <div id="mainDashboard" class="hidden p-4 max-w-md mx-auto fade-in">
+        <header class="flex justify-between items-center py-6">
             <div>
-                <h1 class="text-xl font-black text-blue-500">THE AI HUB</h1>
-                <p class="text-[10px] text-gray-400 uppercase tracking-widest">Finance Portal</p>
-                </div>
-            <button onclick="backToIntro()" class="bg-slate-800 p-2 rounded-lg text-xs">Profile</button>
+                <h1 class="text-xl font-black text-blue-500 tracking-tighter">THE AI HUB</h1>
+                <p class="text-[9px] text-gray-500 uppercase tracking-[0.3em]">Management Portal</p>
+            </div>
+            <button onclick="backToIntro()" class="bg-slate-800/50 border border-slate-700 px-4 py-2 rounded-xl text-[10px] font-bold text-gray-300 uppercase">Profile</button>
         </header>
 
-        <div class="grid grid-cols-2 gap-3 mb-6">
-            <div class="bg-green-900/20 border border-green-800/50 p-4 rounded-2xl">
-                <p class="text-green-500 text-[10px] font-bold">PROFIT</p>
+        <div class="grid grid-cols-2 gap-4 mb-6">
+            <div class="bg-green-950/20 border border-green-800/30 p-5 rounded-3xl">
+                <p class="text-green-500 text-[9px] font-bold mb-1 tracking-widest">TOTAL PROFIT</p>
                 <h2 id="totalP" class="text-2xl font-black text-green-400">₹0</h2>
             </div>
-            <div class="bg-red-900/20 border border-red-800/50 p-4 rounded-2xl">
-                <p class="text-red-500 text-[10px] font-bold">LOSS</p>
+            <div class="bg-red-950/20 border border-red-800/30 p-5 rounded-3xl">
+                <p class="text-red-500 text-[9px] font-bold mb-1 tracking-widest">TOTAL LOSS</p>
                 <h2 id="totalL" class="text-2xl font-black text-red-400">₹0</h2>
             </div>
         </div>
-        <div class="glass p-5 rounded-3xl mb-6">
-            <input type="text" id="itemName" placeholder="Transaction Details" class="w-full bg-slate-900 border border-slate-700 p-3 rounded-xl mb-3 outline-none focus:border-blue-500 transition-all">
-            <input type="number" id="amount" placeholder="Amount (₹)" class="w-full bg-slate-900 border border-slate-700 p-3 rounded-xl mb-4 outline-none focus:border-blue-500 transition-all text-lg font-bold">
-            <div class="flex gap-3">
-                <button onclick="addData('P')" class="flex-1 bg-green-600 text-white font-black py-3 rounded-xl shadow-lg shadow-green-900/20 active:scale-95 transition-all">+ PROFIT</button>
-                <button onclick="addData('L')" class="flex-1 bg-red-600 text-white font-black py-3 rounded-xl shadow-lg shadow-red-900/20 active:scale-95 transition-all">- LOSS</button>
-                </div>
+
+        <div class="glass p-6 rounded-[2rem] mb-8 border-slate-800 shadow-2xl">
+            <input type="text" id="itemName" placeholder="What is this for?" class="w-full bg-slate-900/50 border border-slate-700 p-4 rounded-2xl mb-4 outline-none focus:border-blue-500 transition-all text-sm">
+            <input type="number" id="amount" placeholder="Amount (₹)" class="w-full bg-slate-900/50 border border-slate-700 p-4 rounded-2xl mb-6 outline-none focus:border-blue-500 transition-all text-xl font-bold">
+            <div class="flex gap-4">
+                <button onclick="addData('P')" class="flex-1 bg-green-600 hover:bg-green-500 text-white font-black py-4 rounded-2xl shadow-lg active:scale-95 transition-all">+ PROFIT</button>
+                <h2 id="totalL" class="text-2xl font-black text-red-400">₹0</h2>
+            </div>
         </div>
 
-        <div class="space-y-4">
-            <h3 class="text-xs font-bold text-gray-500 tracking-widest uppercase">Recent History</h3>
-            <div id="list" class="space-y-2"></div>
+        <div class="glass p-6 rounded-[2rem] mb-8 border-slate-800 shadow-2xl">
+            <input type="text" id="itemName" placeholder="What is this for?" class="w-full bg-slate-900/50 border border-slate-700 p-4 rounded-2xl mb-4 outline-none focus:border-blue-500 transition-all text-sm">
+            <input type="number" id="amount" placeholder="Amount (₹)" class="w-full bg-slate-900/50 border border-slate-700 p-4 rounded-2xl mb-6 outline-none focus:border-blue-500 transition-all text-xl font-bold">
+            <div class="flex gap-4">
+                <button onclick="addData('P')" class="flex-1 bg-green-600 hover:bg-green-500 text-white font-black py-4 rounded-2xl shadow-lg active:scale-95 transition-all">+ PROFIT</button>
+                <button onclick="addData('L')" class="flex-1 bg-red-600 hover:bg-red-500 text-white font-black py-4 rounded-2xl shadow-lg active:scale-95 transition-all">- LOSS</button>
+            </div>
         </div>
 
-        <a href="https://www.instagram.com/mr__.karan08" class="mt-8 block w-full text-center py-4 bg-gradient-to-r from-purple-600 to-pink-600 rounded-2xl font-bold text-white shadow-xl">
+        <div class="space-y-4 mb-8">
+            <h3 class="text-[10px] font-bold text-gray-500 tracking-[0.2em] uppercase ml-2">Transaction History</h3>
+            <div id="list" class="space-y-3"></div>
+        </div>
+
+        <a href="https://www.instagram.com/mr__.karan08" class="block w-full text-center py-4 bg-gradient-to-r from-purple-600 to-pink-600 rounded-2xl font-black text-white shadow-xl hover:opacity-90 transition-all active:scale-95">
             Connect on Instagram
         </a>
+
+        <div class="mt-12 mb-8 flex flex-col items-center justify-center opacity-70">
+            <p class="text-[9px] tracking-[0.4em] text-blue-500 mb-3 uppercase font-black">Global Traffic</p>
+            <img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fkv2642240-cell.github.io%2Fai-hub-%2F&count_bg=%232563EB&title_bg=%230F172A&icon=&icon_color=%23E7E7E7&title=VISITORS&edge_flat=false" alt="Views"/>
+        </div>
     </div>
-    <script>
-        let data = JSON.parse(localStorage.getItem('ai_hub_accounts')) || [];
+    Connect on Instagram
+        </a>
 
-        function showDashboard() {
-            document.getElementById('introPage').classList.add('hidden');
-            document.getElementById('mainDashboard').classList.remove('hidden');
-            render();
-        }
+        <div class="mt-12 mb-8 flex flex-col items-center justify-center opacity-70">
+            <p class="text-[9px] tracking-[0.4em] text-blue-500 mb-3 uppercase font-black">Global Traffic</p>
+            <img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fkv2642240-cell.github.io%2Fai-hub-%2F&count_bg=%232563EB&title_bg=%230F172A&icon=&icon_color=%23E7E7E7&title=VISITORS&edge_flat=false" alt="Views"/>
+        </div>
+    </div>
+    Connect on Instagram
+        </a>
 
-        function backToIntro() {
-            document.getElementById('mainDashboard').classList.add('hidden');
-            document.getElementById('introPage').classList.remove('hidden');
-        }
-        function addData(type) {
-            const name = document.getElementById('itemName').value;
-            const amt = document.getElementById('amount').value;
-            if(name && amt) {
-                data.push({ name, amt: Number(amt), type, id: Date.now() });
-                saveAndRefresh();
-            }
-        }
-
-        function deleteItem(id) {
-            data = data.filter(item => item.id !== id);
-            saveAndRefresh();
-        }
-
-        function saveAndRefresh() {
-            localStorage.setItem('ai_hub_accounts', JSON.stringify(data));
-            document.getElementById('itemName').value = '';
-            document.getElementById('amount').value = '';
-            render();
-        }
-        function render() {
-            let tp = 0, tl = 0, html = '';
-            data.slice().reverse().forEach(item => {
-                if(item.type === 'P') tp += item.amt; else tl += item.amt;
-                html += `<div class="glass p-3 rounded-xl flex justify-between items-center border-l-4 ${item.type=='P'?'border-green-500':'border-red-500'}">
-                    <div>
-                        <p class="text-sm font-bold text-white">${item.name}</p>
+        <div class="mt-12 mb-8 flex flex-col items-center justify-center opacity-70">
+            <p class="text-[9px] tracking-[0.4em] text-blue-500 mb-3 uppercase font-black">Global Traffic</p>
+            <img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fkv2642240-cell.github.io%2Fai-hub-%2F&count_bg=%232563EB&title_bg=%230F172A&icon=&icon_color=%23E7E7E7&title=VISITORS&edge_flat=false" alt="Views"/>
+        </div>
+    </div>
+    p class="text-sm font-bold text-white">${item.name}</p>
                         <p class="text-[10px] text-gray-500 italic">${new Date(item.id).toLocaleDateString()}</p>
                     </div>
-                    <div class="flex items-center gap-3">
-                        <span class="${item.type=='P'?'text-green-400':'text-red-400'} font-black">₹${item.amt}</span>
-                        <button onclick="deleteItem(${item.id})" class="text-gray-600 hover:text-red-500 text-xl font-light">×</button>
-                        </div>
+                    <div class="flex items-center gap-4">
+                        <span class="${item.type=='P'?'text-green-400':'text-red-400'} font-black text-lg">₹${item.amt}</span>
+                        <button onclick="deleteItem(${item.id})" class="text-gray-600 hover:text-red-500 text-xl font-light px-2">×</button>
+                    </div>
                 </div>`;
             });
-            document.getElementById('list').innerHTML = html || '<p class="text-center text-gray-600 text-xs py-4 italic">No transactions recorded yet.</p>';
+            document.getElementById('list').innerHTML = html || '<p class="text-center text-gray-600 text-xs py-10 italic">No transactions recorded yet.</p>';
             document.getElementById('totalP').innerText = '₹' + tp;
             document.getElementById('totalL').innerText = '₹' + tl;
         }
