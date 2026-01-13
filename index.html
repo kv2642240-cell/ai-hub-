@@ -2,86 +2,73 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Harshwardhan | Founder & CEO</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Harshwardhan Singh Lodhi | Founder & CEO</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { background: #020617; color: #f8fafc; font-family: sans-serif; overflow-x: hidden; }
-        .glass { background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(10px); border: 1px solid rgba(30, 41, 59, 0.3); }
+        body { background: #020617; color: #f8fafc; font-family: 'Inter', sans-serif; touch-action: manipulation; }
+        .glass { background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(12px); border: 1px solid rgba(30, 41, 59, 0.7); }
         .hidden { display: none !important; }
-        .fade-in { animation: fadeIn 0.5s ease-in-out; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .gradient-text { background: linear-gradient(to right, #60a5fa, #3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     </style>
 </head>
-<body>
-    <div id="introPage" class="min-h-screen flex flex-col items-center justify-center p-6 text-center fade-in">
-        <div class="w-20 h-20 bg-blue-600 rounded-3xl mb-6 flex items-center justify-center text-3xl font-black shadow-2xl shadow-blue-500/20">H</div>
-        <h1 class="text-3xl font-black mb-1 tracking-tight">HARSHWARDHAN</h1>
-        <div class="bg-blue-500/10 border border-blue-500/50 text-blue-400 text-[10px] px-4 py-1 rounded-full font-bold mb-8 inline-block uppercase">Founder & CEO | The AI Hub</div>
+<body class="antialiased">
+    <div id="introPage" class="min-h-screen flex flex-col items-center justify-center p-6 text-center">
+        <div class="w-24 h-24 bg-blue-600 rounded-[2.5rem] mb-8 flex items-center justify-center text-4xl font-black shadow-2xl shadow-blue-500/30">H</div>
+        
+        <h1 class="text-3xl font-black mb-2 tracking-tight uppercase">Harshwardhan Singh Lodhi</h1>
+        <p class="gradient-text font-bold text-sm mb-8 tracking-[0.2em] uppercase">Founder & CEO | THE AI HUB</p>
 
-        <div class="glass p-6 rounded-3xl w-full max-w-sm mb-8 text-left text-sm space-y-3">
-            <p><span class="text-gray-500">🎓 Education:</span> 12th Pass | B.Com</p>
-            <p><span class="text-gray-500">📍 Location:</span> Bhilai, Chhattisgarh</p>
-            <hr class="border-slate-800">
-            <p class="text-xs text-gray-400 italic font-light leading-relaxed">"This app tracks real-time Profit & Loss for high-performance financial management."</p>
+        <div class="glass p-6 rounded-[2rem] w-full max-w-sm mb-10 text-left space-y-4">
+            <div class="flex items-start gap-3">
+                <span class="text-blue-500 text-lg">🚀</span>
+                <p class="text-sm leading-relaxed"><span class="text-gray-400">Mission:</span> Building India's First Hindi AI Assistant.</p>
+                </div>
+            <button onclick="closeDash()" class="bg-slate-800 text-[10px] px-4 py-2 rounded-xl font-black uppercase border border-slate-700">Back</button>
         </div>
 
-        <button onclick="openDash()" class="w-full max-w-sm bg-blue-600 py-4 rounded-2xl font-bold text-lg shadow-lg active:scale-95 transition-all">
-            Launch Dashboard 🚀
-        </button>
-    </div>
-
-    <div id="mainDashboard" class="hidden p-4 max-w-md mx-auto fade-in">
-        <div class="flex justify-between items-center py-6 mb-4">
-            <h1 class="text-xl font-black text-blue-500">THE AI HUB</h1>
-            <button onclick="closeDash()" class="text-xs bg-slate-800 px-3 py-1 rounded-lg">Back</button>
-        </div>
-
-        <div class="grid grid-cols-2 gap-4 mb-6 text-center">
-            <div class="bg-green-950/20 border border-green-800/30 p-4 rounded-2xl">
-                <p class="text-[9px] text-green-500 font-bold tracking-widest uppercase">Profit</p>
-                <h2 id="totalP" class="text-xl font-black text-green-400">₹0</h2>
+        <div class="grid grid-cols-2 gap-4 mb-8">
+            <div class="bg-green-950/20 border border-green-800/30 p-5 rounded-[2rem] text-center">
+                <p class="text-[9px] text-green-500 font-black tracking-widest uppercase mb-1">Total Profit</p>
+                <h2 id="totalP" class="text-2xl font-black text-green-400">₹0</h2>
             </div>
-            <div class="bg-red-950/20 border border-red-800/30 p-4 rounded-2xl">
-                <p class="text-[9px] text-red-500 font-bold tracking-widest uppercase">Loss</p>
-                <h2 id="totalL" class="text-xl font-black text-red-400">₹0</h2>
+            <div class="bg-red-950/20 border border-red-800/30 p-5 rounded-[2rem] text-center">
+                <p class="text-[9px] text-red-500 font-black tracking-widest uppercase mb-1">Total Loss</p>
+                <h2 id="totalL" class="text-2xl font-black text-red-400">₹0</h2>
             </div>
         </div>
-
-        <div class="glass p-5 rounded-3xl mb-8">
-            <input type="text" id="itemName" placeholder="Detail" class="w-full bg-slate-900 p-3 rounded-xl mb-3 outline-none border border-slate-700 focus:border-blue-500">
-            <input type="number" id="amount" placeholder="Amount" class="w-full bg-slate-900 p-3 rounded-xl mb-4 outline-none border border-slate-700 text-lg font-bold">
-            <div class="flex gap-3">
-                <button onclick="addData('P')" class="flex-1 bg-green-600 py-3 rounded-xl font-bold">+ PROFIT</button>
-                <button onclick="addData('L')" class="flex-1 bg-red-600 py-3 rounded-xl font-bold">- LOSS</button>
+        <div class="glass p-6 rounded-[2.5rem] mb-8 shadow-inner">
+            <input type="text" id="itemName" placeholder="Transaction Name..." class="w-full bg-slate-900/50 p-4 rounded-2xl mb-4 outline-none border border-slate-800 focus:border-blue-500 text-white font-medium">
+            <input type="number" id="amount" placeholder="Amount (₹)" class="w-full bg-slate-900/50 p-4 rounded-2xl mb-6 outline-none border border-slate-800 text-xl font-bold text-white">
+            <div class="flex gap-4">
+                <button onclick="addData('P')" class="flex-1 bg-green-600 py-4 rounded-2xl font-black shadow-lg active:scale-95 transition-all">+ PROFIT</button>
+                <button onclick="addData('L')" class="flex-1 bg-red-600 py-4 rounded-2xl font-black shadow-lg active:scale-95 transition-all">- LOSS</button>
             </div>
         </div>
+       <div id="list" class="space-y-4 mb-10"></div>
 
-        <div id="list" class="space-y-3 mb-10"></div>
+        <a href="https://www.instagram.com/mr__.karan08" class="block text-center py-5 bg-gradient-to-r from-purple-600 to-pink-600 rounded-2xl font-black shadow-xl mb-12 active:scale-95">INSTAGRAM BRAND PAGE</a>
 
-        <a href="https://www.instagram.com/mr__.karan08" class="block text-center py-4 bg-gradient-to-r from-purple-600 to-pink-600 rounded-2xl font-bold shadow-lg">Instagram @mr__.karan08</a>
-
-        <div class="mt-10 flex flex-col items-center opacity-50">
-            <p class="text-[9px] mb-2 tracking-[0.3em] font-bold">LIVE VISITS</p>
-            <img
-                src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fkv2642240-cell.github.io%2Fai-hub-%2F&count_bg=%232563EB&title_bg=%230F172A&icon=&icon_color=%23E7E7E7&title=VIEWS&edge_flat=false">
+        <div class="py-12 flex flex-col items-center justify-center border-t border-slate-900">
+            <p class="text-[10px] tracking-[0.4em] text-blue-500 mb-4 font-black uppercase">Live App Traffic</p>
+            <img src="https://count.getloli.com/get/@harsh_ai_hub?theme=asoul" alt="Live Views" class="h-10">
         </div>
     </div>
 
     <script>
         let items = JSON.parse(localStorage.getItem('ai_hub_data')) || [];
-
         function openDash() {
-            document.getElementById('introPage').style.display = 'none';
+            document.getElementById('introPage').classList.add('hidden');
             document.getElementById('mainDashboard').classList.remove('hidden');
+            window.scrollTo(0,0);
             render();
         }
 
         function closeDash() {
             document.getElementById('mainDashboard').classList.add('hidden');
-            document.getElementById('introPage').style.display = 'flex';
+            document.getElementById('introPage').classList.remove('hidden');
+            window.scrollTo(0,0);
         }
-
         function addData(type) {
             const name = document.getElementById('itemName').value;
             const amt = document.getElementById('amount').value;
@@ -99,17 +86,23 @@
             localStorage.setItem('ai_hub_data', JSON.stringify(items));
             render();
         }
-
         function render() {
             let tp = 0, tl = 0, html = '';
             items.slice().reverse().forEach(i => {
                 if(i.type === 'P') tp += i.amt; else tl += i.amt;
-                html += `<div class="glass p-4 rounded-xl flex justify-between items-center border-l-4 ${i.type=='P'?'border-green-500':'border-red-500'}">
-                <div><p class="font-bold text-sm">${i.name}</p><p class="text-[9px] text-gray-500 italic">${new Date(i.id).toLocaleDateString()}</p></div>
-                    <div class="flex items-center gap-3"><span class="${i.type=='P'?'text-green-400':'text-red-400'} font-bold">₹${i.amt}</span><button onclick="deleteItem(${i.id})" class="text-gray-600 font-light">×</button></div>
+                html += `
+                <div class="glass p-5 rounded-2xl flex justify-between items-center border-l-4 ${i.type=='P'?'border-green-500':'border-red-500'}">
+                    <div>
+                        <p class="font-bold text-sm text-white">${i.name}</p>
+                        <p class="text-[9px] text-gray-500 uppercase font-black">${new Date(i.id).toLocaleDateString()}</p>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <span class="${i.type=='P'?'text-green-400':'text-red-400'} font-black text-lg">₹${i.amt}</span>
+                        <button onclick="deleteItem(${i.id})" class="text-gray-700 text-xl font-light">×</button>
+                    </div>
                 </div>`;
             });
-            document.getElementById('list').innerHTML = html || '<p class="text-center text-xs text-gray-600 py-10">Empty History</p>';
+            document.getElementById('list').innerHTML = html || '<p class="text-center text-xs text-gray-600 py-10 tracking-widest uppercase font-bold">Ledger is Empty</p>';
             document.getElementById('totalP').innerText = '₹' + tp;
             document.getElementById('totalL').innerText = '₹' + tl;
         }
