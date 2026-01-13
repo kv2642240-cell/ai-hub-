@@ -1,22 +1,206 @@
-<div id="final-gateway" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 999999 !important; color: white; font-family: sans-serif;">
-    
-    <div style="border: 1px solid #ff9933; padding: 5px 15px; border-radius: 20px; color: #ff9933; margin-bottom: 20px; font-weight: bold; font-size: 14px;">
-        🇮🇳 MADE IN INDIA
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE AI HUB | Harshwardhan Singh Lodhi</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        :root {
+            --bg: #0d0d0d;
+            --card: #181818;
+            --primary: #2ecc71;
+            --gold: #f39c12;
+            --insta: #E1306C;
+            --white: #ffffff;
+            --gray: #95a5a6;
+        }
+        body {
+            background-color: var(--bg);
+            color: var(--white);
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* --- Welcome Screen (Exact as your Photo) --- */
+        #welcome-page {
+            text-align: center;
+            animation: fadeIn 0.8s ease-out;
+        }
+        .tag-india {
+            border: 1.5px solid var(--gold);
+            color: var(--gold);
+            padding: 5px 15px;
+            border-radius: 50px;
+            font-size: 11px;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 15px;
+            letter-spacing: 1.5px;
+        }
+
+        .title {
+            color: var(--primary);
+            font-size: clamp(2.5rem, 8vw, 4.5rem);
+            margin: 10px 0;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+        .ceo-info {
+            color: var(--gray);
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+        }
+
+        .btn-main {
+            background-color: var(--primary);
+            color: #000;
+            padding: 16px 35px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            text-transform: uppercase;
+            box-shadow: 0 5px 15px rgba(46, 204, 113, 0.3);
+        }
+       .btn-main:hover {
+            transform: translateY(-3px);
+            background-color: #27ae60;
+        }
+
+        .insta-btn {
+            margin-top: 25px;
+            display: block;
+            text-decoration: none;
+            color: var(--gray);
+            font-size: 0.9rem;
+            transition: 0.3s;
+        }
+
+        .insta-btn:hover { color: var(--insta); }
+
+        /* --- Dashboard Screen --- */
+        #dashboard-page {
+            display: none;
+            width: 90%;
+            max-width: 450px;
+        }
+        .card {
+            background: var(--card);
+            padding: 30px;
+            border-radius: 20px;
+            border: 1px solid #333;
+            text-align: center;
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 25px 0;
+        }
+
+        .stat-box {
+            background: #222;
+            padding: 20px;
+            border-radius: 15px;
+        }
+
+        .stat-label { font-size: 12px; color: var(--gray); margin-bottom: 10px; }
+        .stat-value { font-size: 22px; font-weight: bold; }
+        .txt-profit { color: var(--primary); }
+        .txt-loss { color: #e74c3c; }
+        .input-area input {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            background: #000;
+            border: 1px solid #444;
+            border-radius: 8px;
+            color: white;
+            box-sizing: border-box;
+        }
+
+        .btn-update {
+            width: 100%;
+            padding: 12px;
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .btn-update:hover { background: var(--primary); color: #000; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="welcome-page">
+        <div class="tag-india">IN MADE IN INDIA</div>
+        <h1 class="title">THE AI HUB</h1>
+        <p class="ceo-info">Harshwardhan Singh Lodhi | CEO</p>
+        
+        <button class="btn-main" onclick="goToDashboard()">Continue to Dashboard</button>
+        <a href="https://www.instagram.com/mr__.karan08?igsh=ZzNiYXNrbXdhM2ti" target="_blank" class="insta-btn">
+            <i class="fab fa-instagram"></i> @mr__.karan08
+        </a>
     </div>
 
-    <h1 style="font-size: 3rem; margin: 0; color: #00d2ff;">THE AI HUB</h1>
-    <p style="color: #888; margin-top: 10px; margin-bottom: 30px;">Harshwardhan Singh Lodhi | CEO</p>
+    <div id="dashboard-page">
+        <div class="card">
+            <h2 style="margin:0">AI HUB Console</h2>
+            <p style="color: var(--gray); font-size: 14px;">Management Dashboard</p>
+            
+            <div class="stats-container">
+                <div class="stat-box">
+                    <div class="stat-label">TOTAL PROFIT</div>
+                    <div id="pVal" class="stat-value txt-profit">₹0</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">TOTAL LOSS</div>
+                    <div id="lVal" class="stat-value txt-loss">₹0</div>
+                </div>
+            </div>
+            <div class="input-area">
+                <input type="number" id="pIn" placeholder="Enter Profit Amount">
+                <input type="number" id="lIn" placeholder="Enter Loss Amount">
+                <button class="btn-update" onclick="updateDashboard()">Update Stats</button>
+            </div>
 
-    <button id="entry-btn" onclick="this.parentElement.style.display='none';" style="padding: 15px 40px; font-size: 1.2rem; background: #00d2ff; color: black; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; box-shadow: 0 0 20px rgba(0,210,255,0.5);">
-        CONTINUE TO DASHBOARD
-    </button>
-</div>
+            <p onclick="location.reload()" style="font-size: 12px; color: #555; cursor: pointer; margin-top: 20px;">
+                <i class="fas fa-sign-out-alt"></i> Exit Session
+            </p>
+        </div>
+    </div>
+   script>
+        function goToDashboard() {
+            document.getElementById('welcome-page').style.display = 'none';
+            document.getElementById('dashboard-page').style.display = 'block';
+            document.getElementById('dashboard-page').style.animation = 'fadeIn 0.5s ease-in';
+        }
 
-<script>
-    // Extra safety: Agar kisi wajah se button na chale, toh screen par kahin bhi click karne se dashboard khul jaye
-    document.getElementById('final-gateway').addEventListener('click', function() {
-        this.style.display = 'none';
-    });
-</script>
+        function updateDashboard() {
+            const profit = document.getElementById('pIn').value || 0;
+            const loss = document.getElementById('lIn').value || 0;
+            
+            document.getElementById('pVal').innerText = "₹" + profit;
+            document.getElementById('lVal').innerText = "₹" + loss;
+        }
+    </script>
 
-
+</body>
+</html> 
