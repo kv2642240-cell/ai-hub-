@@ -3,75 +3,130 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>THE AI HUB | Harshwardhan Singh Lodhi</title>
+    <title>THE AI HUB | Management</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
         :root { --bg: #0d0d0d; --card: #181818; --primary: #2ecc71; --loss: #e74c3c; --gold: #f39c12; --white: #ffffff; --gray: #95a5a6; }
-        body { background-color: var(--bg); color: var(--white); font-family: 'Segoe UI', sans-serif; margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
-        #welcome-page { text-align: center; display: flex; flex-direction: column; align-items: center; }
-        .tag-india { border: 1.5px solid var(--gold); color: var(--gold); padding: 5px 15px; border-radius: 50px; font-size: 11px; font-weight: bold; margin-bottom: 15px; }
-        .title { color: var(--primary); font-size: 3.5rem; margin: 10px 0; font-weight: 800; }
-        .btn-main { background-color: var(--primary); color: #000; padding: 18px 40px; border: none; border-radius: 12px; font-weight: bold; cursor: pointer; text-transform: uppercase; margin-top: 20px; box-shadow: 0 4px 15px rgba(46,204,113,0.3); }
-        #dashboard-page { display: none; width: 95%; max-width: 500px; animation: fadeIn 0.5s ease-out; }
-        .card { background: var(--card); padding: 25px; border-radius: 20px; border: 1px solid #333; text-align: center; }
-        .vision-box { background: rgba(46, 204, 113, 0.1); border: 1px dashed var(--primary); padding: 12px; border-radius: 12px; margin: 15px 0; text-align: left; font-size: 12px; }
-        .balance-card { background: #222; padding: 15px; border-radius: 15px; margin-bottom: 15px; border: 1px solid #444; }
-        #totalBalance { font-size: 30px; font-weight: bold; }
-        .client-header { color: var(--gold); font-weight: bold; margin-bottom: 10px; font-size: 1.2rem; }
-        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 15px 0; }
-        .stat-box { background: #222; padding: 12px; border-radius: 12px; }
-        .input-group input { width: 100%; padding: 12px; margin: 6px 0; background: #000; border: 1px solid #444; border-radius: 8px; color: white; box-sizing: border-box; outline: none; }
+        body { background-color: var(--bg); color: var(--white); font-family: 'Segoe UI', sans-serif; margin: 0; padding: 20px; display: flex; justify-content: center; }
+        #welcome-page { text-align: center; margin-top: 100px; }
+        .tag-india { border: 1.5px solid var(--gold); color: var(--gold); padding: 5px 15px; border-radius: 50px; font-size: 11px; font-weight: bold; }
+        .title { color: var(--primary); font-size: 3rem; margin: 20px 0; }
+        .btn-main { background-color: var(--primary); color: #000; padding: 15px 30px; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; }
+        
+        #dashboard-page { display: none; width: 100%; max-width: 500px; animation: fadeIn 0.5s; }
+        .card { background: var(--card); padding: 20px; border-radius: 20px; border: 1px solid #333; text-align: center; }
+        
+        /* History List Style */
+        .history-section { margin-top: 25px; text-align: left; }
+        .history-item { background: #222; padding: 10px 15px; border-radius: 10px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; border-left: 4px solid var(--primary); }
+        .history-item.is-loss { border-left-color: var(--loss); }
+        .history-info { font-size: 13px; }
+        .history-amount { font-weight: bold; }
+        .balance-card { background: #000; padding: 20px; border-radius: 15px; margin-bottom: 20px; border: 1px solid var(--primary); }
+        #totalBalance { font-size: 32px; font-weight: bold; }
+        .input-group input { width: 100%; padding: 12px; margin: 5px 0; background: #222; border: 1px solid #444; border-radius: 8px; color: white; box-sizing: border-box; }
         .btn-update { width: 100%; padding: 12px; background: var(--primary); border: none; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 10px; }
-        .contact-info { margin-top: 20px; font-size: 0.85rem; color: var(--gray); border-top: 1px solid #333; padding-top: 15px; }
-        .contact-info a { color: var(--primary); text-decoration: none; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .clear-btn { color: var(--loss); background: none; border: none; cursor: pointer; font-size: 12px; margin-top: 15px; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 <body>
     <div id="welcome-page">
         <div class="tag-india">MADE IN INDIA</div>
         <h1 class="title">THE AI HUB</h1>
-        <p style="color:var(--gray)">Harshwardhan Singh Lodhi | CEO</p>
-        <button class="btn-main" onclick="goToDashboard()">CONTINUE TO DASHBOARD</button>
+        <p>Harshwardhan Singh Lodhi | CEO</p>
+        <button class="btn-main" onclick="goToDashboard()">OPEN DASHBOARD</button>
     </div>
+
     <div id="dashboard-page">
         <div class="card">
-            <h3 style="margin:0; color: var(--primary);">Management Console</h3>
-            <div class="vision-box"><p><strong>Future Roadmap:</strong> Scaling into an AI-driven enterprise suite with real-time financial analytics and cloud integration.</p></div>
-            <div id="nameDisplay" class="client-header">Summary for: User</div>
-            <div class="balance-card"><div style="font-size: 11px; color: var(--gray);">NET SETTLEMENT</div><div id="totalBalance">₹0</div></div>
-            <div class="stats-grid">
-                <div class="stat-box"><div style="font-size:10px; color:var(--gray)">TOTAL PROFIT</div><div id="pVal" style="color:var(--primary); font-weight:bold;">₹0</div></div>
-                <div class="stat-box"><div style="font-size:10px; color:var(--gray)">TOTAL LOSS</div><div id="lVal" style="color:var(--loss); font-weight:bold;">₹0</div></div>
+            <h3 style="color:var(--primary)">Enterprise Tracker</h3>
+            
+            <div class="balance-card">
+                <div style="font-size: 11px; color: var(--gray);">NET TOTAL BALANCE</div>
+                <div id="totalBalance">₹0</div>
             </div>
+
             <div class="input-group">
-                <input type="text" id="nameIn" placeholder="Enter Client Name">
-                <input type="number" id="pIn" placeholder="Enter Profit Amount (₹)">
-                <input type="number" id="lIn" placeholder="Enter Loss Amount (₹)">
-                <button class="btn-update" onclick="updateDashboard()">UPDATE & CALCULATE</button>
-                </div>
-            <div class="contact-info">
-                <p><i class="fas fa-envelope"></i> lodhiharshwardhan1@gmail.com</p>
-                <a href="https://www.instagram.com/mr__.karan08?igsh=ZzNiYXNrbXdhM2ti" target="_blank">Instagram: @mr__.karan08</a>
+                <input type="text" id="nameIn" placeholder="Name/Reason">
+                <input type="number" id="pIn" placeholder="Profit Amount (₹)">
+                <input type="number" id="lIn" placeholder="Loss Amount (₹)">
+                <button class="btn-update" onclick="addTransaction()">ADD TRANSACTION</button>
             </div>
+
+            <div class="history-section">
+                <h4 style="color: var(--gold); border-bottom: 1px solid #333; padding-bottom: 5px;">Transaction History</h4>
+                <div id="historyList">
+                    </div>
+            </div>
+
+            <button class="clear-btn" onclick="clearAll()"><i class="fas fa-trash"></i> Clear History</button>
         </div>
     </div>
+
     <script>
-        function goToDashboard() { document.getElementById('welcome-page').style.display = 'none'; document.getElementById('dashboard-page').style.display = 'block'; }
-        function updateDashboard() {
-            const name = document.getElementById('nameIn').value || "User";
-            const profit = parseFloat(document.getElementById('pIn').value) || 0;
-            const loss = parseFloat(document.getElementById('lIn').value) || 0;
-            const balance = profit - loss;
-            document.getElementById('nameDisplay').innerText = "Summary for: " + name;
-            document.getElementById('pVal').innerText = "₹" + profit;
-            document.getElementById('lVal').innerText = "₹" + loss;
+        let transactions = JSON.parse(localStorage.getItem('my_data')) || [];
+        window.onload = function() {
+            if(transactions.length > 0) {
+                updateUI();
+            }
+        };
+
+        function goToDashboard() {
+            document.getElementById('welcome-page').style.display = 'none';
+            document.getElementById('dashboard-page').style.display = 'block';
+        }
+
+        function addTransaction() {
+            const name = document.getElementById('nameIn').value || "Unknown";
+            const p = parseFloat(document.getElementById('pIn').value) || 0;
+            const l = parseFloat(document.getElementById('lIn').value) || 0;
+            
+            const newEntry = { name, profit: p, loss: l, date: new Date().toLocaleTimeString() };
+            transactions.push(newEntry);
+            localStorage.setItem('my_data', JSON.stringify(transactions));
+            
+            // Input clear karein
+            document.getElementById('pIn').value = '';
+            document.getElementById('lIn').value = '';
+            
+            updateUI();
+        }
+
+        function updateUI() {
+            const list = document.getElementById('historyList');
+            list.innerHTML = "";
+            let total = 0;
+            transactions.forEach((item, index) => {
+                const net = item.profit - item.loss;
+                total += net;
+                
+                const div = document.createElement('div');
+                div.className = `history-item ${net < 0 ? 'is-loss' : ''}`;
+                div.innerHTML = `
+                    <div class="history-info">
+                        <strong>${item.name}</strong> <br>
+                        <small style="color:#777">${item.date}</small>
+                    </div>
+                    <div class="history-amount" style="color: ${net >= 0 ? '#2ecc71' : '#e74c3c'}">
+                        ${net >= 0 ? '+' : ''}₹${net}
+                    </div>
+                    `;
+                list.prepend(div); // Naya entry sabse upar dikhega
+            });
+
             const balEl = document.getElementById('totalBalance');
-            balEl.innerText = "₹" + balance;
-            balEl.style.color = balance >= 0 ? "#2ecc71" : "#e74c3c";
+            balEl.innerText = "₹" + total;
+            balEl.style.color = total >= 0 ? "#2ecc71" : "#e74c3c";
+        }
+
+        function clearAll() {
+            if(confirm("Pura data mita dein?")) {
+                localStorage.clear();
+                transactions = [];
+                updateUI();
+            }
         }
     </script>
 </body>
 </html>
-            
-        
