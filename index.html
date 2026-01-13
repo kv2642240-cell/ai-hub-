@@ -1,112 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Harshwardhan Singh Lodhi | Founder & CEO</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        body { background: #020617; color: #f8fafc; font-family: 'Inter', sans-serif; touch-action: manipulation; }
-        .glass { background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(12px); border: 1px solid rgba(30, 41, 59, 0.7); }
-        .hidden { display: none !important; }
-        .gradient-text { background: linear-gradient(to right, #60a5fa, #3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    </style>
-</head>
-<body class="antialiased">
-    <div id="introPage" class="min-h-screen flex flex-col items-center justify-center p-6 text-center">
-        <div class="w-24 h-24 bg-blue-600 rounded-[2.5rem] mb-8 flex items-center justify-center text-4xl font-black shadow-2xl shadow-blue-500/30">H</div>
-        
-        <h1 class="text-3xl font-black mb-2 tracking-tight uppercase">Harshwardhan Singh Lodhi</h1>
-        <p class="gradient-text font-bold text-sm mb-8 tracking-[0.2em] uppercase">Founder & CEO | THE AI HUB</p>
-
-        <div class="glass p-6 rounded-[2rem] w-full max-w-sm mb-10 text-left space-y-4">
-            <div class="flex items-start gap-3">
-                <span class="text-blue-500 text-lg">🚀</span>
-                <p class="text-sm leading-relaxed"><span class="text-gray-400">Mission:</span> Building India's First Hindi AI Assistant.</p>
-                </div>
-            <button onclick="closeDash()" class="bg-slate-800 text-[10px] px-4 py-2 rounded-xl font-black uppercase border border-slate-700">Back</button>
-        </div>
-
-        <div class="grid grid-cols-2 gap-4 mb-8">
-            <div class="bg-green-950/20 border border-green-800/30 p-5 rounded-[2rem] text-center">
-                <p class="text-[9px] text-green-500 font-black tracking-widest uppercase mb-1">Total Profit</p>
-                <h2 id="totalP" class="text-2xl font-black text-green-400">₹0</h2>
-            </div>
-            <div class="bg-red-950/20 border border-red-800/30 p-5 rounded-[2rem] text-center">
-                <p class="text-[9px] text-red-500 font-black tracking-widest uppercase mb-1">Total Loss</p>
-                <h2 id="totalL" class="text-2xl font-black text-red-400">₹0</h2>
-            </div>
-        </div>
-        <div class="glass p-6 rounded-[2.5rem] mb-8 shadow-inner">
-            <input type="text" id="itemName" placeholder="Transaction Name..." class="w-full bg-slate-900/50 p-4 rounded-2xl mb-4 outline-none border border-slate-800 focus:border-blue-500 text-white font-medium">
-            <input type="number" id="amount" placeholder="Amount (₹)" class="w-full bg-slate-900/50 p-4 rounded-2xl mb-6 outline-none border border-slate-800 text-xl font-bold text-white">
-            <div class="flex gap-4">
-                <button onclick="addData('P')" class="flex-1 bg-green-600 py-4 rounded-2xl font-black shadow-lg active:scale-95 transition-all">+ PROFIT</button>
-                <button onclick="addData('L')" class="flex-1 bg-red-600 py-4 rounded-2xl font-black shadow-lg active:scale-95 transition-all">- LOSS</button>
-            </div>
-        </div>
-       <div id="list" class="space-y-4 mb-10"></div>
-
-        <a href="https://www.instagram.com/mr__.karan08" class="block text-center py-5 bg-gradient-to-r from-purple-600 to-pink-600 rounded-2xl font-black shadow-xl mb-12 active:scale-95">INSTAGRAM BRAND PAGE</a>
-
-        <div class="py-12 flex flex-col items-center justify-center border-t border-slate-900">
-            <p class="text-[10px] tracking-[0.4em] text-blue-500 mb-4 font-black uppercase">Live App Traffic</p>
-            <img src="https://count.getloli.com/get/@harsh_ai_hub?theme=asoul" alt="Live Views" class="h-10">
-        </div>
+<div id="gateway-screen" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000000; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 99999; color: white; text-align: center;">
+    
+    <div style="border: 1px solid #ff9933; padding: 5px 15px; border-radius: 20px; color: #ff9933; margin-bottom: 20px; font-weight: bold;">
+        🇮🇳 MADE IN INDIA
     </div>
 
-    <script>
-        let items = JSON.parse(localStorage.getItem('ai_hub_data')) || [];
-        function openDash() {
-            document.getElementById('introPage').classList.add('hidden');
-            document.getElementById('mainDashboard').classList.remove('hidden');
-            window.scrollTo(0,0);
-            render();
-        }
+    <h1 style="font-family: sans-serif; font-size: 3rem; margin: 0; color: #00d2ff;">THE AI HUB</h1>
+    <p style="color: #888; margin-bottom: 30px;">Harshwardhan Singh Lodhi | CEO</p>
 
-        function closeDash() {
-            document.getElementById('mainDashboard').classList.add('hidden');
-            document.getElementById('introPage').classList.remove('hidden');
-            window.scrollTo(0,0);
-        }
-        function addData(type) {
-            const name = document.getElementById('itemName').value;
-            const amt = document.getElementById('amount').value;
-            if(name && amt) {
-                items.push({ name, amt: Number(amt), type, id: Date.now() });
-                localStorage.setItem('ai_hub_data', JSON.stringify(items));
-                document.getElementById('itemName').value = '';
-                document.getElementById('amount').value = '';
-                render();
-            }
-        }
+    <button onclick="closeGateway()" style="padding: 15px 40px; font-size: 1.2rem; background: #00d2ff; color: black; border: none; border-radius: 8px; cursor: pointer; font-weight: bold;">
+        CONTINUE TO DASHBOARD
+    </button>
+</div>
 
-        function deleteItem(id) {
-            items = items.filter(i => i.id !== id);
-            localStorage.setItem('ai_hub_data', JSON.stringify(items));
-            render();
+<script>
+    function closeGateway() {
+        var screen = document.getElementById('gateway-screen');
+        if (screen) {
+            screen.style.display = 'none';
         }
-        function render() {
-            let tp = 0, tl = 0, html = '';
-            items.slice().reverse().forEach(i => {
-                if(i.type === 'P') tp += i.amt; else tl += i.amt;
-                html += `
-                <div class="glass p-5 rounded-2xl flex justify-between items-center border-l-4 ${i.type=='P'?'border-green-500':'border-red-500'}">
-                    <div>
-                        <p class="font-bold text-sm text-white">${i.name}</p>
-                        <p class="text-[9px] text-gray-500 uppercase font-black">${new Date(i.id).toLocaleDateString()}</p>
-                    </div>
-                    <div class="flex items-center gap-4">
-                        <span class="${i.type=='P'?'text-green-400':'text-red-400'} font-black text-lg">₹${i.amt}</span>
-                        <button onclick="deleteItem(${i.id})" class="text-gray-700 text-xl font-light">×</button>
-                    </div>
-                </div>`;
-            });
-            document.getElementById('list').innerHTML = html || '<p class="text-center text-xs text-gray-600 py-10 tracking-widest uppercase font-bold">Ledger is Empty</p>';
-            document.getElementById('totalP').innerText = '₹' + tp;
-            document.getElementById('totalL').innerText = '₹' + tl;
-        }
-    </script>
-</body>
-</html>
-
+    }
+</script>
