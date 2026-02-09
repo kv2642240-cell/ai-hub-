@@ -1,150 +1,144 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>THE AI HUB | Management</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>THE AI HUB - Digital Khata</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        :root { --bg: #0d0d0d; --card: #181818; --primary: #2ecc71; --loss: #e74c3c; --gold: #f39c12; --white: #ffffff; --gray: #95a5a6; }
-        body { background-color: var(--bg); color: var(--white); font-family: 'Segoe UI', sans-serif; margin: 0; padding: 20px; display: flex; justify-content: center; }
-        #welcome-page { text-align: center; margin-top: 100px; }
-        .tag-india { border: 1.5px solid var(--gold); color: var(--gold); padding: 5px 15px; border-radius: 50px; font-size: 11px; font-weight: bold; }
-        .title { color: var(--primary); font-size: 3rem; margin: 20px 0; }
-        .btn-main { background-color: var(--primary); color: #000; padding: 15px 30px; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; }
+        :root { --primary: #2563eb; --success: #16a34a; --danger: #dc2626; --dark: #1e293b; }
+        body { font-family: 'Poppins', sans-serif; margin: 0; background-color: #f1f5f9; color: var(--dark); }
         
-        #dashboard-page { display: none; width: 100%; max-width: 500px; animation: fadeIn 0.5s; }
-        .card { background: var(--card); padding: 20px; border-radius: 20px; border: 1px solid #333; text-align: center; }
+        header { 
+            background: var(--primary); color: white; padding: 25px 15px; 
+            text-align: center; border-bottom-left-radius: 25px; border-bottom-right-radius: 25px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .container { padding: 15px; max-width: 500px; margin: auto; }
         
-        /* History List Style */
-        .history-section { margin-top: 25px; text-align: left; }
-        .history-item { background: #222; padding: 10px 15px; border-radius: 10px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; border-left: 4px solid var(--primary); }
-        .history-item.is-loss { border-left-color: var(--loss); }
-        .history-info { font-size: 13px; }
-        .history-amount { font-weight: bold; }
-        .balance-card { background: #000; padding: 20px; border-radius: 15px; margin-bottom: 20px; border: 1px solid var(--primary); }
-        #totalBalance { font-size: 32px; font-weight: bold; }
-        .input-group input { width: 100%; padding: 12px; margin: 5px 0; background: #222; border: 1px solid #444; border-radius: 8px; color: white; box-sizing: border-box; }
-        .btn-update { width: 100%; padding: 12px; background: var(--primary); border: none; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 10px; }
-        .clear-btn { color: var(--loss); background: none; border: none; cursor: pointer; font-size: 12px; margin-top: 15px; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .card { 
+            background: white; padding: 20px; border-radius: 15px; 
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 20px; 
+        }
+
+        h3 { margin-top: 0; color: var(--primary); font-size: 18px; }
+        
+        input { 
+            width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #cbd5e1; 
+            border-radius: 10px; box-sizing: border-box; font-size: 16px;
+        }
+
+        button { 
+            width: 100%; padding: 14px; border: none; border-radius: 10px; 
+            font-size: 16px; font-weight: 600; cursor: pointer; transition: 0.2s;
+        }
+
+        .btn-add { background: var(--success); color: white; margin-top: 10px; }
+        .btn-add:active { transform: scale(0.96); }
+
+        .khata-item { 
+            background: white; padding: 15px; border-radius: 12px; 
+            margin-bottom: 12px; display: flex; justify-content: space-between; 
+            align-items: center; border-left: 6px solid var(--danger);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .khata-info h4 { margin: 0; font-size: 17px; text-transform: capitalize; }
+        .khata-info p { margin: 0; color: #64748b; font-size: 12px; }
+        .amount { color: var(--danger); font-weight: bold; font-size: 18px; }
+
+        .btn-clear { 
+            background: #fee2e2; color: var(--danger); padding: 6px 12px; 
+            font-size: 12px; width: auto; margin-left: 10px;
+        }
+
+        footer { text-align: center; padding: 30px 15px; color: #94a3b8; font-size: 13px; }
+        .badge { background: #dbeafe; color: #1e40af; padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; }
     </style>
 </head>
 <body>
-    <div id="welcome-page">
-        <div class="tag-india">MADE IN INDIA</div>
-        <h1 class="title">THE AI HUB</h1>
-        <p>Harshwardhan Singh Lodhi | CEO</p>
-        <button class="btn-main" onclick="goToDashboard()">OPEN DASHBOARD</button>
+
+<header>
+    <h1 style="margin:0; letter-spacing: 1px;">THE AI HUB</h1>
+    <span class="badge">IIT Patna Student Startup</span>
+</header>
+
+<div class="container">
+    <div class="card">
+        <h3>Naya Udhari Entry 📝</h3>
+        <input type="text" id="custName" placeholder="Customer ka Naam">
+        <input type="number" id="custAmount" placeholder="Amount (₹) kitna baaki hai?">
+        <button class="btn-add" onclick="saveData()">Khata mein Jodein</button>
     </div>
 
-    <div id="dashboard-page">
-        <div class="card">
-            <h3 style="color:var(--primary)">Enterprise Tracker</h3>
-            
-            <div class="balance-card">
-                <div style="font-size: 11px; color: var(--gray);">NET TOTAL BALANCE</div>
-                <div id="totalBalance">₹0</div>
-            </div>
-
-            <div class="input-group">
-                <input type="text" id="nameIn" placeholder="Name/Reason">
-                <input type="number" id="pIn" placeholder="Profit Amount (₹)">
-                <input type="number" id="lIn" placeholder="Loss Amount (₹)">
-                <button class="btn-update" onclick="addTransaction()">ADD TRANSACTION</button>
-            </div>
-
-            <div class="history-section">
-                <h4 style="color: var(--gold); border-bottom: 1px solid #333; padding-bottom: 5px;">Transaction History</h4>
-                <div id="historyList">
-                    </div>
-            </div>
-
-            <button class="clear-btn" onclick="clearAll()"><i class="fas fa-trash"></i> Clear History</button>
+    <h3 style="color: #64748b; font-size: 16px; padding-left: 5px;">Active Udhari Register</h3>
+    <div id="khataList">
         </div>
-    </div>
+</div>
 
-    <script>
-        let transactions = JSON.parse(localStorage.getItem('my_data')) || [];
-        window.onload = function() {
-            if(transactions.length > 0) {
-                updateUI();
-            }
-        };
+<footer>
+    <p>Developed with ❤️ by <b>Harshwardhan Singh Lodhi</b></p>
+    <p>Founder @ THE AI HUB | Bhilai, CG</p>
+</footer>
 
-        function goToDashboard() {
-            document.getElementById('welcome-page').style.display = 'none';
-            document.getElementById('dashboard-page').style.display = 'block';
+<script>
+    function loadData() {
+        const list = document.getElementById('khataList');
+        const data = JSON.parse(localStorage.getItem('aiHubKhata')) || [];
+        list.innerHTML = '';
+
+        if(data.length === 0) {
+            list.innerHTML = '<div style="text-align:center; padding:40px; color:#94a3b8;">Koi pending udhari nahi hai. Chill maaro! 😎</div>';
+            return;
         }
 
-        function addTransaction() {
-            const name = document.getElementById('nameIn').value || "Unknown";
-            const p = parseFloat(document.getElementById('pIn').value) || 0;
-            const l = parseFloat(document.getElementById('lIn').value) || 0;
-            
-            const newEntry = { name, profit: p, loss: l, date: new Date().toLocaleTimeString() };
-            transactions.push(newEntry);
-            localStorage.setItem('my_data', JSON.stringify(transactions));
-            
-            // Input clear karein
-            document.getElementById('pIn').value = '';
-            document.getElementById('lIn').value = '';
-            
-            updateUI();
-        }
-
-        function updateUI() {
-            const list = document.getElementById('historyList');
-            list.innerHTML = "";
-            let total = 0;
-            transactions.forEach((item, index) => {
-                const net = item.profit - item.loss;
-                total += net;
-                
-                const div = document.createElement('div');
-                div.className = `history-item ${net < 0 ? 'is-loss' : ''}`;
-                div.innerHTML = `
-                    <div class="history-info">
-                        <strong>${item.name}</strong> <br>
-                        <small style="color:#777">${item.date}</small>
+        data.forEach((item, index) => {
+            list.innerHTML += `
+                <div class="khata-item">
+                    <div class="khata-info">
+                        <h4>${item.name}</h4>
+                        <p>📅 ${item.date}</p>
                     </div>
-                    <div class="history-amount" style="color: ${net >= 0 ? '#2ecc71' : '#e74c3c'}">
-                        ${net >= 0 ? '+' : ''}₹${net}
+                    <div style="display:flex; align-items:center;">
+                        <div class="amount">₹${item.amount}</div>
+                        <button class="btn-clear" onclick="deleteEntry(${index})">Hatao</button>
                     </div>
-                    `;
-                list.prepend(div); // Naya entry sabse upar dikhega
-            });
+                </div>
+            `;
+        });
+    }
 
-            const balEl = document.getElementById('totalBalance');
-            balEl.innerText = "₹" + total;
-            balEl.style.color = total >= 0 ? "#2ecc71" : "#e74c3c";
+    function saveData() {
+        const name = document.getElementById('custName').value;
+        const amount = document.getElementById('custAmount').value;
+        const date = new Date().toLocaleDateString('en-IN', { day:'numeric', month:'short', year:'numeric' });
+
+        if(!name || !amount) {
+            alert('Bhai, naam aur amount dono likho!');
+            return;
         }
 
-        function clearAll() {
-            if(confirm("Pura data mita dein?")) {
-                localStorage.clear();
-                transactions = [];
-                updateUI();
-            }
+        const data = JSON.parse(localStorage.getItem('aiHubKhata')) || [];
+        data.push({ name, amount, date });
+        localStorage.setItem('aiHubKhata', JSON.stringify(data));
+
+        document.getElementById('custName').value = '';
+        document.getElementById('custAmount').value = '';
+        loadData();
+    }
+
+    function deleteEntry(index) {
+        if(confirm('Kya ye udhari chukta ho gayi?')) {
+            let data = JSON.parse(localStorage.getItem('aiHubKhata'));
+            data.splice(index, 1);
+            localStorage.setItem('aiHubKhata', JSON.stringify(data));
+            loadData();
         }
-    </script>
-    <div style="text-align: center; margin: 30px 0;">
-    <a href="https://www.instagram.com/mr__.karan07?igsh=dDlxZnZweHlwM3ow" target="_blank" style="text-decoration: none;">
-        <button style="background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); 
-                       color: white; 
-                       border: none; 
-                       padding: 12px 25px; 
-                       border-radius: 50px; 
-                       font-weight: bold; 
-                       font-size: 16px;
-                       cursor: pointer; 
-                       box-shadow: 0 5px 15px rgba(220, 39, 67, 0.4);
-                       font-family: Arial, sans-serif;">
-            Follow CEO on Instagram
-        </button>
-    </a>
-    </div>
-    
+    }
+
+    loadData();
+</script>
+
 </body>
 </html>
-
