@@ -3,113 +3,160 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>THE AI HUB - Digital Khata</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>THE AI HUB - Pro Business Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        :root { --primary: #2563eb; --success: #16a34a; --danger: #dc2626; --dark: #1e293b; }
-        body { font-family: 'Poppins', sans-serif; margin: 0; background: #f8fafc; color: var(--dark); }
+        :root { 
+            --bg: #f0f4f8; --primary: #0f172a; --accent: #3b82f6; 
+            --success: #10b981; --danger: #ef4444; --warning: #f59e0b; 
+        }
+        body { font-family: 'Outfit', sans-serif; margin: 0; background: var(--bg); color: var(--primary); }
         
-        /* Login Page */
-        #login-page { position: fixed; width: 100%; height: 100%; background: white; z-index: 999; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; box-sizing: border-box; }
-        .login-card { width: 100%; max-width: 350px; text-align: center; }
+        /* Login Screen */
+        #login-page { position: fixed; width: 100%; height: 100%; background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); z-index: 1000; display: flex; align-items: center; justify-content: center; padding: 20px; box-sizing: border-box; }
+        .login-card { background: white; padding: 40px; border-radius: 24px; width: 100%; max-width: 400px; text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
         
-        /* Main App */
+        /* Main Dashboard */
         #main-app { display: none; }
-        header { background: var(--primary); color: white; padding: 20px; text-align: center; border-bottom-left-radius: 25px; border-bottom-right-radius: 25px; }
+        header { background: var(--primary); color: white; padding: 30px 20px; text-align: center; border-bottom-left-radius: 40px; border-bottom-right-radius: 40px; position: relative; }
         
-        .container { padding: 15px; max-width: 500px; margin: auto; }
-        .card { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 20px; }
+        .container { padding: 20px; max-width: 600px; margin: -50px auto 0; }
         
-        input { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #cbd5e1; border-radius: 10px; box-sizing: border-box; font-size: 16px; }
-        button { width: 100%; padding: 14px; border: none; border-radius: 10px; font-size: 16px; font-weight: 600; cursor: pointer; }
+        /* Analytics Cards */
+        .analytics-container { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px; }
+        .stat-card { background: white; padding: 20px; border-radius: 20px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); border-bottom: 5px solid #ddd; transition: 0.3s; }
+        .stat-card:hover { transform: translateY(-5px); }
+        .stat-label { font-size: 13px; color: #64748b; font-weight: 600; text-transform: uppercase; }
+        .stat-value { font-size: 22px; font-weight: 700; margin-top: 5px; }
+
+        .card { background: white; padding: 25px; border-radius: 24px; box-shadow: 0 4px 6px rgba(0,0,0,0.02); margin-bottom: 20px; border: 1px solid rgba(255,255,255,0.8); }
         
-        .btn-primary { background: var(--primary); color: white; }
+        /* Form Styling */
+        input { width: 100%; padding: 15px; margin: 10px 0; border: 2px solid #e2e8f0; border-radius: 14px; box-sizing: border-box; font-size: 16px; transition: 0.3s; }
+        input:focus { border-color: var(--accent); outline: none; box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1); }
+        
+        .btn { width: 100%; padding: 16px; border: none; border-radius: 14px; font-size: 16px; font-weight: 600; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        .btn-primary { background: var(--accent); color: white; box-shadow: 0 4px 14px 0 rgba(59, 130, 246, 0.39); }
         .btn-success { background: var(--success); color: white; }
+
+        .launch-banner { background: linear-gradient(90deg, #1e293b, #334155); color: #fff; padding: 12px; border-radius: 12px; font-size: 13px; margin-bottom: 20px; text-align: center; border: 1px solid rgba(255,255,255,0.1); }
         
-        .launch-tag { background: #fee2e2; color: #991b1b; padding: 5px 15px; border-radius: 20px; font-size: 12px; font-weight: bold; margin-bottom: 10px; display: inline-block; }
-        
-        /* Branding */
-        .made-in-india { font-size: 12px; color: #64748b; margin-top: 10px; display: flex; align-items: center; justify-content: center; gap: 5px; }
-        .insta-link { color: #e1306c; text-decoration: none; font-weight: bold; margin-top: 10px; display: block; }
-        
-        footer { text-align: center; padding: 30px; color: #94a3b8; font-size: 12px; }
+        /* List Styling */
+        .list-item { background: white; padding: 18px; border-radius: 18px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 4px rgba(0,0,0,0.02); border-right: 4px solid var(--danger); }
+        .list-info h4 { margin: 0; font-size: 17px; }
+        .list-info p { margin: 2px 0 0; font-size: 12px; color: #94a3b8; }
+
+        footer { text-align: center; padding: 40px; color: #64748b; background: white; margin-top: 40px; border-top-left-radius: 40px; border-top-right-radius: 40px; }
+        .insta-btn { background: #000; color: white; text-decoration: none; padding: 12px 24px; border-radius: 50px; display: inline-flex; align-items: center; gap: 8px; font-size: 14px; margin-top: 15px; }
     </style>
 </head>
 <body>
 
 <div id="login-page">
     <div class="login-card">
-        <h1 style="color: var(--primary); margin: 0;">THE AI HUB</h1>
-        <p style="font-size: 14px; color: #64748b;">Secure Mobile Login</p>
-        
+        <h1 style="color: var(--primary); margin: 0; font-size: 32px; letter-spacing: -1px;">THE AI HUB</h1>
+        <p style="color: #64748b; margin-bottom: 30px;">Premium Business Access</p>
         <input type="text" id="user-name" placeholder="Aapka Naam">
-        <input type="number" id="phone" placeholder="Mobile Number (+91)">
-        <button class="btn-primary" onclick="handleLogin()">Login Karein</button>
-        
-        <div class="made-in-india">
-            🇮🇳 Made in India | IIT Patna Startup
-        </div>
+        <input type="number" id="phone" placeholder="Mobile Number">
+        <button class="btn btn-primary" onclick="handleLogin()">Unlock Dashboard</button>
+        <p style="font-size: 12px; margin-top: 20px; color: #94a3b8;">🇮🇳 Proudly Made in India | IIT Patna</p>
     </div>
 </div>
 
 <div id="main-app">
     <header>
-        <h2 style="margin:0;">THE AI HUB</h2>
-        <p id="welcome-text" style="font-size:14px; opacity:0.9; margin:5px 0 0;"></p>
+        <h2 style="margin:0; font-weight: 600;">THE AI HUB</h2>
+        <p id="welcome-text" style="opacity: 0.8; font-size: 14px; margin-top: 5px;"></p>
     </header>
 
     <div class="container">
-        <div style="text-align: center;">
-            <span class="launch-tag">🚀 Official Launch: July - Sept 2026</span>
+        <div class="launch-banner">
+            ✨ <b>OFFICIAL LAUNCH:</b> July - Sept 2026
+        </div>
+
+        <div class="analytics-container">
+            <div class="stat-card" style="border-bottom-color: var(--warning);">
+                <div class="stat-label">Total Udhari</div>
+                <div class="stat-value" id="disp-udhari" style="color: var(--warning);">₹0</div>
+            </div>
+            <div class="stat-card" style="border-bottom-color: var(--success);">
+                <div class="stat-label">Net Profit</div>
+                <div class="stat-value" id="disp-profit" style="color: var(--success);">₹0</div>
+            </div>
         </div>
 
         <div class="card">
-            <h3 style="margin-top:0; color:var(--primary);">Naya Khata Entry</h3>
-            <input type="text" id="custName" placeholder="Customer Name">
-            <input type="number" id="custAmount" placeholder="Udhari Amount (₹)">
-            <button class="btn-success" onclick="addEntry()">Register Mein Jodein</button>
+            <h3 style="margin-top:0; font-size: 18px;">Naya Transaction 💳</h3>
+            <input type="text" id="custName" placeholder="Customer ka Naam">
+            <input type="number" id="custAmount" placeholder="Sales Amount (₹)">
+            <input type="number" id="custProfit" placeholder="Profit in this sale (₹)">
+            <button class="btn btn-success" onclick="addEntry()">Save Transaction</button>
         </div>
 
-        <div id="list-container">
-            </div>
+        <h4 style="color: #64748b; margin-left: 10px;">Recent Activities</h4>
+        <div id="list-container"></div>
     </div>
 
     <footer>
-        <p>Developed by <b>Harshwardhan Singh Lodhi</b></p>
-        <div class="made-in-india">🇮🇳 Proudly Made in India</div>
-        <a href="https://instagram.com/aapka_username" class="insta-link" target="_blank">📸 Follow on Instagram</a>
+        <p>Developed by <br><b>Harshwardhan Singh Lodhi</b></p>
+        <div style="margin: 15px 0;">🇮🇳 Made in India | IIT Patna Student</div>
+        <a href="https://www.instagram.com/h_a_r_s_h_w_a_r_d_h_a_n_19/" class="insta-btn" target="_blank">
+            Follow on Instagram
+        </a>
     </footer>
 </div>
 
 <script>
+    let totalUdhari = 0;
+    let totalProfit = 0;
+
     function handleLogin() {
         const name = document.getElementById('user-name').value;
         const phone = document.getElementById('phone').value;
-
         if(name && phone.length >= 10) {
             document.getElementById('login-page').style.display = 'none';
             document.getElementById('main-app').style.display = 'block';
             document.getElementById('welcome-text').innerText = "Namaste, " + name;
         } else {
-            alert("Bhai, sahi naam aur 10-digit number dalo!");
+            alert("Details sahi se bhariye!");
         }
     }
 
     function addEntry() {
         const name = document.getElementById('custName').value;
-        const amt = document.getElementById('custAmount').value;
-        if(!name || !amt) return alert("Details bharo!");
+        const amt = parseFloat(document.getElementById('custAmount').value);
+        const profit = parseFloat(document.getElementById('custProfit').value || 0);
+        const date = new Date().toLocaleDateString('en-IN', {day:'2-digit', month:'short'});
+
+        if(!name || !amt) return alert("Details bharna zaroori hai!");
+
+        totalUdhari += amt;
+        totalProfit += profit;
+        updateStats();
 
         const div = document.createElement('div');
-        div.className = 'card';
-        div.style.borderLeft = "5px solid #dc2626";
-        div.innerHTML = `<b>${name}</b> <br> <span style="color:#dc2626">₹${amt} baaki hai</span>`;
-        
+        div.className = 'list-item';
+        div.innerHTML = `
+            <div class="list-info">
+                <h4>${name}</h4>
+                <p>📅 ${date} • Profit: ₹${profit}</p>
+            </div>
+            <div style="text-align: right;">
+                <div style="font-weight: 700; color: var(--danger);">₹${amt}</div>
+                <small style="color: #94a3b8; cursor:pointer" onclick="this.parentElement.parentElement.remove()">Clear</small>
+            </div>
+        `;
         document.getElementById('list-container').prepend(div);
+        
         document.getElementById('custName').value = '';
         document.getElementById('custAmount').value = '';
+        document.getElementById('custProfit').value = '';
+    }
+
+    function updateStats() {
+        document.getElementById('disp-udhari').innerText = '₹' + totalUdhari;
+        document.getElementById('disp-profit').innerText = '₹' + totalProfit;
     }
 </script>
-
 </body>
 </html>
