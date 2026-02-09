@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>THE AI HUB - Pro Business Dashboard</title>
+    <title>THE AI HUB - Smart Khata Dashboard</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         :root { 
@@ -12,150 +12,175 @@
         }
         body { font-family: 'Outfit', sans-serif; margin: 0; background: var(--bg); color: var(--primary); }
         
-        /* Login Screen */
+        /* Login Page */
         #login-page { position: fixed; width: 100%; height: 100%; background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); z-index: 1000; display: flex; align-items: center; justify-content: center; padding: 20px; box-sizing: border-box; }
         .login-card { background: white; padding: 40px; border-radius: 24px; width: 100%; max-width: 400px; text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
         
-        /* Main Dashboard */
+        /* Dashboard */
         #main-app { display: none; }
-        header { background: var(--primary); color: white; padding: 30px 20px; text-align: center; border-bottom-left-radius: 40px; border-bottom-right-radius: 40px; position: relative; }
+        header { background: var(--primary); color: white; padding: 30px 20px; text-align: center; border-bottom-left-radius: 40px; border-bottom-right-radius: 40px; }
         
         .container { padding: 20px; max-width: 600px; margin: -50px auto 0; }
         
-        /* Analytics Cards */
         .analytics-container { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px; }
-        .stat-card { background: white; padding: 20px; border-radius: 20px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); border-bottom: 5px solid #ddd; transition: 0.3s; }
-        .stat-card:hover { transform: translateY(-5px); }
-        .stat-label { font-size: 13px; color: #64748b; font-weight: 600; text-transform: uppercase; }
-        .stat-value { font-size: 22px; font-weight: 700; margin-top: 5px; }
+        .stat-card { background: white; padding: 20px; border-radius: 20px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); text-align: center; border-bottom: 4px solid #ddd; }
+        
+        .card { background: white; padding: 25px; border-radius: 24px; box-shadow: 0 4px 6px rgba(0,0,0,0.02); margin-bottom: 20px; }
+        
+        input { width: 100%; padding: 15px; margin: 10px 0; border: 2px solid #e2e8f0; border-radius: 14px; box-sizing: border-box; font-size: 16px; outline: none; }
+        input:focus { border-color: var(--accent); }
+        
+        .search-box { background: #fff; border: 2px solid var(--accent); margin-bottom: 20px; padding: 15px 20px; border-radius: 50px; font-weight: 600; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.1); }
 
-        .card { background: white; padding: 25px; border-radius: 24px; box-shadow: 0 4px 6px rgba(0,0,0,0.02); margin-bottom: 20px; border: 1px solid rgba(255,255,255,0.8); }
-        
-        /* Form Styling */
-        input { width: 100%; padding: 15px; margin: 10px 0; border: 2px solid #e2e8f0; border-radius: 14px; box-sizing: border-box; font-size: 16px; transition: 0.3s; }
-        input:focus { border-color: var(--accent); outline: none; box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1); }
-        
-        .btn { width: 100%; padding: 16px; border: none; border-radius: 14px; font-size: 16px; font-weight: 600; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 10px; }
-        .btn-primary { background: var(--accent); color: white; box-shadow: 0 4px 14px 0 rgba(59, 130, 246, 0.39); }
+        .btn { width: 100%; padding: 16px; border: none; border-radius: 14px; font-size: 16px; font-weight: 600; cursor: pointer; transition: 0.3s; }
+        .btn-primary { background: var(--accent); color: white; }
         .btn-success { background: var(--success); color: white; }
 
-        .launch-banner { background: linear-gradient(90deg, #1e293b, #334155); color: #fff; padding: 12px; border-radius: 12px; font-size: 13px; margin-bottom: 20px; text-align: center; border: 1px solid rgba(255,255,255,0.1); }
+        .list-item { background: white; padding: 18px; border-radius: 18px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; border-right: 4px solid var(--danger); }
         
-        /* List Styling */
-        .list-item { background: white; padding: 18px; border-radius: 18px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 4px rgba(0,0,0,0.02); border-right: 4px solid var(--danger); }
-        .list-info h4 { margin: 0; font-size: 17px; }
-        .list-info p { margin: 2px 0 0; font-size: 12px; color: #94a3b8; }
-
-        footer { text-align: center; padding: 40px; color: #64748b; background: white; margin-top: 40px; border-top-left-radius: 40px; border-top-right-radius: 40px; }
-        .insta-btn { background: #000; color: white; text-decoration: none; padding: 12px 24px; border-radius: 50px; display: inline-flex; align-items: center; gap: 8px; font-size: 14px; margin-top: 15px; }
+        footer { text-align: center; padding: 40px; color: #64748b; margin-top: 20px; }
+        .insta-btn { background: #000; color: white; text-decoration: none; padding: 12px 24px; border-radius: 50px; display: inline-flex; align-items: center; gap: 8px; font-size: 14px; margin-top: 10px;}
     </style>
 </head>
 <body>
 
 <div id="login-page">
     <div class="login-card">
-        <h1 style="color: var(--primary); margin: 0; font-size: 32px; letter-spacing: -1px;">THE AI HUB</h1>
-        <p style="color: #64748b; margin-bottom: 30px;">Premium Business Access</p>
+        <h1 style="margin:0;">THE AI HUB</h1>
+        <p>Premium Khata Access</p>
         <input type="text" id="user-name" placeholder="Aapka Naam">
         <input type="number" id="phone" placeholder="Mobile Number">
         <button class="btn btn-primary" onclick="handleLogin()">Unlock Dashboard</button>
-        <p style="font-size: 12px; margin-top: 20px; color: #94a3b8;">🇮🇳 Proudly Made in India | IIT Patna</p>
+        <p style="font-size: 12px; margin-top: 15px;">🇮🇳 Made in India | IIT Patna Startup</p>
     </div>
 </div>
 
 <div id="main-app">
     <header>
-        <h2 style="margin:0; font-weight: 600;">THE AI HUB</h2>
-        <p id="welcome-text" style="opacity: 0.8; font-size: 14px; margin-top: 5px;"></p>
+        <h2 style="margin:0;">THE AI HUB</h2>
+        <p id="welcome-text" style="font-size: 14px; margin-top: 5px; opacity: 0.8;"></p>
     </header>
 
     <div class="container">
-        <div class="launch-banner">
-            ✨ <b>OFFICIAL LAUNCH:</b> July - Sept 2026
-        </div>
-
         <div class="analytics-container">
-            <div class="stat-card" style="border-bottom-color: var(--warning);">
-                <div class="stat-label">Total Udhari</div>
-                <div class="stat-value" id="disp-udhari" style="color: var(--warning);">₹0</div>
+            <div class="stat-card" style="border-color: var(--warning);">
+                <div id="stat-label-udhari" style="font-size: 12px; color: #64748b; font-weight:600;">TOTAL UDHARI</div>
+                <div id="disp-udhari" style="font-size: 24px; font-weight: 700; color: var(--warning);">₹0</div>
             </div>
-            <div class="stat-card" style="border-bottom-color: var(--success);">
-                <div class="stat-label">Net Profit</div>
-                <div class="stat-value" id="disp-profit" style="color: var(--success);">₹0</div>
+            <div class="stat-card" style="border-color: var(--success);">
+                <div id="stat-label-profit" style="font-size: 12px; color: #64748b; font-weight:600;">NET PROFIT</div>
+                <div id="disp-profit" style="font-size: 24px; font-weight: 700; color: var(--success);">₹0</div>
             </div>
         </div>
 
         <div class="card">
-            <h3 style="margin-top:0; font-size: 18px;">Naya Transaction 💳</h3>
+            <h3 style="margin:0 0 10px; font-size: 18px;">Naya Bill / Udhari 📝</h3>
             <input type="text" id="custName" placeholder="Customer ka Naam">
-            <input type="number" id="custAmount" placeholder="Sales Amount (₹)">
-            <input type="number" id="custProfit" placeholder="Profit in this sale (₹)">
-            <button class="btn btn-success" onclick="addEntry()">Save Transaction</button>
+            <input type="number" id="custAmount" placeholder="Udhari Amount (₹)">
+            <input type="number" id="custProfit" placeholder="Apna Profit (₹)">
+            <button class="btn btn-success" onclick="addEntry()">Register Mein Save Karein</button>
         </div>
 
-        <h4 style="color: #64748b; margin-left: 10px;">Recent Activities</h4>
+        <div style="text-align: center; margin-bottom: 10px; font-size: 14px; color: #64748b;">🔍 Naam se hisaab dhoondhein:</div>
+        <input type="text" id="searchBar" class="search-box" placeholder="Customer ka naam likhein..." onkeyup="searchCustomer()">
+
+        <h4 id="list-title" style="color: #64748b; margin-left: 10px;">Sabhi Entries</h4>
         <div id="list-container"></div>
     </div>
 
     <footer>
-        <p>Developed by <br><b>Harshwardhan Singh Lodhi</b></p>
-        <div style="margin: 15px 0;">🇮🇳 Made in India | IIT Patna Student</div>
-        <a href="https://www.instagram.com/h_a_r_s_h_w_a_r_d_h_a_n_19/" class="insta-btn" target="_blank">
-            Follow on Instagram
-        </a>
+        <p>Developed by <b>Harshwardhan Singh Lodhi</b></p>
+        <div style="margin-bottom: 15px;">🚀 Officially Launching: July - Sept 2026</div>
+        <a href="https://www.instagram.com/h_a_r_s_h_w_a_r_d_h_a_n_19/" class="insta-btn" target="_blank">📸 Follow on Instagram</a>
     </footer>
 </div>
 
 <script>
-    let totalUdhari = 0;
-    let totalProfit = 0;
-
+    let entries = [];
+    
     function handleLogin() {
         const name = document.getElementById('user-name').value;
         const phone = document.getElementById('phone').value;
         if(name && phone.length >= 10) {
             document.getElementById('login-page').style.display = 'none';
             document.getElementById('main-app').style.display = 'block';
-            document.getElementById('welcome-text').innerText = "Namaste, " + name;
-        } else {
-            alert("Details sahi se bhariye!");
-        }
+            document.getElementById('welcome-text').innerText = "Namaste, " + name + " !";
+        } else { alert("Sahi details bhariye!"); }
     }
 
     function addEntry() {
-        const name = document.getElementById('custName').value;
+        const name = document.getElementById('custName').value.trim();
         const amt = parseFloat(document.getElementById('custAmount').value);
         const profit = parseFloat(document.getElementById('custProfit').value || 0);
         const date = new Date().toLocaleDateString('en-IN', {day:'2-digit', month:'short'});
 
-        if(!name || !amt) return alert("Details bharna zaroori hai!");
+        if(!name || !amt) return alert("Naam aur Amount zaroori hai!");
 
-        totalUdhari += amt;
-        totalProfit += profit;
-        updateStats();
-
-        const div = document.createElement('div');
-        div.className = 'list-item';
-        div.innerHTML = `
-            <div class="list-info">
-                <h4>${name}</h4>
-                <p>📅 ${date} • Profit: ₹${profit}</p>
-            </div>
-            <div style="text-align: right;">
-                <div style="font-weight: 700; color: var(--danger);">₹${amt}</div>
-                <small style="color: #94a3b8; cursor:pointer" onclick="this.parentElement.parentElement.remove()">Clear</small>
-            </div>
-        `;
-        document.getElementById('list-container').prepend(div);
+        const newEntry = { name, amt, profit, date, id: Date.now() };
+        entries.unshift(newEntry);
+        
+        renderApp(entries);
         
         document.getElementById('custName').value = '';
         document.getElementById('custAmount').value = '';
         document.getElementById('custProfit').value = '';
     }
 
-    function updateStats() {
-        document.getElementById('disp-udhari').innerText = '₹' + totalUdhari;
-        document.getElementById('disp-profit').innerText = '₹' + totalProfit;
+    function renderApp(dataList) {
+        // Calculate Totals for the current view
+        let viewUdhari = 0;
+        let viewProfit = 0;
+        
+        const container = document.getElementById('list-container');
+        container.innerHTML = '';
+        
+        dataList.forEach(item => {
+            viewUdhari += item.amt;
+            viewProfit += item.profit;
+            
+            container.innerHTML += `
+                <div class="list-item">
+                    <div>
+                        <h4 style="margin:0; text-transform:capitalize;">${item.name}</h4>
+                        <small style="color:#94a3b8;">📅 ${item.date} • Profit: ₹${item.profit}</small>
+                    </div>
+                    <div style="text-align: right;">
+                        <div style="font-weight: 700; color: var(--danger); font-size: 18px;">₹${item.amt}</div>
+                        <small style="color: var(--accent); cursor:pointer; font-weight:600;" onclick="removeEntry(${item.id})">PAISA MILA</small>
+                    </div>
+                </div>`;
+        });
+
+        // Update Dashboard Stats dynamically
+        document.getElementById('disp-udhari').innerText = '₹' + viewUdhari;
+        document.getElementById('disp-profit').innerText = '₹' + viewProfit;
+    }
+
+    function searchCustomer() {
+        const term = document.getElementById('searchBar').value.toLowerCase();
+        const filtered = entries.filter(item => item.name.toLowerCase().includes(term));
+        
+        const labelUdhari = document.getElementById('stat-label-udhari');
+        const listTitle = document.getElementById('list-title');
+
+        if(term !== "") {
+            labelUdhari.innerText = "SEARCH TOTAL";
+            labelUdhari.style.color = "var(--accent)";
+            listTitle.innerText = `"${term}" ke Records`;
+        } else {
+            labelUdhari.innerText = "TOTAL UDHARI";
+            labelUdhari.style.color = "#64748b";
+            listTitle.innerText = "Sabhi Entries";
+        }
+        
+        renderApp(filtered);
+    }
+
+    function removeEntry(id) {
+        if(confirm("Kya ye udhari clear ho gayi hai?")) {
+            entries = entries.filter(item => item.id !== id);
+            searchCustomer(); // To refresh current view
+        }
     }
 </script>
 </body>
