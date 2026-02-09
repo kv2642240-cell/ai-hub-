@@ -7,137 +7,108 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         :root { --primary: #2563eb; --success: #16a34a; --danger: #dc2626; --dark: #1e293b; }
-        body { font-family: 'Poppins', sans-serif; margin: 0; background-color: #f1f5f9; color: var(--dark); }
+        body { font-family: 'Poppins', sans-serif; margin: 0; background: #f8fafc; color: var(--dark); }
         
-        header { 
-            background: var(--primary); color: white; padding: 25px 15px; 
-            text-align: center; border-bottom-left-radius: 25px; border-bottom-right-radius: 25px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
-
+        /* Login Page */
+        #login-page { position: fixed; width: 100%; height: 100%; background: white; z-index: 999; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; box-sizing: border-box; }
+        .login-card { width: 100%; max-width: 350px; text-align: center; }
+        
+        /* Main App */
+        #main-app { display: none; }
+        header { background: var(--primary); color: white; padding: 20px; text-align: center; border-bottom-left-radius: 25px; border-bottom-right-radius: 25px; }
+        
         .container { padding: 15px; max-width: 500px; margin: auto; }
+        .card { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 20px; }
         
-        .card { 
-            background: white; padding: 20px; border-radius: 15px; 
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 20px; 
-        }
-
-        h3 { margin-top: 0; color: var(--primary); font-size: 18px; }
+        input { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #cbd5e1; border-radius: 10px; box-sizing: border-box; font-size: 16px; }
+        button { width: 100%; padding: 14px; border: none; border-radius: 10px; font-size: 16px; font-weight: 600; cursor: pointer; }
         
-        input { 
-            width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #cbd5e1; 
-            border-radius: 10px; box-sizing: border-box; font-size: 16px;
-        }
-
-        button { 
-            width: 100%; padding: 14px; border: none; border-radius: 10px; 
-            font-size: 16px; font-weight: 600; cursor: pointer; transition: 0.2s;
-        }
-
-        .btn-add { background: var(--success); color: white; margin-top: 10px; }
-        .btn-add:active { transform: scale(0.96); }
-
-        .khata-item { 
-            background: white; padding: 15px; border-radius: 12px; 
-            margin-bottom: 12px; display: flex; justify-content: space-between; 
-            align-items: center; border-left: 6px solid var(--danger);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-        }
-
-        .khata-info h4 { margin: 0; font-size: 17px; text-transform: capitalize; }
-        .khata-info p { margin: 0; color: #64748b; font-size: 12px; }
-        .amount { color: var(--danger); font-weight: bold; font-size: 18px; }
-
-        .btn-clear { 
-            background: #fee2e2; color: var(--danger); padding: 6px 12px; 
-            font-size: 12px; width: auto; margin-left: 10px;
-        }
-
-        footer { text-align: center; padding: 30px 15px; color: #94a3b8; font-size: 13px; }
-        .badge { background: #dbeafe; color: #1e40af; padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; }
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-success { background: var(--success); color: white; }
+        
+        .launch-tag { background: #fee2e2; color: #991b1b; padding: 5px 15px; border-radius: 20px; font-size: 12px; font-weight: bold; margin-bottom: 10px; display: inline-block; }
+        
+        /* Branding */
+        .made-in-india { font-size: 12px; color: #64748b; margin-top: 10px; display: flex; align-items: center; justify-content: center; gap: 5px; }
+        .insta-link { color: #e1306c; text-decoration: none; font-weight: bold; margin-top: 10px; display: block; }
+        
+        footer { text-align: center; padding: 30px; color: #94a3b8; font-size: 12px; }
     </style>
 </head>
 <body>
 
-<header>
-    <h1 style="margin:0; letter-spacing: 1px;">THE AI HUB</h1>
-    <span class="badge">IIT Patna Student Startup</span>
-</header>
-
-<div class="container">
-    <div class="card">
-        <h3>Naya Udhari Entry 📝</h3>
-        <input type="text" id="custName" placeholder="Customer ka Naam">
-        <input type="number" id="custAmount" placeholder="Amount (₹) kitna baaki hai?">
-        <button class="btn-add" onclick="saveData()">Khata mein Jodein</button>
-    </div>
-
-    <h3 style="color: #64748b; font-size: 16px; padding-left: 5px;">Active Udhari Register</h3>
-    <div id="khataList">
+<div id="login-page">
+    <div class="login-card">
+        <h1 style="color: var(--primary); margin: 0;">THE AI HUB</h1>
+        <p style="font-size: 14px; color: #64748b;">Secure Mobile Login</p>
+        
+        <input type="text" id="user-name" placeholder="Aapka Naam">
+        <input type="number" id="phone" placeholder="Mobile Number (+91)">
+        <button class="btn-primary" onclick="handleLogin()">Login Karein</button>
+        
+        <div class="made-in-india">
+            🇮🇳 Made in India | IIT Patna Startup
         </div>
+    </div>
 </div>
 
-<footer>
-    <p>Developed with ❤️ by <b>Harshwardhan Singh Lodhi</b></p>
-    <p>Founder @ THE AI HUB | Bhilai, CG</p>
-</footer>
+<div id="main-app">
+    <header>
+        <h2 style="margin:0;">THE AI HUB</h2>
+        <p id="welcome-text" style="font-size:14px; opacity:0.9; margin:5px 0 0;"></p>
+    </header>
+
+    <div class="container">
+        <div style="text-align: center;">
+            <span class="launch-tag">🚀 Official Launch: July - Sept 2026</span>
+        </div>
+
+        <div class="card">
+            <h3 style="margin-top:0; color:var(--primary);">Naya Khata Entry</h3>
+            <input type="text" id="custName" placeholder="Customer Name">
+            <input type="number" id="custAmount" placeholder="Udhari Amount (₹)">
+            <button class="btn-success" onclick="addEntry()">Register Mein Jodein</button>
+        </div>
+
+        <div id="list-container">
+            </div>
+    </div>
+
+    <footer>
+        <p>Developed by <b>Harshwardhan Singh Lodhi</b></p>
+        <div class="made-in-india">🇮🇳 Proudly Made in India</div>
+        <a href="https://instagram.com/aapka_username" class="insta-link" target="_blank">📸 Follow on Instagram</a>
+    </footer>
+</div>
 
 <script>
-    function loadData() {
-        const list = document.getElementById('khataList');
-        const data = JSON.parse(localStorage.getItem('aiHubKhata')) || [];
-        list.innerHTML = '';
+    function handleLogin() {
+        const name = document.getElementById('user-name').value;
+        const phone = document.getElementById('phone').value;
 
-        if(data.length === 0) {
-            list.innerHTML = '<div style="text-align:center; padding:40px; color:#94a3b8;">Koi pending udhari nahi hai. Chill maaro! 😎</div>';
-            return;
+        if(name && phone.length >= 10) {
+            document.getElementById('login-page').style.display = 'none';
+            document.getElementById('main-app').style.display = 'block';
+            document.getElementById('welcome-text').innerText = "Namaste, " + name;
+        } else {
+            alert("Bhai, sahi naam aur 10-digit number dalo!");
         }
-
-        data.forEach((item, index) => {
-            list.innerHTML += `
-                <div class="khata-item">
-                    <div class="khata-info">
-                        <h4>${item.name}</h4>
-                        <p>📅 ${item.date}</p>
-                    </div>
-                    <div style="display:flex; align-items:center;">
-                        <div class="amount">₹${item.amount}</div>
-                        <button class="btn-clear" onclick="deleteEntry(${index})">Hatao</button>
-                    </div>
-                </div>
-            `;
-        });
     }
 
-    function saveData() {
+    function addEntry() {
         const name = document.getElementById('custName').value;
-        const amount = document.getElementById('custAmount').value;
-        const date = new Date().toLocaleDateString('en-IN', { day:'numeric', month:'short', year:'numeric' });
+        const amt = document.getElementById('custAmount').value;
+        if(!name || !amt) return alert("Details bharo!");
 
-        if(!name || !amount) {
-            alert('Bhai, naam aur amount dono likho!');
-            return;
-        }
-
-        const data = JSON.parse(localStorage.getItem('aiHubKhata')) || [];
-        data.push({ name, amount, date });
-        localStorage.setItem('aiHubKhata', JSON.stringify(data));
-
+        const div = document.createElement('div');
+        div.className = 'card';
+        div.style.borderLeft = "5px solid #dc2626";
+        div.innerHTML = `<b>${name}</b> <br> <span style="color:#dc2626">₹${amt} baaki hai</span>`;
+        
+        document.getElementById('list-container').prepend(div);
         document.getElementById('custName').value = '';
         document.getElementById('custAmount').value = '';
-        loadData();
     }
-
-    function deleteEntry(index) {
-        if(confirm('Kya ye udhari chukta ho gayi?')) {
-            let data = JSON.parse(localStorage.getItem('aiHubKhata'));
-            data.splice(index, 1);
-            localStorage.setItem('aiHubKhata', JSON.stringify(data));
-            loadData();
-        }
-    }
-
-    loadData();
 </script>
 
 </body>
