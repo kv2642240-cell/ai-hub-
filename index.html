@@ -3,143 +3,144 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>THE AI HUB | Digital Khata Management</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>THE AI HUB | Pro Business Ledger</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&display=swap" rel="stylesheet">
     <style>
-        :root { --primary: #1a73e8; --success: #34a853; --danger: #ea4335; --bg: #f8fafc; }
-        body { font-family: 'Poppins', sans-serif; background: var(--bg); margin: 0; padding: 15px; color: #1e293b; }
-        .container { max-width: 500px; margin: auto; }
-        .card { background: white; padding: 20px; border-radius: 16px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); margin-bottom: 20px; }
-        input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #e2e8f0; border-radius: 10px; box-sizing: border-box; font-size: 14px; }
-        button { width: 100%; padding: 14px; border: none; border-radius: 10px; font-weight: 700; cursor: pointer; transition: 0.3s; }
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-        .btn-profit { background: var(--success); color: white; }
-        .btn-loss { background: var(--danger); color: white; }
-        .search-input { border: 2px solid var(--primary); background: #f0f7ff; }
-        .record-row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #f1f5f9; }
-        .insta-link { display: inline-block; margin-top: 10px; color: #d62976; font-weight: 600; text-decoration: none; font-size: 14px; }
-        #login-screen { text-align: center; padding-top: 80px; }
-        .dev-tag { font-size: 12px; color: #64748b; margin-top: 25px; border-top: 1px solid #e2e8f0; padding-top: 15px; line-height: 1.6; }
+        :root { --primary: #6366f1; --success: #10b981; --danger: #f43f5e; --warning: #f59e0b; --dark: #0f172a; }
+        body { font-family: 'Outfit', sans-serif; background-color: #020617; color: #f8fafc; margin: 0; padding: 15px; }
+        .container { max-width: 480px; margin: auto; }
+        
+        /* Premium Card Design */
+        .glass-card { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); border-radius: 24px; padding: 20px; margin-bottom: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        
+        /* Stats Styling */
+        .stats-container { display: grid; grid-template-columns: 1fr; gap: 12px; margin-top: 15px; }
+        .stat-card { padding: 15px; border-radius: 18px; text-align: left; position: relative; overflow: hidden; }
+        .stat-card b { font-size: 22px; display: block; margin-top: 5px; }
+        .bg-p { background: linear-gradient(135deg, #059669, #10b981); }
+        .bg-l { background: linear-gradient(135deg, #e11d48, #f43f5e); }
+        .bg-u { background: linear-gradient(135deg, #d97706, #f59e0b); }
+
+        input { width: 100%; padding: 14px; margin: 10px 0; border: 1px solid #334155; border-radius: 12px; background: #1e293b; color: white; box-sizing: border-box; }
+        .btn-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-top: 5px; }
+        button { padding: 12px; border: none; border-radius: 12px; font-weight: 600; cursor: pointer; color: white; transition: 0.2s; }
+        .btn-insta { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); width: 100%; margin-top: 15px; display: flex; align-items: center; justify-content: center; text-decoration: none; gap: 8px; font-size: 14px; }
+        
+        .record-box { border-bottom: 1px solid #334155; padding: 12px 0; display: flex; justify-content: space-between; align-items: center; }
+        .badge { font-size: 10px; padding: 3px 8px; border-radius: 20px; text-transform: uppercase; margin-left: 5px; }
+        
+        #login-screen { text-align: center; padding-top: 100px; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <div id="login-screen" class="card">
-        <h1 style="color: var(--primary); margin-bottom: 5px;">THE AI HUB</h1>
-        <p style="color: #64748b;">Enter your name to access your dashboard</p>
-        <input type="text" id="authName" placeholder="Enter Full Name...">
-        <button style="background: var(--primary); color: white;" onclick="handleLogin()">Login to Dashboard</button>
+    <div id="login-screen" class="glass-card">
+        <h1 style="color: var(--primary); margin-bottom: 0;">THE AI HUB</h1>
+        <p style="color: #94a3b8; font-size: 14px;">Next-Gen Digital Ledger</p>
+        <input type="text" id="nameIn" placeholder="Enter Your Professional Name">
+        <button style="background: var(--primary); width: 100%;" onclick="startApp()">Access Dashboard</button>
     </div>
 
-    <div id="main-dashboard" style="display:none;">
-        <div class="card" style="background: linear-gradient(135deg, #1a73e8, #1557b0); color: white;">
-            <h2 style="margin:0;">Welcome, <span id="user-display"></span>!</h2>
-            <p style="font-size: 13px; opacity: 0.9;">Digital Business Overview</p>
-            <div class="grid" style="margin-top: 15px;">
-                <div style="background: rgba(255,255,255,0.2); padding: 10px; border-radius: 10px;">
-                    <small>Total Profit</small><br><b id="sumProfit" style="font-size: 18px;">$0</b>
-                </div>
-                <div style="background: rgba(255,255,255,0.2); padding: 10px; border-radius: 10px;">
-                    <small>Total Credit (Loss)</small><br><b id="sumLoss" style="font-size: 18px;">$0</b>
-                </div>
+    <div id="app" style="display:none;">
+        <div class="glass-card">
+            <h2 style="margin:0;">Namaste, <span id="uDisplayName" style="color: var(--primary);"></span>!</h2>
+            <div class="stats-container">
+                <div class="stat-card bg-p"><small>Total Profit</small><b id="sumP">₹0</b></div>
+                <div class="stat-card bg-l"><small>Total Loss</small><b id="sumL">₹0</b></div>
+                <div class="stat-card bg-u"><small>Total Udhari (Credit)</small><b id="sumU">₹0</b></div>
             </div>
-            <a href="https://www.instagram.com/h_a_r_s_h_w_a_r_d_h_a_n_19/" class="insta-link" style="color: #ffdaea;" target="_blank">📸 Connect on Instagram</a>
+            <a href="https://www.instagram.com/h_a_r_s_h_w_a_r_d_h_a_n_19/" target="_blank" class="btn-insta">
+                Connect on Instagram 📸
+            </a>
         </div>
 
-        <div class="card">
-            <h3 style="margin-top:0;">New Transaction</h3>
-            <input type="text" id="customer" placeholder="Customer Name (For Search)">
-            <input type="number" id="valAmount" placeholder="Amount ($ / ₹)">
-            <div class="grid">
-                <button class="btn-profit" onclick="recordEntry('profit')">+ Add Profit</button>
-                <button class="btn-loss" onclick="recordEntry('loss')">- Add Credit</button>
+        <div class="glass-card">
+            <h4 style="margin-top:0;">New Entry</h4>
+            <input type="text" id="cust" placeholder="Customer or Detail">
+            <input type="number" id="val" placeholder="Amount (₹)">
+            <div class="btn-row">
+                <button class="bg-p" onclick="add('profit')">Profit</button>
+                <button class="bg-l" onclick="add('loss')">Loss</button>
+                <button class="bg-u" onclick="add('udhari')">Udhari</button>
             </div>
         </div>
 
-        <div class="card">
-            <h3 style="margin-top:0;">Search Customer Khata</h3>
-            <input type="text" id="searchInput" class="search-input" placeholder="Type name to filter..." onkeyup="refreshList()">
-            <div id="data-list" style="margin-top: 15px;"></div>
-            <button onclick="wipeData()" style="background:none; color:var(--danger); font-size: 11px; margin-top:20px; text-decoration: underline;">Clear All Records</button>
+        <div class="glass-card">
+            <h4 style="margin-top:0;">Search Customer Khata</h4>
+            <input type="text" id="q" placeholder="Type name to filter..." onkeyup="render()">
+            <div id="history"></div>
+            <button onclick="reset()" style="background:none; color:#f43f5e; font-size:11px; width:100%; margin-top:20px; opacity:0.6;">Delete All Data Permanently</button>
         </div>
 
-        <div class="dev-tag">
-            <p><b>About THE AI HUB:</b> Developed by <b>Harshwardhan Singh Lodhi</b>, a student at <b>IIT Patna</b>. This application is designed to help local businesses transition from manual paper registers to a secure digital ledger system.</p>
+        <div style="text-align:center; font-size:11px; color:#475569; padding-bottom: 30px;">
+            <b>Developer:</b> Harshwardhan Singh Lodhi | IIT Patna
         </div>
     </div>
 </div>
 
 <script>
-    // Authentication Check
     window.onload = () => {
-        const activeUser = localStorage.getItem("hub_session_user");
-        if(activeUser) initApp(activeUser);
+        const user = localStorage.getItem("hub_session");
+        if(user) setup(user);
     };
 
-    function handleLogin() {
-        const name = document.getElementById("authName").value;
-        if(name.trim()) { 
-            localStorage.setItem("hub_session_user", name); 
-            initApp(name); 
-        }
+    function startApp() {
+        const n = document.getElementById("nameIn").value;
+        if(n) { localStorage.setItem("hub_session", n); setup(n); }
     }
 
-    function initApp(name) {
+    function setup(n) {
         document.getElementById("login-screen").style.display="none";
-        document.getElementById("main-dashboard").style.display="block";
-        document.getElementById("user-display").innerText = name;
-        refreshList();
+        document.getElementById("app").style.display="block";
+        document.getElementById("uDisplayName").innerText = n;
+        render();
     }
 
-    function recordEntry(type) {
-        const cName = document.getElementById("customer").value;
-        const amt = document.getElementById("valAmount").value;
-        if(!cName || !amt) return alert("Please fill all fields!");
+    function add(t) {
+        const c = document.getElementById("cust").value;
+        const v = document.getElementById("val").value;
+        if(!c || !v) return alert("Fill all details!");
 
-        const db = JSON.parse(localStorage.getItem("hub_ledger")) || [];
-        db.push({ 
-            owner: cName.toLowerCase(), 
-            amount: parseFloat(amt), 
-            category: type, 
-            timestamp: new Date().toLocaleDateString() 
-        });
-        localStorage.setItem("hub_ledger", JSON.stringify(db));
+        const db = JSON.parse(localStorage.getItem("hub_db")) || [];
+        db.push({ n: c.toLowerCase(), a: parseFloat(v), t: t, d: new Date().toLocaleDateString() });
+        localStorage.setItem("hub_db", JSON.stringify(db));
         
-        document.getElementById("customer").value = "";
-        document.getElementById("valAmount").value = "";
-        refreshList();
+        document.getElementById("cust").value = "";
+        document.getElementById("val").value = "";
+        render();
     }
 
-    function refreshList() {
-        const db = JSON.parse(localStorage.getItem("hub_ledger")) || [];
-        const filter = document.getElementById("searchInput").value.toLowerCase();
-        const listDiv = document.getElementById("data-list");
-        let pTotal = 0, lTotal = 0;
+    function render() {
+        const db = JSON.parse(localStorage.getItem("hub_db")) || [];
+        const q = document.getElementById("q").value.toLowerCase();
+        const box = document.getElementById("history");
+        let p=0, l=0, u=0;
         
-        listDiv.innerHTML = "";
-        db.forEach(item => {
-            if(item.category === 'profit') pTotal += item.amount; else lTotal += item.amount;
-            
-            if(item.owner.includes(filter)) {
-                listDiv.innerHTML += `
-                <div class="record-row">
-                    <span><b style="text-transform: capitalize;">${item.owner}</b><br><small style="color:#64748b;">${item.timestamp}</small></span>
-                    <b style="color:${item.category === 'profit' ? 'var(--success)' : 'var(--danger)'}">
-                        ${item.category === 'profit' ? '+' : '-'} ₹${item.amount}
-                    </b>
+        box.innerHTML = "";
+        db.reverse().forEach(i => {
+            if(i.t==='profit') p+=i.a;
+            else if(i.t==='loss') l+=i.a;
+            else u+=i.a;
+
+            if(i.n.includes(q)) {
+                let color = i.t==='profit' ? '#10b981' : (i.t==='loss' ? '#f43f5e' : '#f59e0b');
+                box.innerHTML += `<div class="record-box">
+                    <span><b style="text-transform:capitalize">${i.n}</b><br><small style="color:#64748b">${i.d}</small></span>
+                    <div style="text-align:right">
+                        <b style="color:${color}">${i.t==='profit'?'+':'-'} ₹${i.a}</b><br>
+                        <span class="badge" style="background:${color}">${i.t}</span>
+                    </div>
                 </div>`;
             }
         });
-        document.getElementById("sumProfit").innerText = "₹" + pTotal;
-        document.getElementById("sumLoss").innerText = "₹" + lTotal;
+        document.getElementById("sumP").innerText = "₹" + p;
+        document.getElementById("sumL").innerText = "₹" + l;
+        document.getElementById("sumU").innerText = "₹" + u;
     }
 
-    function wipeData() {
-        if(confirm("Are you sure you want to delete all data permanently?")) { 
-            localStorage.removeItem("hub_ledger"); 
-            refreshList(); 
-        }
+    function reset() {
+        if(confirm("Confirm Wipeout?")) { localStorage.removeItem("hub_db"); render(); }
     }
 </script>
 
