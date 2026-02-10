@@ -3,62 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>THE AI HUB | Smart Ledger</title>
+    
+    <title>Harshwardhan Singh Lodhi | THE AI HUB | IIT Patna</title>
+    <meta name="title" content="Harshwardhan Singh Lodhi - Developer of THE AI HUB">
+    <meta name="description" content="Official Digital Ledger by Harshwardhan Singh Lodhi, IIT Patna. Manage Profit, Loss, and Udhari easily.">
+    <meta name="keywords" content="Harshwardhan Singh Lodhi, Harshwardhan Singh IIT Patna, THE AI HUB, the ai hub management, Digital Khata Harshwardhan">
+    <meta name="author" content="Harshwardhan Singh Lodhi">
+    <meta name="robots" content="index, follow">
+
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         :root { --p: #10b981; --l: #f43f5e; --u: #f59e0b; --main: #6366f1; }
         body { font-family: 'Outfit', sans-serif; background: #020617; color: #f8fafc; margin: 0; padding: 15px; }
         .container { max-width: 450px; margin: auto; }
-        
         .glass-card { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 20px; margin-bottom: 15px; }
-        
-        /* Stats Section */
         .stats-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
         .stat-box { padding: 15px; border-radius: 15px; color: white; }
-        .stat-box b { font-size: 22px; display: block; margin-top: 5px; }
+        .stat-box b { font-size: 24px; display: block; margin-top: 5px; }
         .bg-p { background: linear-gradient(135deg, #059669, #10b981); }
         .bg-l { background: linear-gradient(135deg, #e11d48, #f43f5e); }
         .bg-u { background: linear-gradient(135deg, #d97706, #f59e0b); }
-
         input { width: 100%; padding: 14px; margin: 10px 0; border: 1px solid #334155; border-radius: 12px; background: #1e293b; color: white; box-sizing: border-box; }
         .btn-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
-        button { padding: 12px; border: none; border-radius: 12px; font-weight: bold; cursor: pointer; color: white; }
-        
-        .clear-btn { background: #6366f1; font-size: 10px; padding: 5px 10px; margin-left: 10px; border-radius: 5px; }
+        button { padding: 12px; border: none; border-radius: 12px; font-weight: bold; cursor: pointer; color: white; transition: 0.3s; }
+        button:active { transform: scale(0.95); }
+        .clear-btn { background: var(--main); font-size: 10px; padding: 6px 10px; border-radius: 6px; cursor: pointer; border: none; color: white; }
         .record-item { border-bottom: 1px solid #334155; padding: 12px 0; display: flex; justify-content: space-between; align-items: center; }
-        .btn-insta { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); width: 100%; margin-top: 15px; display: flex; align-items: center; justify-content: center; text-decoration: none; gap: 8px; font-size: 14px; border-radius: 12px; padding: 12px; color: white; font-weight: bold;}
-        
-        #login-screen { text-align: center; padding-top: 100px; }
-        .bio-section { font-size: 12px; color: #94a3b8; text-align: center; margin-top: 30px; border-top: 1px solid #334155; padding-top: 20px; line-height: 1.6; }
+        .btn-insta { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); width: 100%; margin-top: 15px; display: flex; align-items: center; justify-content: center; text-decoration: none; border-radius: 12px; padding: 12px; color: white; font-weight: bold; }
+        #login-screen { text-align: center; padding-top: 80px; }
     </style>
 </head>
 <body>
 
 <div class="container">
     <div id="login-screen" class="glass-card">
-        <h1 style="color: var(--main); margin:0;">THE AI HUB</h1>
-        <p style="color: #94a3b8;">Smart Business Solutions</p>
-        <input type="text" id="userName" placeholder="Enter Your Name">
-        <button style="background: var(--main); width: 100%;" onclick="login()">Open My Khata</button>
+        <h1 style="color: var(--main); margin:0; font-size: 32px;">THE AI HUB</h1>
+        <p style="color: #94a3b8;">Smart Business Management</p>
+        <input type="text" id="userName" placeholder="Enter Your Full Name">
+        <button style="background: var(--main); width: 100%; font-size: 16px;" onclick="login()">Get Started</button>
     </div>
 
     <div id="app" style="display:none;">
-        <div class="glass-card" style="text-align: center; border-bottom: 4px solid var(--main);">
+        <div class="glass-card" style="text-align: center;">
             <h1 style="margin:0; color: var(--main); letter-spacing: 1px;">THE AI HUB</h1>
-            <p style="margin:5px 0; font-weight: 600;">Welcome, <span id="displayName" style="color: #fff;"></span>! 👋</p>
-            
-            <div class="stats-grid" style="margin-top:20px;">
+            <p style="margin-top: 5px;">Welcome, <span id="displayName" style="color: #fff; font-weight: bold;"></span>!</p>
+            <div class="stats-grid" style="margin-top: 15px;">
                 <div class="stat-box bg-p"><small>Total Profit</small><b id="sumP">₹0</b></div>
                 <div class="stat-box bg-l"><small>Total Loss</small><b id="sumL">₹0</b></div>
                 <div class="stat-box bg-u"><small>Pending Udhari</small><b id="sumU">₹0</b></div>
             </div>
-            
-            <a href="https://www.instagram.com/h_a_r_s_h_w_a_r_d_h_a_n_19/" target="_blank" class="btn-insta">Connect on Instagram 📸</a>
+            <a href="https://www.instagram.com/h_a_r_s_h_w_a_r_d_h_a_n_19/" target="_blank" class="btn-insta">Follow on Instagram 📸</a>
         </div>
 
         <div class="glass-card">
-            <h4 style="margin:0;">New Entry</h4>
-            <input type="text" id="cust" placeholder="Customer Name / Detail">
+            <h4 style="margin-top:0;">New Transaction</h4>
+            <input type="text" id="cust" placeholder="Customer Name / Details">
             <input type="number" id="amt" placeholder="Amount (₹)">
             <div class="btn-row">
                 <button class="bg-p" onclick="save('profit')">Profit</button>
@@ -68,58 +67,43 @@
         </div>
 
         <div class="glass-card">
-            <h4 style="margin:0;">Search Customer Khata</h4>
-            <input type="text" id="search" placeholder="Type name to filter..." onkeyup="render()">
+            <h4 style="margin-top:0;">Ledger Records</h4>
+            <input type="text" id="search" placeholder="Search by name..." onkeyup="render()">
             <div id="list"></div>
-            <button onclick="resetAll()" style="background:none; color:#f43f5e; font-size:10px; width:100%; margin-top:20px; opacity:0.4;">RESET ALL DATA</button>
         </div>
 
-        <div class="bio-section">
-            <p><b>About the Developer:</b><br>
-            Designed & Developed by <b>Harshwardhan Singh Lodhi</b>, a student at <b>IIT Patna</b>. 
-            <b>THE AI HUB</b> is a premium digital ledger mission to help small businesses manage their finances 
-            with precision. No more paper, no more errors—just pure digital efficiency.</p>
+        <div class="glass-card" style="text-align: center; border-top: 3px solid var(--main);">
+            <h4 style="color: var(--main); margin-bottom: 10px;">About the Developer</h4>
+            <p style="font-size: 13px; line-height: 1.6; color: #94a3b8; margin: 0;">
+                <b>THE AI HUB</b> is a professional business management tool developed by 
+                <span style="color: white;">Harshwardhan Singh Lodhi</span>, 
+                a student at <span style="color: white;">IIT Patna</span>. 
+                This application helps users manage their <b>Profit, Loss, and Udhari</b> 
+                records with digital precision.
+            </p>
         </div>
     </div>
 </div>
 
 <script>
-    window.onload = () => {
-        const u = localStorage.getItem("hub_user");
-        if(u) openDashboard(u);
-    };
-
-    function login() {
-        const n = document.getElementById("userName").value;
-        if(n) { localStorage.setItem("hub_user", n); openDashboard(n); }
-    }
-
-    function openDashboard(n) {
-        document.getElementById("login-screen").style.display="none";
-        document.getElementById("app").style.display="block";
-        document.getElementById("displayName").innerText = n;
-        render();
-    }
-
+    window.onload = () => { const u = localStorage.getItem("hub_user"); if(u) openApp(u); };
+    function login() { const n = document.getElementById("userName").value; if(n) { localStorage.setItem("hub_user", n); openApp(n); } }
+    function openApp(n) { document.getElementById("login-screen").style.display="none"; document.getElementById("app").style.display="block"; document.getElementById("displayName").innerText = n; render(); }
+    
     function save(type) {
         const c = document.getElementById("cust").value;
         const a = document.getElementById("amt").value;
         if(!c || !a) return alert("Please enter name and amount!");
-
         const data = JSON.parse(localStorage.getItem("hub_data")) || [];
         data.push({ id: Date.now(), n: c.toLowerCase(), a: parseFloat(a), t: type, d: new Date().toLocaleDateString() });
         localStorage.setItem("hub_data", JSON.stringify(data));
-        
-        document.getElementById("cust").value = "";
-        document.getElementById("amt").value = "";
-        render();
+        document.getElementById("cust").value = ""; document.getElementById("amt").value = ""; render();
     }
 
     function clearUdhari(id) {
-        let data = JSON.parse(localStorage.getItem("hub_data")) || [];
-        // Udhari wale record ko profit mein convert kar sakte hain ya delete
-        if(confirm("Did the customer pay this amount?")) {
-            data = data.filter(item => item.id !== id);
+        if(confirm("Confirm: Has the customer paid this amount?")) {
+            let data = JSON.parse(localStorage.getItem("hub_data")) || [];
+            data = data.filter(i => i.id !== id);
             localStorage.setItem("hub_data", JSON.stringify(data));
             render();
         }
@@ -127,25 +111,17 @@
 
     function render() {
         const data = JSON.parse(localStorage.getItem("hub_data")) || [];
-        const query = document.getElementById("search").value.toLowerCase();
+        const q = document.getElementById("search").value.toLowerCase();
         const list = document.getElementById("list");
-        let tp=0, tl=0, tu=0;
-        
-        list.innerHTML = "";
+        let tp=0, tl=0, tu=0; list.innerHTML = "";
         data.slice().reverse().forEach(i => {
-            if(i.t==='profit') tp+=i.a;
-            else if(i.t==='loss') tl+=i.a;
-            else tu+=i.a;
-
-            if(i.n.includes(query)) {
+            if(i.t==='profit') tp+=i.a; else if(i.t==='loss') tl+=i.a; else tu+=i.a;
+            if(i.n.includes(q)) {
                 let color = i.t==='profit' ? '#10b981' : (i.t==='loss' ? '#f43f5e' : '#f59e0b');
-                let clearBtn = i.t === 'udhari' ? `<button class="clear-btn" onclick="clearUdhari(${i.id})">Paid?</button>` : '';
-                
+                let btn = i.t === 'udhari' ? `<button class="clear-btn" onclick="clearUdhari(${i.id})">Paid?</button>` : '';
                 list.innerHTML += `<div class="record-item">
                     <span><b style="text-transform:capitalize">${i.n}</b><br><small style="color:#64748b">${i.d}</small></span>
-                    <div style="text-align:right">
-                        <b style="color:${color}">${i.t==='profit'?'+':'-'} ₹${i.a}</b> ${clearBtn}
-                    </div>
+                    <span><b style="color:${color}">${i.t==='profit'?'+':'-'} ₹${i.a}</b> ${btn}</span>
                 </div>`;
             }
         });
@@ -153,14 +129,6 @@
         document.getElementById("sumL").innerText = "₹" + tl;
         document.getElementById("sumU").innerText = "₹" + tu;
     }
-
-    function resetAll() {
-        if(confirm("Danger! This will delete all your business records. Proceed?")) {
-            localStorage.removeItem("hub_data");
-            render();
-        }
-    }
 </script>
-
 </body>
 </html>
