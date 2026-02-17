@@ -7,92 +7,102 @@
     <meta name="google-site-verification" content="ryKoSefcaCa9KEmGunISRagpfvqKzwgavcKRk7J2Njo" />
 
     <style>
-        :root { --primary: #6366f1; --bg: #0f172a; --card: #1e293b; --green: #22c55e; --red: #ef4444; }
-        body { font-family: 'Segoe UI', sans-serif; background-color: var(--bg); color: white; margin: 0; padding: 15px; display: flex; flex-direction: column; align-items: center; }
-        .card { background: var(--card); padding: 20px; border-radius: 20px; border: 1px solid var(--primary); width: 100%; max-width: 400px; margin-bottom: 20px; text-align: center; }
-        .profile-img { width: 90px; height: 90px; border-radius: 50%; border: 3px solid var(--primary); margin-bottom: 10px; }
-        .about-box { text-align: left; font-size: 13px; background: rgba(0,0,0,0.2); padding: 12px; border-radius: 10px; margin: 10px 0; border-left: 4px solid var(--primary); }
-        .social-btns { display: flex; gap: 10px; margin-top: 10px; }
-        .btn-social { flex: 1; padding: 10px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 12px; color: white; }
+        :root { --primary: #6366f1; --bg: #0b0f1a; --card: #161b2c; --green: #10b981; --red: #ef4444; --yellow: #f59e0b; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg); color: white; margin: 0; padding: 15px; display: flex; flex-direction: column; align-items: center; }
+        .card { background: var(--card); padding: 20px; border-radius: 20px; border: 1px solid #2d3748; width: 100%; max-width: 450px; margin-bottom: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .profile-img { width: 80px; height: 80px; border-radius: 50%; border: 2px solid var(--primary); margin-bottom: 10px; }
         
-        .section-title { color: var(--primary); font-size: 18px; margin-bottom: 15px; border-bottom: 1px solid #334155; padding-bottom: 5px; }
-        input { width: 85%; padding: 10px; border-radius: 8px; border: 1px solid #334155; background: #0f172a; color: white; margin-bottom: 10px; }
-        .add-btn { width: 90%; padding: 10px; border-radius: 8px; border: none; font-weight: bold; cursor: pointer; color: white; }
+        .dash-header { font-size: 22px; font-weight: bold; color: var(--primary); margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px; }
         
-        .list-container { text-align: left; margin-top: 15px; max-height: 200px; overflow-y: auto; }
-        .entry-item { display: flex; justify-content: space-between; padding: 8px; border-bottom: 1px solid #334155; font-size: 14px; }
-        .clear-btn { background: var(--red); border: none; color: white; padding: 4px 8px; border-radius: 4px; cursor: pointer; font-size: 10px; }
+        .entry-box { background: rgba(0,0,0,0.3); padding: 15px; border-radius: 15px; margin-bottom: 15px; border: 1px solid #2d3748; }
+        .label { font-weight: bold; font-size: 14px; margin-bottom: 10px; display: block; color: #94a3b8; }
+        
+        input { width: 90%; padding: 12px; border-radius: 10px; border: 1px solid #2d3748; background: #1a202c; color: white; margin-bottom: 10px; outline: none; }
+        .btn { width: 100%; padding: 12px; border-radius: 10px; border: none; font-weight: bold; cursor: pointer; color: white; transition: 0.3s; }
+        
+        .list-area { margin-top: 10px; border-top: 1px solid #2d3748; padding-top: 10px; max-height: 150px; overflow-y: auto; }
+        .item { display: flex; justify-content: space-between; padding: 8px 0; font-size: 14px; border-bottom: 1px dashed #2d3748; }
+        .del-btn { color: var(--red); cursor: pointer; font-weight: bold; background: none; border: none; }
     </style>
 </head>
 <body>
 
-    <div class="card">
+    <div class="card" style="text-align: center;">
         <img src="mera-photo.jpg" alt="Harshwardhan" class="profile-img">
         <h2 style="margin:0;">Harshwardhan Singh Lodhi</h2>
-        <p style="color:var(--primary); font-weight:bold; margin:5px 0;">Founder: THE AI HUB (IIT Patna)</p>
-        <div class="about-box">
-            <b>Bio:</b> I am a developer at <b>IIT Patna</b> building <b>THE AI HUB</b>. My goal is to simplify business accounting using AI-powered digital ledgers.
-        </div>
-        <div class="social-btns">
-            <a href="https://www.instagram.com/_verma_karan08" class="btn-social" style="background:linear-gradient(45deg, #f09433, #dc2743, #bc1888);">Instagram</a>
-            <a href="mailto:kv2642240@gmail.com" class="btn-social" style="background:#ea4335; border:1px solid white;">Gmail</a>
+        <p style="color:var(--primary); font-size: 14px;">IIT Patna | Founder: THE AI HUB</p>
+        <div style="display: flex; gap: 10px; margin-top: 15px;">
+            <a href="https://www.instagram.com/_verma_karan08" style="flex:1; background:var(--primary); color:white; padding:10px; border-radius:8px; text-decoration:none; font-size:12px; font-weight:bold;">Instagram</a>
+            <a href="mailto:kv2642240@gmail.com" style="flex:1; background:white; color:black; padding:10px; border-radius:8px; text-decoration:none; font-size:12px; font-weight:bold;">Gmail</a>
         </div>
     </div>
 
+    <div class="dash-header">📂 Open Dashboard</div>
+
     <div class="card">
-        <div class="section-title">📑 Udhari Khata (Debt)</div>
-        <input type="text" id="uName" placeholder="Kiska naam?">
-        <input type="number" id="uAmount" placeholder="Kitna paisa? (₹)">
-        <button onclick="saveEntry('udhari')" class="add-btn" style="background:var(--primary);">Add Udhari</button>
-        <div id="udhariList" class="list-container"></div>
+        <span class="label" style="color:var(--yellow);">🟡 UDHARI (KHATA)</span>
+        <input type="text" id="uName" placeholder="Naam">
+        <input type="number" id="uAmt" placeholder="Amount (₹)">
+        <button onclick="save('udhari')" class="btn" style="background:var(--yellow);">Save Udhari</button>
+        <div id="udhariList" class="list-area"></div>
     </div>
 
     <div class="card">
-        <div class="section-title">📈 Profit & Loss</div>
-        <input type="text" id="pTitle" placeholder="Kahan se? (e.g. Sale, Rent)">
-        <input type="number" id="pAmount" placeholder="Amount (Profit: +, Loss: -)">
-        <button onclick="saveEntry('pl')" class="add-btn" style="background:var(--green);">Add P&L</button>
-        <div id="plList" class="list-container"></div>
+        <span class="label" style="color:var(--green);">🟢 PROFIT (MUNFA)</span>
+        <input type="text" id="pTitle" placeholder="Kahan se aaya?">
+        <input type="number" id="pAmt" placeholder="Kitna Profit? (₹)">
+        <button onclick="save('profit')" class="btn" style="background:var(--green);">Save Profit</button>
+        <div id="profitList" class="list-area"></div>
+    </div>
+
+    <div class="card">
+        <span class="label" style="color:var(--red);">🔴 LOSS (NUKSAAN)</span>
+        <input type="text" id="lTitle" placeholder="Kahan gaya?">
+        <input type="number" id="lAmt" placeholder="Kitna Loss? (₹)">
+        <button onclick="save('loss')" class="btn" style="background:var(--red);">Save Loss</button>
+        <div id="lossList" class="list-area"></div>
     </div>
 
     <script>
-        function saveEntry(type) {
-            let name = document.getElementById(type === 'udhari' ? 'uName' : 'pTitle').value;
-            let amount = document.getElementById(type === 'udhari' ? 'uAmount' : 'pAmount').value;
-            if(!name || !amount) return alert("Bhai detail bharo!");
+        function save(type) {
+            let nId = type.charAt(0) + (type === 'udhari' ? 'Name' : 'Title');
+            let aId = type.charAt(0) + 'Amt';
+            let name = document.getElementById(nId).value;
+            let amt = document.getElementById(aId).value;
 
-            let entries = JSON.parse(localStorage.getItem(type)) || [];
-            entries.push({ id: Date.now(), name, amount });
-            localStorage.setItem(type, JSON.stringify(entries));
+            if(!name || !amt) return alert("Pura detail dalo bhai!");
 
-            document.getElementById(type === 'udhari' ? 'uName' : 'pTitle').value = '';
-            document.getElementById(type === 'udhari' ? 'uAmount' : 'pAmount').value = '';
-            loadData();
+            let data = JSON.parse(localStorage.getItem(type)) || [];
+            data.push({ id: Date.now(), name, amt });
+            localStorage.setItem(type, JSON.stringify(data));
+
+            document.getElementById(nId).value = '';
+            document.getElementById(aId).value = '';
+            load();
         }
 
-        function loadData() {
-            ['udhari', 'pl'].forEach(type => {
+        function load() {
+            ['udhari', 'profit', 'loss'].forEach(type => {
                 let list = document.getElementById(type + 'List');
-                let entries = JSON.parse(localStorage.getItem(type)) || [];
-                list.innerHTML = entries.length ? '' : '<p style="text-align:center;color:#64748b;font-size:12px;">Khali hai</p>';
-                entries.forEach(item => {
-                    let amtColor = type === 'pl' ? (item.amount >= 0 ? 'var(--green)' : 'var(--red)') : 'white';
+                let data = JSON.parse(localStorage.getItem(type)) || [];
+                list.innerHTML = data.length ? '' : '<p style="color:#4a5568; font-size:12px; text-align:center;">No entries yet</p>';
+                data.forEach(item => {
                     list.innerHTML += `
-                        <div class="entry-item">
-                            <span><b>${item.name}</b>: <span style="color:${amtColor}">₹${item.amount}</span></span>
-                            <button class="clear-btn" onclick="removeEntry('${type}', ${item.id})">Clear</button>
+                        <div class="item">
+                            <span><b>${item.name}</b>: ₹${item.amt}</span>
+                            <button class="del-btn" onclick="del('${type}', ${item.id})">Clear</button>
                         </div>`;
                 });
             });
         }
 
-        function removeEntry(type, id) {
-            let entries = JSON.parse(localStorage.getItem(type));
-            localStorage.setItem(type, JSON.stringify(entries.filter(e => e.id !== id)));
-            loadData();
+        function del(type, id) {
+            let data = JSON.parse(localStorage.getItem(type));
+            localStorage.setItem(type, JSON.stringify(data.filter(i => i.id !== id)));
+            load();
         }
 
-        window.onload = loadData;
+        window.onload = load;
     </script>
 </body>
 </html>
