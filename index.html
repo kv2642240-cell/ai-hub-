@@ -1,134 +1,55 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <title>Harshwardhan Singh Lodhi | THE AI HUB | IIT Patna</title>
-    <meta name="title" content="Harshwardhan Singh Lodhi - Developer of THE AI HUB">
-    <meta name="description" content="Official Digital Ledger by Harshwardhan Singh Lodhi, IIT Patna. Manage Profit, Loss, and Udhari easily.">
-    <meta name="keywords" content="Harshwardhan Singh Lodhi, Harshwardhan Singh IIT Patna, THE AI HUB, the ai hub management, Digital Khata Harshwardhan">
-    <meta name="author" content="Harshwardhan Singh Lodhi">
-    <meta name="robots" content="index, follow">
+    <meta name="google-site-verification" content="ryKoSefcaCa9KEmGunISRagpfvqKzwgavcKRk7J2Njo" />
 
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    <title>Harshwardhan Singh Lodhi | THE AI HUB | IIT Patna</title>
+    <meta name="description" content="Harshwardhan Singh Lodhi, student at IIT Patna and Founder of THE AI HUB. Specialized in Full-Stack AI solutions.">
+    
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Harshwardhan Singh Lodhi",
+      "affiliation": "IIT Patna",
+      "jobTitle": "Founder & CEO of THE AI HUB",
+      "url": "https://kv2642240-cell.github.io/a/",
+      "image": "https://kv2642240-cell.github.io/a/mera-photo.jpg",
+      "sameAs": [
+        "https://www.instagram.com/_verma_karan08"
+      ]
+    }
+    </script>
+
     <style>
-        :root { --p: #10b981; --l: #f43f5e; --u: #f59e0b; --main: #6366f1; }
-        body { font-family: 'Outfit', sans-serif; background: #020617; color: #f8fafc; margin: 0; padding: 15px; }
-        .container { max-width: 450px; margin: auto; }
-        .glass-card { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 20px; margin-bottom: 15px; }
-        .stats-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
-        .stat-box { padding: 15px; border-radius: 15px; color: white; }
-        .stat-box b { font-size: 24px; display: block; margin-top: 5px; }
-        .bg-p { background: linear-gradient(135deg, #059669, #10b981); }
-        .bg-l { background: linear-gradient(135deg, #e11d48, #f43f5e); }
-        .bg-u { background: linear-gradient(135deg, #d97706, #f59e0b); }
-        input { width: 100%; padding: 14px; margin: 10px 0; border: 1px solid #334155; border-radius: 12px; background: #1e293b; color: white; box-sizing: border-box; }
-        .btn-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
-        button { padding: 12px; border: none; border-radius: 12px; font-weight: bold; cursor: pointer; color: white; transition: 0.3s; }
-        button:active { transform: scale(0.95); }
-        .clear-btn { background: var(--main); font-size: 10px; padding: 6px 10px; border-radius: 6px; cursor: pointer; border: none; color: white; }
-        .record-item { border-bottom: 1px solid #334155; padding: 12px 0; display: flex; justify-content: space-between; align-items: center; }
-        .btn-insta { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); width: 100%; margin-top: 15px; display: flex; align-items: center; justify-content: center; text-decoration: none; border-radius: 12px; padding: 12px; color: white; font-weight: bold; }
-        #login-screen { text-align: center; padding-top: 80px; }
+        :root { --primary: #6366f1; --bg: #0f172a; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg); color: white; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; }
+        .profile-card { background: #1e293b; padding: 40px 30px; border-radius: 24px; border: 2px solid var(--primary); text-align: center; max-width: 380px; box-shadow: 0 20px 50px rgba(0,0,0,0.6); }
+        .profile-img { width: 130px; height: 130px; border-radius: 50%; border: 4px solid var(--primary); object-fit: cover; margin-bottom: 20px; box-shadow: 0 0 20px rgba(99, 102, 241, 0.3); }
+        h1 { font-size: 24px; margin: 10px 0; letter-spacing: 0.5px; }
+        .subtitle { color: var(--primary); font-weight: 700; font-size: 14px; text-transform: uppercase; margin-bottom: 20px; display: block; }
+        .about-box { background: rgba(15, 23, 42, 0.5); padding: 20px; border-radius: 16px; text-align: left; font-size: 14px; line-height: 1.6; color: #cbd5e1; border: 1px solid rgba(255,255,255,0.05); }
+        .btn { display: inline-block; margin-top: 25px; padding: 12px 25px; background: var(--primary); color: white; text-decoration: none; border-radius: 10px; font-weight: bold; transition: 0.3s; }
+        .btn:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(99, 102, 241, 0.4); }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div id="login-screen" class="glass-card">
-        <h1 style="color: var(--main); margin:0; font-size: 32px;">THE AI HUB</h1>
-        <p style="color: #94a3b8;">Smart Business Management</p>
-        <input type="text" id="userName" placeholder="Enter Your Full Name">
-        <button style="background: var(--main); width: 100%; font-size: 16px;" onclick="login()">Get Started</button>
+    <div class="profile-card">
+        <img src="mera-photo.jpg" alt="Harshwardhan Singh Lodhi" class="profile-img">
+        
+        <h1>Harshwardhan Singh Lodhi</h1>
+        <span class="subtitle">Founder of THE AI HUB | IIT Patna</span>
+
+        <div class="about-box">
+            <b>Bio:</b> I am a tech innovator and student at <b>IIT Patna</b>. I developed <b>THE AI HUB</b> to transform how businesses manage their accounts and digital ledgers. Passionate about AI, Full-Stack development, and SEO.
+        </div>
+
+        <a href="https://www.instagram.com/_verma_karan08" class="btn" target="_blank">Instagram Profile</a>
     </div>
 
-    <div id="app" style="display:none;">
-        <div class="glass-card" style="text-align: center;">
-            <h1 style="margin:0; color: var(--main); letter-spacing: 1px;">THE AI HUB</h1>
-            <p style="margin-top: 5px;">Welcome, <span id="displayName" style="color: #fff; font-weight: bold;"></span>!</p>
-            <div class="stats-grid" style="margin-top: 15px;">
-                <div class="stat-box bg-p"><small>Total Profit</small><b id="sumP">₹0</b></div>
-                <div class="stat-box bg-l"><small>Total Loss</small><b id="sumL">₹0</b></div>
-                <div class="stat-box bg-u"><small>Pending Udhari</small><b id="sumU">₹0</b></div>
-            </div>
-            <a href="https://www.instagram.com/h_a_r_s_h_w_a_r_d_h_a_n_19/" target="_blank" class="btn-insta">Follow on Instagram 📸</a>
-        </div>
-
-        <div class="glass-card">
-            <h4 style="margin-top:0;">New Transaction</h4>
-            <input type="text" id="cust" placeholder="Customer Name / Details">
-            <input type="number" id="amt" placeholder="Amount (₹)">
-            <div class="btn-row">
-                <button class="bg-p" onclick="save('profit')">Profit</button>
-                <button class="bg-l" onclick="save('loss')">Loss</button>
-                <button class="bg-u" onclick="save('udhari')">Udhari</button>
-            </div>
-        </div>
-
-        <div class="glass-card">
-            <h4 style="margin-top:0;">Ledger Records</h4>
-            <input type="text" id="search" placeholder="Search by name..." onkeyup="render()">
-            <div id="list"></div>
-        </div>
-
-        <div class="glass-card" style="text-align: center; border-top: 3px solid var(--main);">
-            <h4 style="color: var(--main); margin-bottom: 10px;">About the Developer</h4>
-            <p style="font-size: 13px; line-height: 1.6; color: #94a3b8; margin: 0;">
-                <b>THE AI HUB</b> is a professional business management tool developed by 
-                <span style="color: white;">Harshwardhan Singh Lodhi</span>, 
-                a student at <span style="color: white;">IIT Patna</span>. 
-                This application helps users manage their <b>Profit, Loss, and Udhari</b> 
-                records with digital precision.
-            </p>
-        </div>
-    </div>
-</div>
-
-<script>
-    window.onload = () => { const u = localStorage.getItem("hub_user"); if(u) openApp(u); };
-    function login() { const n = document.getElementById("userName").value; if(n) { localStorage.setItem("hub_user", n); openApp(n); } }
-    function openApp(n) { document.getElementById("login-screen").style.display="none"; document.getElementById("app").style.display="block"; document.getElementById("displayName").innerText = n; render(); }
-    
-    function save(type) {
-        const c = document.getElementById("cust").value;
-        const a = document.getElementById("amt").value;
-        if(!c || !a) return alert("Please enter name and amount!");
-        const data = JSON.parse(localStorage.getItem("hub_data")) || [];
-        data.push({ id: Date.now(), n: c.toLowerCase(), a: parseFloat(a), t: type, d: new Date().toLocaleDateString() });
-        localStorage.setItem("hub_data", JSON.stringify(data));
-        document.getElementById("cust").value = ""; document.getElementById("amt").value = ""; render();
-    }
-
-    function clearUdhari(id) {
-        if(confirm("Confirm: Has the customer paid this amount?")) {
-            let data = JSON.parse(localStorage.getItem("hub_data")) || [];
-            data = data.filter(i => i.id !== id);
-            localStorage.setItem("hub_data", JSON.stringify(data));
-            render();
-        }
-    }
-
-    function render() {
-        const data = JSON.parse(localStorage.getItem("hub_data")) || [];
-        const q = document.getElementById("search").value.toLowerCase();
-        const list = document.getElementById("list");
-        let tp=0, tl=0, tu=0; list.innerHTML = "";
-        data.slice().reverse().forEach(i => {
-            if(i.t==='profit') tp+=i.a; else if(i.t==='loss') tl+=i.a; else tu+=i.a;
-            if(i.n.includes(q)) {
-                let color = i.t==='profit' ? '#10b981' : (i.t==='loss' ? '#f43f5e' : '#f59e0b');
-                let btn = i.t === 'udhari' ? `<button class="clear-btn" onclick="clearUdhari(${i.id})">Paid?</button>` : '';
-                list.innerHTML += `<div class="record-item">
-                    <span><b style="text-transform:capitalize">${i.n}</b><br><small style="color:#64748b">${i.d}</small></span>
-                    <span><b style="color:${color}">${i.t==='profit'?'+':'-'} ₹${i.a}</b> ${btn}</span>
-                </div>`;
-            }
-        });
-        document.getElementById("sumP").innerText = "₹" + tp;
-        document.getElementById("sumL").innerText = "₹" + tl;
-        document.getElementById("sumU").innerText = "₹" + tu;
-    }
-</script>
 </body>
 </html>
