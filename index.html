@@ -1,38 +1,42 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>THE AI HUB | Digital Ledger</title>
+    <title>THE AI HUB | Harshwardhan Singh Lodhi</title>
     <meta name="google-site-verification" content="ryKoSefcaCa9KEmGunISRagpfvqKzwgavcKRk7J2Njo" />
     
     <style>
         :root { --primary: #6366f1; --bg: #0b0f1a; --card: #161b2c; --green: #10b981; --red: #ef4444; --yellow: #f59e0b; }
-        body { font-family: 'Segoe UI', sans-serif; background-color: var(--bg); color: white; margin: 0; padding: 15px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
+        body { font-family: 'Inter', -apple-system, sans-serif; background-color: var(--bg); color: white; margin: 0; padding: 15px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
         
         .card { background: var(--card); padding: 25px; border-radius: 24px; border: 1px solid #2d3748; width: 100%; max-width: 420px; text-align: center; box-shadow: 0 10px 40px rgba(0,0,0,0.6); margin-bottom: 20px; }
         
-        /* Social Buttons */
-        .social-row { display: flex; gap: 10px; justify-content: center; margin: 15px 0; }
-        .s-btn { padding: 8px 15px; border-radius: 10px; text-decoration: none; font-size: 12px; font-weight: bold; color: white; display: flex; align-items: center; gap: 5px; }
+        /* About Section Style */
+        .about-text { text-align: left; font-size: 14px; color: #cbd5e1; line-height: 1.6; background: rgba(0,0,0,0.3); padding: 15px; border-radius: 12px; margin: 15px 0; border-left: 4px solid var(--primary); }
+        
+        .social-row { display: flex; gap: 10px; justify-content: center; margin-top: 15px; }
+        .s-btn { padding: 10px 15px; border-radius: 10px; text-decoration: none; font-size: 12px; font-weight: bold; color: white; display: flex; align-items: center; gap: 5px; }
         .insta { background: linear-gradient(45deg, #f09433, #dc2743, #bc1888); }
         .gmail { background: #ea4335; border: 1px solid white; }
 
-        input { width: 85%; padding: 12px; border-radius: 12px; border: 1px solid #2d3748; background: #1a202c; color: white; margin-bottom: 15px; outline: none; text-align: center; font-size: 16px; }
-        .btn-main { width: 95%; padding: 14px; border-radius: 12px; border: none; font-weight: bold; cursor: pointer; color: white; background: var(--primary); font-size: 15px; }
+        input { width: 88%; padding: 12px; border-radius: 12px; border: 1px solid #2d3748; background: #1a202c; color: white; margin-bottom: 10px; outline: none; text-align: center; font-size: 15px; }
+        .btn-main { width: 100%; padding: 12px; border-radius: 10px; border: none; font-weight: bold; cursor: pointer; color: white; margin-bottom: 5px; font-size: 14px; }
         
-        .section-box { text-align: left; margin-top: 20px; padding: 15px; border-radius: 15px; background: rgba(0,0,0,0.3); border: 1px solid #2d3748; }
-        .item { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px dashed #2d3748; font-size: 14px; }
-        .del-x { color: var(--red); cursor: pointer; font-weight: bold; border: none; background: none; }
-        
-        .back-btn { background: #334155; margin-top: 20px; width: 100%; padding: 10px; border-radius: 10px; color: white; border: none; cursor: pointer; }
+        .list-area { text-align: left; margin-top: 10px; padding: 10px; border-radius: 10px; background: rgba(0,0,0,0.2); max-height: 120px; overflow-y: auto; font-size: 13px; }
+        .item { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px dashed #2d3748; }
+        .clear-x { color: var(--red); cursor: pointer; font-weight: bold; border: none; background: none; }
     </style>
 </head>
 <body>
 
     <div id="homePage" class="card">
-        <h1 style="color: var(--primary); margin: 0;">THE AI HUB</h1>
-        <p style="color: #94a3b8; font-size: 14px;">Harshwardhan Singh Lodhi | IIT Patna</p>
+        <h1 style="color: var(--primary); margin: 0; font-size: 28px;">THE AI HUB</h1>
+        
+        <div class="about-text">
+            <b>Professional Profile:</b><br>
+            I am <b>Harshwardhan Singh Lodhi</b>, an innovator and student at <b>IIT Patna</b>. As the Founder of <b>THE AI HUB</b>, I am dedicated to revolutionizing traditional accounting through AI-driven digital ledgers. My mission is to empower businesses with smart, automated financial tools for seamless growth.
+        </div>
 
         <div class="social-row">
             <a href="https://www.instagram.com/_verma_karan08" target="_blank" class="s-btn insta">📸 Instagram</a>
@@ -41,39 +45,39 @@
 
         <hr style="border: 0.5px solid #2d3748; margin: 20px 0;">
         
-        <label style="display:block; margin-bottom: 10px; font-weight: bold;">Naam Likhiye (Dashboard kholne ke liye)</label>
-        <input type="text" id="userInput" placeholder="Jaise: Harsh ya Rahul">
-        <button onclick="enterDash()" class="btn-main">📂 OPEN DASHBOARD</button>
+        <input type="text" id="userInput" placeholder="Enter Name to Open Ledger">
+        <button onclick="enterDash()" class="btn-main" style="background: var(--primary); font-size: 16px;">📂 OPEN DASHBOARD</button>
     </div>
 
     <div id="dashPage" style="display: none; width: 100%; max-width: 450px;">
         <div class="card">
             <h2 id="userHeading" style="margin: 0; color: var(--primary);"></h2>
-            <p style="font-size: 12px; color: #94a3b8;">Aapka Personal Digital Ledger</p>
+            <p style="font-size: 12px; color: #94a3b8;">Unified Ledger: Debt | Profit | Loss</p>
+        </div>
+
+        <div class="card" style="text-align: left;">
+            <p style="font-size: 14px; font-weight: bold; margin-bottom: 10px; color: var(--primary);">Quick Entry Panel:</p>
+            <input type="number" id="amtInput" placeholder="Enter Amount (₹)" style="width: 93%;">
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px;">
+                <button onclick="addData('udhari')" class="btn-main" style="background: var(--yellow); color: black;">+ Udhari</button>
+                <button onclick="addData('profit')" class="btn-main" style="background: var(--green);">+ Profit</button>
+                <button onclick="addData('loss')" class="btn-main" style="background: var(--red);">+ Loss</button>
+            </div>
         </div>
 
         <div class="card">
-            <h3 style="color: var(--yellow); margin-top: 0; font-size: 16px;">🟡 UDHARI KHATA (DEBT)</h3>
-            <input type="number" id="uAmt" placeholder="Amount (₹)">
-            <button onclick="addData('udhari')" class="btn-main" style="background: var(--yellow); color: black;">Save Udhari</button>
-            <div id="udhariList" class="section-box"></div>
+            <h4 style="color: var(--yellow); margin: 0 0 10px 0;">🟡 UDHARI LIST</h4>
+            <div id="udhariList" class="list-area"></div>
+            
+            <h4 style="color: var(--green); margin: 15px 0 10px 0;">🟢 PROFIT LIST</h4>
+            <div id="profitList" class="list-area"></div>
+            
+            <h4 style="color: var(--red); margin: 15px 0 10px 0;">🔴 LOSS LIST</h4>
+            <div id="lossList" class="list-area"></div>
         </div>
 
-        <div class="card">
-            <h3 style="color: var(--green); margin-top: 0; font-size: 16px;">🟢 PROFIT KHATA (MUNFA)</h3>
-            <input type="number" id="pAmt" placeholder="Amount (₹)">
-            <button onclick="addData('profit')" class="btn-main" style="background: var(--green);">Save Profit</button>
-            <div id="profitList" class="section-box"></div>
-        </div>
-
-        <div class="card">
-            <h3 style="color: var(--red); margin-top: 0; font-size: 16px;">🔴 LOSS KHATA (NUKSAAN)</h3>
-            <input type="number" id="lAmt" placeholder="Amount (₹)">
-            <button onclick="addData('loss')" class="btn-main" style="background: var(--red);">Save Loss</button>
-            <div id="lossList" class="section-box"></div>
-        </div>
-
-        <button onclick="location.reload()" class="back-btn">⬅️ Exit / Search New Name</button>
+        <button onclick="location.reload()" class="btn-main" style="background: #334155;">⬅️ Exit / New Search</button>
     </div>
 
     <script>
@@ -81,25 +85,24 @@
 
         function enterDash() {
             let name = document.getElementById('userInput').value.trim().toLowerCase();
-            if(!name) return alert("Bhai, naam likhna zaroori hai!");
+            if(!name) return alert("Please enter a name!");
             currentUser = name;
             document.getElementById('homePage').style.display = 'none';
             document.getElementById('dashPage').style.display = 'block';
-            document.getElementById('userHeading').innerText = "Namaste, " + name.toUpperCase();
+            document.getElementById('userHeading').innerText = "Dashboard: " + name.toUpperCase();
             loadData();
         }
 
         function addData(type) {
-            let id = type.charAt(0) + "Amt";
-            let amt = document.getElementById(id).value;
-            if(!amt) return alert("Amount dalo!");
+            let amt = document.getElementById('amtInput').value;
+            if(!amt) return alert("Enter amount first!");
 
             let key = currentUser + "_" + type;
             let db = JSON.parse(localStorage.getItem(key)) || [];
             db.push({ id: Date.now(), amt, time: new Date().toLocaleDateString() });
             localStorage.setItem(key, JSON.stringify(db));
             
-            document.getElementById(id).value = '';
+            document.getElementById('amtInput').value = '';
             loadData();
         }
 
@@ -108,12 +111,12 @@
                 let key = currentUser + "_" + type;
                 let list = document.getElementById(type + "List");
                 let db = JSON.parse(localStorage.getItem(key)) || [];
-                list.innerHTML = db.length ? '' : '<p style="text-align:center;color:#4a5568;font-size:12px;">No Data</p>';
+                list.innerHTML = db.length ? '' : '<p style="text-align:center;color:#4a5568;font-size:11px;">No records</p>';
                 db.forEach(item => {
                     list.innerHTML += `
                         <div class="item">
                             <span>📅 ${item.time} - <b>₹${item.amt}</b></span>
-                            <button class="del-x" onclick="removeItem('${type}', ${item.id})">Clear</button>
+                            <button class="clear-x" onclick="removeItem('${type}', ${item.id})">Clear</button>
                         </div>`;
                 });
             });
