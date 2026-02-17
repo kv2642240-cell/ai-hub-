@@ -3,55 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>THE AI HUB | Business Intelligence</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <style>
-        :root { 
-            --primary: #6366f1; --accent: #8b5cf6; --bg: #030712; --card: #111827; 
-            --green: #10b981; --red: #ef4444; --yellow: #f59e0b; --text-main: #f3f4f6; --text-dim: #9ca3af;
-        }
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--bg); color: var(--text-main); margin: 0; padding: 15px; display: flex; flex-direction: column; align-items: center; }
-        
-        .premium-card { 
-            background: rgba(17, 24, 39, 0.7); backdrop-filter: blur(15px); padding: 25px; 
-            border-radius: 24px; border: 1px solid rgba(255, 255, 255, 0.08); 
-            width: 100%; max-width: 850px; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4); margin-bottom: 20px;
-        }
+    
+    <meta name="google-site-verification" content="ryKoSefcaCa9KEmGunISRagpfvqKzwgavcKRk7J2Njo" />
 
-        /* --- NEW: SUMMARY CARDS --- */
+    <title>THE AI HUB | Admin Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root { --primary: #6366f1; --accent: #8b5cf6; --bg: #030712; --card: #111827; --green: #10b981; --red: #ef4444; --yellow: #f59e0b; --text-main: #f3f4f6; --text-dim: #9ca3af; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--bg); color: var(--text-main); margin: 0; padding: 15px; display: flex; flex-direction: column; align-items: center; }
+        .premium-card { background: rgba(17, 24, 39, 0.7); backdrop-filter: blur(15px); padding: 25px; border-radius: 24px; border: 1px solid rgba(255, 255, 255, 0.08); width: 100%; max-width: 850px; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4); margin-bottom: 20px; }
         .summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 15px; width: 100%; max-width: 850px; margin-bottom: 20px; }
         .stat-box { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); padding: 20px; border-radius: 20px; text-align: center; }
-        .stat-box h4 { margin: 0; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-dim); }
+        .stat-box h4 { margin: 0; font-size: 11px; text-transform: uppercase; color: var(--text-dim); }
         .stat-box p { margin: 10px 0 0 0; font-size: 20px; font-weight: 800; }
-
-        h1 { font-size: 2.2rem; margin: 0; background: linear-gradient(to right, #818cf8, #c084fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        
+        h1 { font-size: 2.2rem; background: linear-gradient(to right, #818cf8, #c084fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .input-group { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin: 20px 0; }
-        input { background: #1f2937; border: 1px solid #374151; padding: 12px; border-radius: 10px; color: white; outline: none; width: 90%; }
-        .btn-main { background: linear-gradient(135deg, var(--primary), var(--accent)); color: white; padding: 12px; border-radius: 10px; border: none; font-weight: 700; cursor: pointer; transition: 0.3s; width: 100%; }
-        
-        .search-bar { width: 96%; padding: 14px; border-radius: 12px; border: 1px solid var(--primary); background: rgba(99, 102, 241, 0.1); color: white; outline: none; margin-bottom: 15px; }
-
-        table { width: 100%; border-collapse: collapse; }
-        th { padding: 12px; text-align: left; font-size: 11px; color: var(--text-dim); border-bottom: 1px solid #374151; }
-        td { padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 14px; }
-
+        input { background: #1f2937; border: 1px solid #374151; padding: 12px; border-radius: 10px; color: white; outline: none; }
+        .btn-main { background: linear-gradient(135deg, var(--primary), var(--accent)); color: white; padding: 12px; border-radius: 10px; border: none; font-weight: 700; cursor: pointer; width: 100%; }
+        .search-bar { width: 95%; padding: 14px; border-radius: 12px; border: 1px solid var(--primary); background: rgba(99, 102, 241, 0.1); color: white; outline: none; margin-bottom: 15px; }
         .about-section { width: 100%; max-width: 850px; margin-top: 50px; padding: 40px 20px; text-align: center; border-radius: 40px; border: 1px solid rgba(99, 102, 241, 0.2); }
-        
-        #billModal { display: none; position: fixed; inset: 0; background: white; color: black; padding: 30px; z-index: 10000; overflow-y: auto; }
     </style>
 </head>
 <body>
 
     <div id="loginPage" class="premium-card" style="text-align: center; max-width: 400px; margin-top: 50px;">
         <h1>THE AI HUB</h1>
-        <p style="color: var(--text-dim);">Admin Control Panel</p>
-        <input type="text" id="adminIn" placeholder="Enter Admin Name" style="margin-top: 20px;">
+        <p style="color: var(--text-dim);">Business Intelligence Ledger</p>
+        <input type="text" id="adminIn" placeholder="Enter Admin Name" style="width: 85%; margin-top: 20px;">
         <button onclick="startApp()" class="btn-main" style="margin-top: 15px;">Launch Dashboard</button>
     </div>
 
     <div id="dashboard" style="display: none; width: 100%; max-width: 900px;">
-        
         <div class="summary-grid">
             <div class="stat-box" style="border-top: 4px solid var(--yellow);"><h4 style="color:var(--yellow)">Total Udhari</h4><p id="totalU" style="color:var(--yellow)">₹0</p></div>
             <div class="stat-box" style="border-top: 4px solid var(--green);"><h4 style="color:var(--green)">Total Profit</h4><p id="totalP" style="color:var(--green)">₹0</p></div>
@@ -69,13 +52,13 @@
             <button onclick="addEntry()" class="btn-main" style="background: var(--green);">+ Save Transaction</button>
         </div>
 
-        <input type="text" id="liveSearch" class="search-bar" onkeyup="filterTable()" placeholder="🔍 Quick Search Customer...">
+        <input type="text" id="liveSearch" class="search-bar" onkeyup="filterTable()" placeholder="🔍 Quick Search...">
 
         <div class="premium-card">
             <div style="overflow-x: auto;">
-                <table id="customerTable">
+                <table id="customerTable" style="width:100%; border-collapse: collapse;">
                     <thead>
-                        <tr><th>Customer</th><th>Udhari 🟡</th><th>Profit 🟢</th><th>Loss 🔴</th><th>Bill</th><th>Del</th></tr>
+                        <tr><th style="text-align:left; padding:12px;">Customer</th><th>Udhari 🟡</th><th>Profit 🟢</th><th>Loss 🔴</th><th>Action</th></tr>
                     </thead>
                     <tbody id="mTable"></tbody>
                 </table>
@@ -86,30 +69,10 @@
     <div class="about-section">
         <h2 style="margin:0; color:white;">Harshwardhan Singh Lodhi</h2>
         <p style="color: var(--primary); font-weight: 700;">CEO & Founder, THE AI HUB | IIT Patna</p>
-        <p style="color: var(--text-dim); max-width:600px; margin: 15px auto;">Leading the digital transformation of small business accounting with smart AI-driven tools.</p>
-        <div style="display: flex; justify-content: center; gap: 15px; margin-top: 20px;">
-            <a href="https://www.instagram.com/_verma_karan08" target="_blank" style="color:white; text-decoration:none; background:#1f2937; padding:8px 20px; border-radius:50px;">Instagram</a>
-            <a href="mailto:kv2642240@gmail.com" style="color:white; text-decoration:none; background:#1f2937; padding:8px 20px; border-radius:50px;">Email</a>
-        </div>
-    </div>
-
-    <div id="billModal">
-        <h1 style="color:black;">THE AI HUB - INVOICE</h1>
-        <p>Founder: Harshwardhan Singh Lodhi | IIT Patna</p>
-        <hr>
-        <p><strong>Customer:</strong> <span id="bC"></span></p>
-        <table style="width: 100%; border: 1px solid black; border-collapse: collapse;">
-            <tr style="background: #eee;"><th>Desc</th><th>Base</th><th>GST (18%)</th><th>Total</th></tr>
-            <tbody id="bR"></tbody>
-        </table>
-        <h2 id="bT" style="text-align: right; margin-top: 30px;"></h2>
-        <button onclick="window.print()" class="btn-main" style="width: auto; padding: 10px 40px;">Print PDF</button>
-        <button onclick="document.getElementById('billModal').style.display='none'">Close</button>
     </div>
 
     <script>
-        let KEY = "aihub_final_summary_db";
-
+        let KEY = "aihub_mega_final_db";
         function startApp() {
             let user = document.getElementById('adminIn').value.trim();
             if(!user) return alert("Admin Name Required!");
@@ -118,47 +81,31 @@
             document.getElementById('helloUser').innerText = "Dashboard: " + user.toUpperCase();
             showData();
         }
-
         function addEntry() {
             let name = document.getElementById('cName').value.trim();
-            let u = document.getElementById('uIn').value || 0;
-            let p = document.getElementById('pIn').value || 0;
-            let l = document.getElementById('lIn').value || 0;
-            if(!name) return alert("Customer Name Required!");
-
+            let u = parseFloat(document.getElementById('uIn').value || 0);
+            let p = parseFloat(document.getElementById('pIn').value || 0);
+            let l = parseFloat(document.getElementById('lIn').value || 0);
+            if(!name) return alert("Name?");
             let db = JSON.parse(localStorage.getItem(KEY)) || [];
-            db.push({ id: Date.now(), name, u: parseFloat(u), p: parseFloat(p), l: parseFloat(l), date: new Date().toLocaleDateString() });
+            db.push({ id: Date.now(), name, u, p, l, date: new Date().toLocaleDateString() });
             localStorage.setItem(KEY, JSON.stringify(db));
-            
             ["cName", "uIn", "pIn", "lIn"].forEach(id => document.getElementById(id).value = "");
             showData();
         }
-
         function showData() {
             let db = JSON.parse(localStorage.getItem(KEY)) || [];
             let table = document.getElementById('mTable');
-            let sumU = 0, sumP = 0, sumL = 0;
+            let sU = 0, sP = 0, sL = 0;
             table.innerHTML = "";
-            
             db.forEach(item => {
-                sumU += item.u; sumP += item.p; sumL += item.l;
-                table.innerHTML += `
-                    <tr>
-                        <td><b>${item.name.toUpperCase()}</b><br><small style="color:gray">${item.date}</small></td>
-                        <td style="color:var(--yellow)">₹${item.u}</td>
-                        <td style="color:var(--green)">₹${item.p}</td>
-                        <td style="color:var(--red)">₹${item.l}</td>
-                        <td><button onclick="makeBill('${item.name}', ${item.u})" style="background:var(--primary); color:white; border:none; padding:5px; border-radius:5px; cursor:pointer;">Bill</button></td>
-                        <td><button onclick="del(${item.id})" style="background:none; border:none; color:var(--red); cursor:pointer;">✕</button></td>
-                    </tr>`;
+                sU += item.u; sP += item.p; sL += item.l;
+                table.innerHTML += `<tr><td style="padding:12px;"><b>${item.name.toUpperCase()}</b><br><small style="color:gray">${item.date}</small></td><td style="color:var(--yellow); text-align:center;">₹${item.u}</td><td style="color:var(--green); text-align:center;">₹${item.p}</td><td style="color:var(--red); text-align:center;">₹${item.l}</td><td style="text-align:center;"><button onclick="del(${item.id})" style="background:none; border:none; color:var(--red); cursor:pointer;">✕</button></td></tr>`;
             });
-
-            // Update Summary Cards
-            document.getElementById('totalU').innerText = "₹" + sumU;
-            document.getElementById('totalP').innerText = "₹" + sumP;
-            document.getElementById('totalL').innerText = "₹" + sumL;
+            document.getElementById('totalU').innerText = "₹" + sU;
+            document.getElementById('totalP').innerText = "₹" + sP;
+            document.getElementById('totalL').innerText = "₹" + sL;
         }
-
         function filterTable() {
             let input = document.getElementById("liveSearch").value.toUpperCase();
             let tr = document.getElementById("mTable").getElementsByTagName("tr");
@@ -170,20 +117,7 @@
                 }
             }
         }
-
-        function del(id) {
-            let db = JSON.parse(localStorage.getItem(KEY)).filter(i => i.id !== id);
-            localStorage.setItem(KEY, JSON.stringify(db));
-            showData();
-        }
-
-        function makeBill(name, amt) {
-            document.getElementById('bC').innerText = name.toUpperCase();
-            let gst = amt * 0.18;
-            document.getElementById('bR').innerHTML = `<tr><td>Business Dealing</td><td>₹${amt}</td><td>₹${gst.toFixed(2)}</td><td>₹${(amt+gst).toFixed(2)}</td></tr>`;
-            document.getElementById('bT').innerText = "Total: ₹" + (amt+gst).toFixed(2);
-            document.getElementById('billModal').style.display = 'block';
-        }
+        function del(id) { if(confirm("Delete?")) { let db = JSON.parse(localStorage.getItem(KEY)).filter(i => i.id !== id); localStorage.setItem(KEY, JSON.stringify(db)); showData(); } }
     </script>
 </body>
 </html>
