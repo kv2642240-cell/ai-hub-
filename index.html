@@ -3,152 +3,174 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>THE AI HUB | GST Billing & Ledger</title>
+    <title>THE AI HUB | Professional Ledger & GST</title>
     <style>
         :root { --primary: #6366f1; --bg: #0b0f1a; --card: #161b2c; --green: #10b981; --red: #ef4444; --yellow: #f59e0b; }
         body { font-family: 'Segoe UI', sans-serif; background-color: var(--bg); color: white; margin: 0; padding: 15px; display: flex; flex-direction: column; align-items: center; }
         .card { background: var(--card); padding: 20px; border-radius: 20px; border: 1px solid #2d3748; width: 100%; max-width: 450px; margin-bottom: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
         input { width: 90%; padding: 12px; border-radius: 10px; border: 1px solid #2d3748; background: #1a202c; color: white; margin-bottom: 10px; outline: none; text-align: center; }
-        .btn { width: 100%; padding: 12px; border-radius: 10px; border: none; font-weight: bold; cursor: pointer; color: white; margin-bottom: 5px; }
-        .list-area { text-align: left; background: rgba(0,0,0,0.2); padding: 10px; border-radius: 12px; margin-top: 10px; max-height: 150px; overflow-y: auto; }
-        .item { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px dashed #2d3748; font-size: 13px; }
+        .btn { width: 100%; padding: 12px; border-radius: 10px; border: none; font-weight: bold; cursor: pointer; color: white; margin-bottom: 8px; transition: 0.3s; }
+        .list-area { text-align: left; background: rgba(0,0,0,0.2); padding: 10px; border-radius: 12px; margin-top: 10px; max-height: 200px; overflow-y: auto; }
+        .item { display: flex; justify-content: space-between; padding: 10px; border-bottom: 1px dashed #2d3748; font-size: 14px; }
         
-        /* GST Bill Styling */
-        #billModal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; color: black; padding: 20px; box-sizing: border-box; overflow-y: auto; z-index: 1000; }
-        .bill-header { text-align: center; border-bottom: 2px solid black; padding-bottom: 10px; }
+        /* Bill Styles */
+        #billModal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; color: black; padding: 30px; box-sizing: border-box; overflow-y: auto; z-index: 1000; }
         .bill-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        .bill-table th, .bill-table td { border: 1px solid black; padding: 8px; text-align: left; }
+        .bill-table th, .bill-table td { border: 1px solid black; padding: 10px; text-align: left; }
     </style>
 </head>
 <body>
 
     <div id="homePage" class="card">
-        <h1 style="color: var(--primary);">THE AI HUB</h1>
-        <p style="font-size: 13px; color: #94a3b8;">Search Account to manage Udhari & Bills</p>
-        <input type="text" id="userInput" placeholder="Enter Customer Name (Search)">
-        <button onclick="enterDash()" class="btn" style="background: var(--primary);">📂 OPEN DASHBOARD / SEARCH</button>
-        <div style="margin-top: 15px;">
-            <a href="https://www.instagram.com/_verma_karan08" style="color: #cbd5e1; text-decoration:none; margin-right:15px;">Instagram</a>
-            <a href="mailto:kv2642240@gmail.com" style="color: #cbd5e1; text-decoration:none;">Gmail</a>
+        <h1 style="color: var(--primary); margin-bottom: 5px;">THE AI HUB</h1>
+        <p style="color: #94a3b8; font-size: 14px; margin-bottom: 20px;">By Harshwardhan Singh Lodhi (IIT Patna)</p>
+        
+        <div style="margin-bottom: 20px;">
+            <a href="https://www.instagram.com/_verma_karan08" target="_blank" style="color: #818cf8; text-decoration:none; margin-right:15px;">Instagram</a>
+            <a href="mailto:kv2642240@gmail.com" style="color: #818cf8; text-decoration:none;">Gmail</a>
         </div>
+
+        <input type="text" id="userInput" placeholder="Kiska Khata Kholna Hai? (Enter Name)">
+        <button onclick="enterDash()" class="btn" style="background: var(--primary);">📂 OPEN DASHBOARD</button>
     </div>
 
     <div id="dashPage" style="display: none; width: 100%; max-width: 480px;">
-        <div class="card">
+        <div class="card" style="border-left: 5px solid var(--primary);">
             <h2 id="userHeading" style="margin: 0; color: var(--primary);"></h2>
-            <button onclick="generateBill()" class="btn" style="background: #ffffff; color: black; margin-top:10px;">📄 GENERATE GST BILL</button>
+            <p id="totalDisplay" style="margin: 5px 0; color: #94a3b8; font-weight: bold;"></p>
+            <button onclick="generateBill()" class="btn" style="background: #fff; color: #000; margin-top:10px; border: 1px solid #000;">📄 GENERATE GST BILL</button>
         </div>
 
         <div class="card">
-            <p style="text-align: left; font-weight: bold;">Quick Entry Panel:</p>
-            <input type="number" id="amtInput" placeholder="Enter Amount (₹)">
-            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px;">
+            <label style="display:block; margin-bottom:8px; font-weight:bold;">Nayi Entry Karein:</label>
+            <input type="number" id="amtInput" placeholder="Amount (₹) Daalein">
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px;">
                 <button onclick="addData('udhari')" class="btn" style="background: var(--yellow);">+ Udhari</button>
                 <button onclick="addData('profit')" class="btn" style="background: var(--green);">+ Profit</button>
                 <button onclick="addData('loss')" class="btn" style="background: var(--red);">+ Loss</button>
             </div>
         </div>
 
-        <div class="card" style="text-align: left;">
-            <h4 style="color: var(--yellow);">🟡 UDHARI (Total: ₹<span id="uTotal">0</span>)</h4>
+        <div class="card">
+            <h3 style="color: var(--yellow); font-size: 16px; margin: 0;">🟡 Udhari List</h3>
             <div id="udhariList" class="list-area"></div>
-            <h4 style="color: var(--green);">🟢 PROFIT LIST</h4>
+
+            <h3 style="color: var(--green); font-size: 16px; margin: 20px 0 0 0;">🟢 Profit List</h3>
             <div id="profitList" class="list-area"></div>
-            <h4 style="color: var(--red);">🔴 LOSS LIST</h4>
+
+            <h3 style="color: var(--red); font-size: 16px; margin: 20px 0 0 0;">🔴 Loss List</h3>
             <div id="lossList" class="list-area"></div>
         </div>
 
-        <button onclick="location.reload()" class="btn" style="background: #334155; margin-bottom: 50px;">⬅️ BACK TO SEARCH</button>
+        <button onclick="location.reload()" class="btn" style="background: #334155; margin-bottom: 50px;">⬅️ SEARCH ANOTHER NAME</button>
     </div>
 
     <div id="billModal">
-        <div class="bill-header">
-            <h2>THE AI HUB - INVOICE</h2>
+        <center>
+            <h1>THE AI HUB</h1>
             <p>IIT Patna | Founder: Harshwardhan Singh Lodhi</p>
-            <p>Email: kv2642240@gmail.com</p>
-        </div>
-        <p><strong>Customer Name:</strong> <span id="billCustName"></span></p>
+            <hr>
+        </center>
+        <p><strong>Customer:</strong> <span id="billName"></span></p>
         <p><strong>Date:</strong> <span id="billDate"></span></p>
         <table class="bill-table">
-            <thead>
-                <tr><th>Description</th><th>Amount (₹)</th></tr>
-            </thead>
+            <thead><tr><th>Description</th><th>Amount (₹)</th></tr></thead>
             <tbody id="billItems"></tbody>
-            <tfoot>
-                <tr><th>Subtotal</th><td id="subtotal"></td></tr>
-                <tr><th>GST (18%)</th><td id="gst"></td></tr>
-                <tr><th><strong>Grand Total</strong></th><td id="grandTotal" style="font-weight:bold;"></td></tr>
-            </tfoot>
+            <tr><th>Subtotal</th><td id="sub"></td></tr>
+            <tr><th>GST (18%)</th><td id="gst"></td></tr>
+            <tr><th><strong>Grand Total</strong></th><td id="grand" style="font-weight:bold;"></td></tr>
         </table>
         <div style="margin-top: 30px; text-align: center;">
-            <button onclick="window.print()" style="padding: 10px 20px; background: blue; color: white; border:none; border-radius:5px;">Download / Print PDF</button>
-            <button onclick="document.getElementById('billModal').style.display='none'" style="padding: 10px 20px; background: grey; color: white; border:none; border-radius:5px;">Close</button>
+            <button onclick="window.print()" class="btn" style="background: blue; width: auto; padding: 10px 30px;">Download / Print PDF</button>
+            <button onclick="document.getElementById('billModal').style.display='none'" class="btn" style="background: gray; width: auto; padding: 10px 30px;">Close</button>
         </div>
     </div>
 
     <script>
-        let currentUser = "";
+        let currentAccount = "";
 
+        // DASHBOARD KHOLNA
         function enterDash() {
-            let name = document.getElementById('userInput').value.trim().toLowerCase();
-            if(!name) return alert("Please enter a name!");
-            currentUser = name;
+            let name = document.getElementById('userInput').value.trim();
+            if(!name) { alert("Bhai, naam likhna zaroori hai!"); return; }
+            
+            currentAccount = name.toLowerCase(); // Sab small case mein save hoga search ke liye
             document.getElementById('homePage').style.display = 'none';
             document.getElementById('dashPage').style.display = 'block';
             document.getElementById('userHeading').innerText = "Account: " + name.toUpperCase();
             loadData();
         }
 
+        // DATA SAVE KARNA
         function addData(type) {
             let amt = document.getElementById('amtInput').value;
-            if(!amt) return alert("Enter amount!");
-            let key = currentUser + "_" + type;
-            let db = JSON.parse(localStorage.getItem(key)) || [];
-            db.push({ id: Date.now(), amt: parseFloat(amt), time: new Date().toLocaleDateString() });
-            localStorage.setItem(key, JSON.stringify(db));
-            document.getElementById('amtInput').value = '';
-            loadData();
-        }
+            if(!amt || amt <= 0) { alert("Sahi amount daalo!"); return; }
 
-        function loadData() {
-            let totalUdhari = 0;
-            ['udhari', 'profit', 'loss'].forEach(type => {
-                let key = currentUser + "_" + type;
-                let list = document.getElementById(type + "List");
-                let db = JSON.parse(localStorage.getItem(key)) || [];
-                list.innerHTML = db.length ? '' : '<p style="text-align:center;color:#4a5568;font-size:11px;">No records</p>';
-                db.forEach(item => {
-                    if(type === 'udhari') totalUdhari += item.amt;
-                    list.innerHTML += `<div class="item"><span>📅 ${item.time} - ₹${item.amt}</span><button onclick="removeItem('${type}', ${item.id})" style="color:var(--red); border:none; background:none; cursor:pointer;">✕</button></div>`;
-                });
-            });
-            document.getElementById('uTotal').innerText = totalUdhari;
-        }
-
-        function removeItem(type, id) {
-            let key = currentUser + "_" + type;
-            let db = JSON.parse(localStorage.getItem(key));
-            localStorage.setItem(key, JSON.stringify(db.filter(i => i.id !== id)));
-            loadData();
-        }
-
-        function generateBill() {
-            let db = JSON.parse(localStorage.getItem(currentUser + "_udhari")) || [];
-            if(!db.length) return alert("No udhari found to generate bill!");
+            let key = "theaihub_" + currentAccount + "_" + type;
+            let existingData = JSON.parse(localStorage.getItem(key)) || [];
             
-            document.getElementById('billCustName').innerText = currentUser.toUpperCase();
-            document.getElementById('billDate').innerText = new Date().toLocaleDateString();
-            let itemsHtml = "";
-            let subtotal = 0;
-            db.forEach(item => {
-                itemsHtml += `<tr><td>Transaction on ${item.time}</td><td>₹${item.amt}</td></tr>`;
-                subtotal += item.amt;
+            existingData.push({
+                id: Date.now(),
+                amount: parseFloat(amt),
+                date: new Date().toLocaleString('en-IN')
             });
-            let gst = subtotal * 0.18;
-            document.getElementById('billItems').innerHTML = itemsHtml;
-            document.getElementById('subtotal').innerText = "₹" + subtotal.toFixed(2);
+
+            localStorage.setItem(key, JSON.stringify(existingData));
+            document.getElementById('amtInput').value = ''; // Input clear
+            loadData();
+        }
+
+        // DATA LOAD KARNA
+        function loadData() {
+            let totalU = 0;
+            ['udhari', 'profit', 'loss'].forEach(type => {
+                let key = "theaihub_" + currentAccount + "_" + type;
+                let data = JSON.parse(localStorage.getItem(key)) || [];
+                let container = document.getElementById(type + 'List');
+                container.innerHTML = "";
+
+                data.forEach(item => {
+                    if(type === 'udhari') totalU += item.amount;
+                    container.innerHTML += `
+                        <div class="item">
+                            <span>📅 ${item.date.split(',')[0]} - <b>₹${item.amount}</b></span>
+                            <button onclick="deleteItem('${type}', ${item.id})" style="background:none; border:none; color:red; cursor:pointer; font-weight:bold;">✕</button>
+                        </div>`;
+                });
+                if(data.length === 0) container.innerHTML = "<p style='font-size:12px; color:gray; text-align:center;'>No records</p>";
+            });
+            document.getElementById('totalDisplay').innerText = "Current Udhari: ₹" + totalU;
+        }
+
+        // DELETE ENTRY
+        function deleteItem(type, id) {
+            let key = "theaihub_" + currentAccount + "_" + type;
+            let data = JSON.parse(localStorage.getItem(key));
+            let newData = data.filter(i => i.id !== id);
+            localStorage.setItem(key, JSON.stringify(newData));
+            loadData();
+        }
+
+        // GST BILL GENERATE
+        function generateBill() {
+            let data = JSON.parse(localStorage.getItem("theaihub_" + currentAccount + "_udhari")) || [];
+            if(data.length === 0) { alert("Bill banane ke liye udhari entry honi chahiye!"); return; }
+
+            document.getElementById('billName').innerText = currentAccount.toUpperCase();
+            document.getElementById('billDate').innerText = new Date().toLocaleDateString();
+            
+            let html = "";
+            let sub = 0;
+            data.forEach(i => {
+                html += `<tr><td>Transaction (${i.date.split(',')[0]})</td><td>₹${i.amount}</td></tr>`;
+                sub += i.amount;
+            });
+
+            let gst = sub * 0.18;
+            document.getElementById('billItems').innerHTML = html;
+            document.getElementById('sub').innerText = "₹" + sub.toFixed(2);
             document.getElementById('gst').innerText = "₹" + gst.toFixed(2);
-            document.getElementById('grandTotal').innerText = "₹" + (subtotal + gst).toFixed(2);
+            document.getElementById('grand').innerText = "₹" + (sub + gst).toFixed(2);
             document.getElementById('billModal').style.display = 'block';
         }
     </script>
