@@ -4,81 +4,95 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>THE AI HUB | Harshwardhan Singh Lodhi</title>
-    
     <meta name="google-site-verification" content="ryKoSefcaCa9KEmGunISRagpfvqKzwgavcKRk7J2Njo" />
 
     <style>
-        :root { --primary: #6366f1; --insta: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
-        body { font-family: 'Segoe UI', sans-serif; background-color: #0f172a; color: white; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; }
-        .card { background: #1e293b; padding: 25px; border-radius: 20px; border: 2px solid var(--primary); width: 100%; max-width: 400px; text-align: center; margin-bottom: 20px; }
-        .profile-img { width: 100px; height: 100px; border-radius: 50%; border: 3px solid var(--primary); object-fit: cover; }
-        .btn-insta { display: block; margin: 10px 0; padding: 12px; background: var(--insta); color: white; text-decoration: none; border-radius: 10px; font-weight: bold; }
-        .btn-gmail { display: block; margin: 10px 0; padding: 12px; background: white; color: #ea4335; text-decoration: none; border-radius: 10px; font-weight: bold; border: 2px solid #ea4335; }
-        .ledger-box { background: rgba(0,0,0,0.3); padding: 15px; border-radius: 15px; text-align: left; }
-        .entry { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #334155; }
-        input { padding: 8px; border-radius: 5px; border: none; margin-bottom: 10px; width: 80%; }
-        .clear-btn { background: #ef4444; border: none; color: white; padding: 5px 10px; border-radius: 5px; cursor: pointer; }
+        :root { --primary: #6366f1; --bg: #0f172a; --card: #1e293b; --green: #22c55e; --red: #ef4444; }
+        body { font-family: 'Segoe UI', sans-serif; background-color: var(--bg); color: white; margin: 0; padding: 15px; display: flex; flex-direction: column; align-items: center; }
+        .card { background: var(--card); padding: 20px; border-radius: 20px; border: 1px solid var(--primary); width: 100%; max-width: 400px; margin-bottom: 20px; text-align: center; }
+        .profile-img { width: 90px; height: 90px; border-radius: 50%; border: 3px solid var(--primary); margin-bottom: 10px; }
+        .about-box { text-align: left; font-size: 13px; background: rgba(0,0,0,0.2); padding: 12px; border-radius: 10px; margin: 10px 0; border-left: 4px solid var(--primary); }
+        .social-btns { display: flex; gap: 10px; margin-top: 10px; }
+        .btn-social { flex: 1; padding: 10px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 12px; color: white; }
+        
+        .section-title { color: var(--primary); font-size: 18px; margin-bottom: 15px; border-bottom: 1px solid #334155; padding-bottom: 5px; }
+        input { width: 85%; padding: 10px; border-radius: 8px; border: 1px solid #334155; background: #0f172a; color: white; margin-bottom: 10px; }
+        .add-btn { width: 90%; padding: 10px; border-radius: 8px; border: none; font-weight: bold; cursor: pointer; color: white; }
+        
+        .list-container { text-align: left; margin-top: 15px; max-height: 200px; overflow-y: auto; }
+        .entry-item { display: flex; justify-content: space-between; padding: 8px; border-bottom: 1px solid #334155; font-size: 14px; }
+        .clear-btn { background: var(--red); border: none; color: white; padding: 4px 8px; border-radius: 4px; cursor: pointer; font-size: 10px; }
     </style>
 </head>
 <body>
 
     <div class="card">
         <img src="mera-photo.jpg" alt="Harshwardhan" class="profile-img">
-        <h2>Harshwardhan Singh Lodhi</h2>
-        <p style="color: #818cf8;">Founder of THE AI HUB | IIT Patna</p>
-        
-        <a href="https://www.instagram.com/_verma_karan08" class="btn-insta" target="_blank">Instagram Profile</a>
-        <a href="mailto:kv2642240@gmail.com" class="btn-gmail">Email Me (Gmail)</a>
+        <h2 style="margin:0;">Harshwardhan Singh Lodhi</h2>
+        <p style="color:var(--primary); font-weight:bold; margin:5px 0;">Founder: THE AI HUB (IIT Patna)</p>
+        <div class="about-box">
+            <b>Bio:</b> I am a developer at <b>IIT Patna</b> building <b>THE AI HUB</b>. My goal is to simplify business accounting using AI-powered digital ledgers.
+        </div>
+        <div class="social-btns">
+            <a href="https://www.instagram.com/_verma_karan08" class="btn-social" style="background:linear-gradient(45deg, #f09433, #dc2743, #bc1888);">Instagram</a>
+            <a href="mailto:kv2642240@gmail.com" class="btn-social" style="background:#ea4335; border:1px solid white;">Gmail</a>
+        </div>
     </div>
 
     <div class="card">
-        <h3>📊 Udhari Ledger</h3>
-        <input type="text" id="nameInput" placeholder="Kiska Naam?">
-        <input type="number" id="amountInput" placeholder="Kitna Paisa? (₹)">
-        <button onclick="addEntry()" style="width: 85%; padding: 10px; background: #22c55e; border: none; color: white; border-radius: 8px; font-weight: bold; cursor: pointer;">Add Entry</button>
-        
-        <div id="ledgerList" class="ledger-box" style="margin-top: 20px;">
-            </div>
+        <div class="section-title">📑 Udhari Khata (Debt)</div>
+        <input type="text" id="uName" placeholder="Kiska naam?">
+        <input type="number" id="uAmount" placeholder="Kitna paisa? (₹)">
+        <button onclick="saveEntry('udhari')" class="add-btn" style="background:var(--primary);">Add Udhari</button>
+        <div id="udhariList" class="list-container"></div>
+    </div>
+
+    <div class="card">
+        <div class="section-title">📈 Profit & Loss</div>
+        <input type="text" id="pTitle" placeholder="Kahan se? (e.g. Sale, Rent)">
+        <input type="number" id="pAmount" placeholder="Amount (Profit: +, Loss: -)">
+        <button onclick="saveEntry('pl')" class="add-btn" style="background:var(--green);">Add P&L</button>
+        <div id="plList" class="list-container"></div>
     </div>
 
     <script>
-        // Load data on start
-        window.onload = function() { displayEntries(); };
+        function saveEntry(type) {
+            let name = document.getElementById(type === 'udhari' ? 'uName' : 'pTitle').value;
+            let amount = document.getElementById(type === 'udhari' ? 'uAmount' : 'pAmount').value;
+            if(!name || !amount) return alert("Bhai detail bharo!");
 
-        function addEntry() {
-            const name = document.getElementById('nameInput').value;
-            const amount = document.getElementById('amountInput').value;
-            if(!name || !amount) return alert("Pura dalo bhai!");
-
-            let entries = JSON.parse(localStorage.getItem('udhari')) || [];
+            let entries = JSON.parse(localStorage.getItem(type)) || [];
             entries.push({ id: Date.now(), name, amount });
-            localStorage.setItem('udhari', JSON.stringify(entries));
-            
-            document.getElementById('nameInput').value = '';
-            document.getElementById('amountInput').value = '';
-            displayEntries();
+            localStorage.setItem(type, JSON.stringify(entries));
+
+            document.getElementById(type === 'udhari' ? 'uName' : 'pTitle').value = '';
+            document.getElementById(type === 'udhari' ? 'uAmount' : 'pAmount').value = '';
+            loadData();
         }
 
-        function displayEntries() {
-            const list = document.getElementById('ledgerList');
-            let entries = JSON.parse(localStorage.getItem('udhari')) || [];
-            list.innerHTML = entries.length ? '' : '<p style="text-align:center; color:#64748b;">Khata khali hai.</p>';
-            
-            entries.forEach(item => {
-                list.innerHTML += `
-                    <div class="entry">
-                        <span><b>${item.name}</b>: ₹${item.amount}</span>
-                        <button class="clear-btn" onclick="clearEntry(${item.id})">Clear Paid</button>
-                    </div>`;
+        function loadData() {
+            ['udhari', 'pl'].forEach(type => {
+                let list = document.getElementById(type + 'List');
+                let entries = JSON.parse(localStorage.getItem(type)) || [];
+                list.innerHTML = entries.length ? '' : '<p style="text-align:center;color:#64748b;font-size:12px;">Khali hai</p>';
+                entries.forEach(item => {
+                    let amtColor = type === 'pl' ? (item.amount >= 0 ? 'var(--green)' : 'var(--red)') : 'white';
+                    list.innerHTML += `
+                        <div class="entry-item">
+                            <span><b>${item.name}</b>: <span style="color:${amtColor}">₹${item.amount}</span></span>
+                            <button class="clear-btn" onclick="removeEntry('${type}', ${item.id})">Clear</button>
+                        </div>`;
+                });
             });
         }
 
-        function clearEntry(id) {
-            let entries = JSON.parse(localStorage.getItem('udhari')) || [];
-            entries = entries.filter(item => item.id !== id);
-            localStorage.setItem('udhari', JSON.stringify(entries));
-            displayEntries();
+        function removeEntry(type, id) {
+            let entries = JSON.parse(localStorage.getItem(type));
+            localStorage.setItem(type, JSON.stringify(entries.filter(e => e.id !== id)));
+            loadData();
         }
+
+        window.onload = loadData;
     </script>
 </body>
 </html>
