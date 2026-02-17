@@ -3,53 +3,82 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE AI HUB | Harshwardhan Singh Lodhi</title>
     
     <meta name="google-site-verification" content="ryKoSefcaCa9KEmGunISRagpfvqKzwgavcKRk7J2Njo" />
 
-    <title>Harshwardhan Singh Lodhi | THE AI HUB | IIT Patna</title>
-    <meta name="description" content="Harshwardhan Singh Lodhi, student at IIT Patna and Founder of THE AI HUB. Specialized in Full-Stack AI solutions.">
-    
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Person",
-      "name": "Harshwardhan Singh Lodhi",
-      "affiliation": "IIT Patna",
-      "jobTitle": "Founder & CEO of THE AI HUB",
-      "url": "https://kv2642240-cell.github.io/a/",
-      "image": "https://kv2642240-cell.github.io/a/mera-photo.jpg",
-      "sameAs": [
-        "https://www.instagram.com/_verma_karan08"
-      ]
-    }
-    </script>
-
     <style>
-        :root { --primary: #6366f1; --bg: #0f172a; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg); color: white; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; }
-        .profile-card { background: #1e293b; padding: 40px 30px; border-radius: 24px; border: 2px solid var(--primary); text-align: center; max-width: 380px; box-shadow: 0 20px 50px rgba(0,0,0,0.6); }
-        .profile-img { width: 130px; height: 130px; border-radius: 50%; border: 4px solid var(--primary); object-fit: cover; margin-bottom: 20px; box-shadow: 0 0 20px rgba(99, 102, 241, 0.3); }
-        h1 { font-size: 24px; margin: 10px 0; letter-spacing: 0.5px; }
-        .subtitle { color: var(--primary); font-weight: 700; font-size: 14px; text-transform: uppercase; margin-bottom: 20px; display: block; }
-        .about-box { background: rgba(15, 23, 42, 0.5); padding: 20px; border-radius: 16px; text-align: left; font-size: 14px; line-height: 1.6; color: #cbd5e1; border: 1px solid rgba(255,255,255,0.05); }
-        .btn { display: inline-block; margin-top: 25px; padding: 12px 25px; background: var(--primary); color: white; text-decoration: none; border-radius: 10px; font-weight: bold; transition: 0.3s; }
-        .btn:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(99, 102, 241, 0.4); }
+        :root { --primary: #6366f1; --insta: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
+        body { font-family: 'Segoe UI', sans-serif; background-color: #0f172a; color: white; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; }
+        .card { background: #1e293b; padding: 25px; border-radius: 20px; border: 2px solid var(--primary); width: 100%; max-width: 400px; text-align: center; margin-bottom: 20px; }
+        .profile-img { width: 100px; height: 100px; border-radius: 50%; border: 3px solid var(--primary); object-fit: cover; }
+        .btn-insta { display: block; margin: 10px 0; padding: 12px; background: var(--insta); color: white; text-decoration: none; border-radius: 10px; font-weight: bold; }
+        .btn-gmail { display: block; margin: 10px 0; padding: 12px; background: white; color: #ea4335; text-decoration: none; border-radius: 10px; font-weight: bold; border: 2px solid #ea4335; }
+        .ledger-box { background: rgba(0,0,0,0.3); padding: 15px; border-radius: 15px; text-align: left; }
+        .entry { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #334155; }
+        input { padding: 8px; border-radius: 5px; border: none; margin-bottom: 10px; width: 80%; }
+        .clear-btn { background: #ef4444; border: none; color: white; padding: 5px 10px; border-radius: 5px; cursor: pointer; }
     </style>
 </head>
 <body>
 
-    <div class="profile-card">
-        <img src="mera-photo.jpg" alt="Harshwardhan Singh Lodhi" class="profile-img">
+    <div class="card">
+        <img src="mera-photo.jpg" alt="Harshwardhan" class="profile-img">
+        <h2>Harshwardhan Singh Lodhi</h2>
+        <p style="color: #818cf8;">Founder of THE AI HUB | IIT Patna</p>
         
-        <h1>Harshwardhan Singh Lodhi</h1>
-        <span class="subtitle">Founder of THE AI HUB | IIT Patna</span>
-
-        <div class="about-box">
-            <b>Bio:</b> I am a tech innovator and student at <b>IIT Patna</b>. I developed <b>THE AI HUB</b> to transform how businesses manage their accounts and digital ledgers. Passionate about AI, Full-Stack development, and SEO.
-        </div>
-
-        <a href="https://www.instagram.com/_verma_karan08" class="btn" target="_blank">Instagram Profile</a>
+        <a href="https://www.instagram.com/_verma_karan08" class="btn-insta" target="_blank">Instagram Profile</a>
+        <a href="mailto:kv2642240@gmail.com" class="btn-gmail">Email Me (Gmail)</a>
     </div>
 
+    <div class="card">
+        <h3>📊 Udhari Ledger</h3>
+        <input type="text" id="nameInput" placeholder="Kiska Naam?">
+        <input type="number" id="amountInput" placeholder="Kitna Paisa? (₹)">
+        <button onclick="addEntry()" style="width: 85%; padding: 10px; background: #22c55e; border: none; color: white; border-radius: 8px; font-weight: bold; cursor: pointer;">Add Entry</button>
+        
+        <div id="ledgerList" class="ledger-box" style="margin-top: 20px;">
+            </div>
+    </div>
+
+    <script>
+        // Load data on start
+        window.onload = function() { displayEntries(); };
+
+        function addEntry() {
+            const name = document.getElementById('nameInput').value;
+            const amount = document.getElementById('amountInput').value;
+            if(!name || !amount) return alert("Pura dalo bhai!");
+
+            let entries = JSON.parse(localStorage.getItem('udhari')) || [];
+            entries.push({ id: Date.now(), name, amount });
+            localStorage.setItem('udhari', JSON.stringify(entries));
+            
+            document.getElementById('nameInput').value = '';
+            document.getElementById('amountInput').value = '';
+            displayEntries();
+        }
+
+        function displayEntries() {
+            const list = document.getElementById('ledgerList');
+            let entries = JSON.parse(localStorage.getItem('udhari')) || [];
+            list.innerHTML = entries.length ? '' : '<p style="text-align:center; color:#64748b;">Khata khali hai.</p>';
+            
+            entries.forEach(item => {
+                list.innerHTML += `
+                    <div class="entry">
+                        <span><b>${item.name}</b>: ₹${item.amount}</span>
+                        <button class="clear-btn" onclick="clearEntry(${item.id})">Clear Paid</button>
+                    </div>`;
+            });
+        }
+
+        function clearEntry(id) {
+            let entries = JSON.parse(localStorage.getItem('udhari')) || [];
+            entries = entries.filter(item => item.id !== id);
+            localStorage.setItem('udhari', JSON.stringify(entries));
+            displayEntries();
+        }
+    </script>
 </body>
 </html>
