@@ -3,109 +3,151 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>THE AI HUB | Karan's Ledger</title>
+    <title>THE AI HUB | Karan's AI Ledger</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
-        :root { --primary: #6366f1; --bg: #030712; --card: #111827; --text: #f3f4f6; --green: #10b981; --red: #ef4444; }
-        body { font-family: sans-serif; background: var(--bg); color: var(--text); padding: 15px; display: flex; flex-direction: column; align-items: center; }
-        .container { width: 100%; max-width: 500px; }
-        .card { background: var(--card); padding: 20px; border-radius: 20px; border: 1px solid #374151; margin-bottom: 20px; }
-        h2 { color: var(--primary); margin-top: 0; }
+        :root { --primary: #6366f1; --bg: #030712; --card: #111827; --text: #f3f4f6; --accent: #10b981; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 15px; }
+        .container { max-width: 600px; margin: auto; }
+        .glass-card { background: rgba(17, 24, 39, 0.8); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 20px; margin-bottom: 20px; }
+        
+        /* Stats Grid */
+        .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+        .stat-box { padding: 15px; border-radius: 15px; text-align: center; border-bottom: 4px solid var(--primary); background: var(--card); }
+
+        /* Input Styles */
         input, textarea, select { width: 100%; padding: 12px; margin: 8px 0; border-radius: 10px; border: 1px solid #374151; background: #1f2937; color: white; box-sizing: border-box; }
         .btn { width: 100%; padding: 12px; border-radius: 10px; border: none; font-weight: bold; cursor: pointer; background: var(--primary); color: white; margin-top: 10px; }
-        .summary { display: flex; justify-content: space-between; gap: 10px; }
-        .stat { flex: 1; padding: 15px; border-radius: 15px; text-align: center; font-weight: bold; }
-        .item-row { display: flex; justify-content: space-between; padding: 10px; border-bottom: 1px solid #1f2937; font-size: 14px; }
-        .badge { padding: 2px 8px; border-radius: 5px; font-size: 12px; }
+
+        /* Real Bill Look (Hidden till needed) */
+        #bill-container { position: absolute; left: -9999px; width: 400px; background: white; color: black; padding: 30px; }
+        .bill-header { border-bottom: 2px solid black; text-align: center; margin-bottom: 15px; }
+        
+        /* Ledger List */
+        .ledger-item { background: #1f2937; padding: 15px; border-radius: 12px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
+        
+        /* AI Assistant */
+        #ai-chat { position: fixed; bottom: 20px; right: 20px; background: var(--primary); width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 0 20px var(--primary); }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <div style="text-align: center; margin-bottom: 20px;">
-        <h1 style="margin:0; color:var(--primary);">THE AI HUB</h1>
-        <p style="margin:5px 0; color:gray;">Founder: Harshwardhan (Karan) - IIT Patna</p>
+    <div style="text-align:center;">
+        <h1 style="color:var(--primary); margin:0;">THE AI HUB</h1>
+        <p style="color:gray;">Karan | IIT Patna | AI Intelligence</p>
     </div>
 
-    <div class="summary">
-        <div class="stat" style="background: rgba(16, 185, 129, 0.1); color: var(--green);">Nagad (Paid)<br><span id="totalPaid">₹0</span></div>
-        <div class="stat" style="background: rgba(239, 68, 68, 0.1); color: var(--red);">Udhari (Pending)<br><span id="totalUdhari">₹0</span></div>
+    <div class="stats">
+        <div class="stat-box">Total Udhari<br><b id="sumUdhari" style="color:#ef4444">₹0</b></div>
+        <div class="stat-box">Total Profit<br><b id="sumProfit" style="color:var(--accent)">₹0</b></div>
     </div>
 
-    <div class="card">
-        <h2>Nayi Entry</h2>
-        <input type="text" id="cName" placeholder="Customer Ka Naam">
-        <textarea id="itemsList" rows="3" placeholder="Saman ki list (Ek line mein ek item)&#10;Jaise:&#10;Tamatar 20&#10;Aalu 40"></textarea>
-        <p style="font-size: 12px; color: gray;">*Tip: Item ke baad space dekar rate likhein</p>
-        <select id="pStatus">
-            <option value="Paid">Paise Mil Gaye (Paid)</option>
-            <option value="Udhari">Udhari Hai (Pending)</option>
+    <div class="glass-card">
+        <h3>🔍 Udhari Checker</h3>
+        <input type="text" id="searchName" placeholder="Customer ka naam likho..." onkeyup="searchCustomer()">
+        <div id="customerResult" style="color:var(--accent); font-weight:bold;"></div>
+    </div>
+
+    <div class="glass-card">
+        <h3>📝 New Billing</h3>
+        <input type="text" id="cName" placeholder="Customer Name">
+        <textarea id="itemsList" rows="3" placeholder="Saman list (Ex: Tamatar 20)"></textarea>
+        <select id="type">
+            <option value="Udhari">Udhari (Pending)</option>
+            <option value="Paid">Nagad (Profit)</option>
         </select>
-        <button class="btn" onclick="addEntry()">Bill Banayein & Save Karein</button>
+        <button class="btn" onclick="saveAndDownload()">Download Bill & Save</button>
     </div>
 
-    <div id="history"></div>
+    <div id="ledgerList"></div>
 </div>
 
+<div id="bill-container">
+    <div class="bill-header">
+        <h1>THE AI HUB</h1>
+        <p>Rajnandgaon, Chhattisgarh</p>
+    </div>
+    <p><b>Bill No:</b> <span id="rNo"></span></p>
+    <p><b>Customer:</b> <span id="rName"></span></p>
+    <hr>
+    <div id="rItems"></div>
+    <hr>
+    <h3>Total: ₹<span id="rTotal"></span></h3>
+    <p>Status: <span id="rStatus"></span></p>
+    <div style="text-align:center; margin-top:20px; font-size:12px;">
+        <p>Generated by Karan (IIT Patna AI System)</p>
+    </div>
+</div>
+
+<div id="ai-chat" onclick="askAI()">🤖</div>
+
 <script>
-    let db = JSON.parse(localStorage.getItem('karan_ledger')) || [];
+    let db = JSON.parse(localStorage.getItem('aih_v3')) || [];
 
-    function addEntry() {
-        let name = document.getElementById('cName').value;
-        let listText = document.getElementById('itemsList').value;
-        let status = document.getElementById('pStatus').value;
+    function saveAndDownload() {
+        const name = document.getElementById('cName').value;
+        const list = document.getElementById('itemsList').value;
+        const type = document.getElementById('type').value;
 
-        if(!name || !listText) return alert("Pehle naam aur saman bharo!");
+        if(!name || !list) return alert("Details bharo!");
 
-        // Calculation Logic
-        let lines = listText.split('\n');
         let total = 0;
-        lines.forEach(line => {
-            let parts = line.trim().split(' ');
-            let price = parseFloat(parts[parts.length - 1]);
-            if(!isNaN(price)) total += price;
+        let itemRows = '';
+        list.split('\n').forEach(line => {
+            let p = line.trim().split(' ');
+            let price = parseFloat(p[p.length-1]);
+            if(!isNaN(price)) {
+                total += price;
+                itemRows += `<p>${line}</p>`;
+            }
         });
 
-        db.push({
-            id: Date.now(),
-            name: name,
-            list: listText,
-            total: total,
-            status: status,
-            date: new Date().toLocaleString()
-        });
+        // Save to Local Data
+        db.push({ name, total, type, date: new Date().toLocaleDateString() });
+        localStorage.setItem('aih_v3', JSON.stringify(db));
 
-        localStorage.setItem('karan_ledger', JSON.stringify(db));
-        location.reload(); 
+        // Prepare Bill for Download
+        document.getElementById('rName').innerText = name;
+        document.getElementById('rTotal').innerText = total;
+        document.getElementById('rItems').innerHTML = itemRows;
+        document.getElementById('rStatus').innerText = type;
+        document.getElementById('rNo').innerText = 'AIH-' + Math.floor(Math.random()*9000);
+
+        // Convert to Image and Download
+        html2canvas(document.getElementById('bill-container')).then(canvas => {
+            let link = document.createElement('a');
+            link.download = `${name}_Bill.png`;
+            link.href = canvas.toDataURL();
+            link.click();
+            location.reload();
+        });
+    }
+
+    function searchCustomer() {
+        const sName = document.getElementById('searchName').value.toLowerCase();
+        if(!sName) { document.getElementById('customerResult').innerText = ""; return; }
+        
+        let totalDebt = 0;
+        db.forEach(entry => {
+            if(entry.name.toLowerCase().includes(sName) && entry.type === "Udhari") {
+                totalDebt += entry.total;
+            }
+        });
+        document.getElementById('customerResult').innerText = sName ? `${sName} ki total udhari: ₹${totalDebt}` : "";
     }
 
     function render() {
-        let historyDiv = document.getElementById('history');
-        let tP = 0, tU = 0;
-
-        db.reverse().forEach(entry => {
-            if(entry.status === 'Paid') tP += entry.total;
-            else tU += entry.total;
-
-            let waMsg = `*THE AI HUB - BILL*%0A*Customer:* ${entry.name}%0A*Saman:*%0A${entry.list}%0A---%0A*Total: ₹${entry.total}*%0A*Status:* ${entry.status}%0A_By: Karan (IIT Patna)_`;
-
-            historyDiv.innerHTML += `
-                <div class="card">
-                    <div style="display:flex; justify-content:space-between; align-items:center;">
-                        <b>${entry.name}</b>
-                        <span class="badge" style="background:${entry.status === 'Paid' ? 'var(--green)' : 'var(--red)'}">${entry.status}</span>
-                    </div>
-                    <pre style="font-size:12px; color:gray; margin:10px 0;">${entry.list}</pre>
-                    <div style="display:flex; justify-content:space-between; align-items:center;">
-                        <b style="font-size:18px;">Total: ₹${entry.total}</b>
-                        <a href="https://wa.me/?text=${waMsg}" target="_blank" style="color:var(--primary); text-decoration:none; font-weight:bold;">Share Bill</a>
-                    </div>
-                    <small style="color:gray; display:block; margin-top:10px;">${entry.date}</small>
-                </div>
-            `;
+        let tU = 0, tP = 0;
+        db.forEach(e => {
+            if(e.type === "Udhari") tU += e.total; else tP += e.total;
         });
+        document.getElementById('sumUdhari').innerText = "₹" + tU;
+        document.getElementById('sumProfit').innerText = "₹" + tP;
+    }
 
-        document.getElementById('totalPaid').innerText = "₹" + tP;
-        document.getElementById('totalUdhari').innerText = "₹" + tU;
+    function askAI() {
+        alert("Karan's AI Assistant: Aaj ka business solid chal raha hai! Aapne ab tak ₹" + document.getElementById('sumProfit').innerText + " ka profit kiya hai. Sabse zyada udhari " + (db.length > 0 ? db[0].name : "kisi ki nahi") + " ki hai.");
     }
 
     render();
