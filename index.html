@@ -3,145 +3,203 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>THE AI HUB | Business Intelligence by Karan</title>
+    <title>THE AI HUB | Official Business Suite by Karan</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
         :root { --primary: #6366f1; --bg: #030712; --card: #111827; --text: #f3f4f6; --accent: #10b981; --danger: #ef4444; }
-        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 10px; }
+        body { font-family: 'Inter', system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 10px; }
         .container { max-width: 600px; margin: auto; }
         
-        header { text-align: center; padding: 15px 0; border-bottom: 1px solid rgba(255,255,255,0.1); }
-        .contact-pills { display: flex; justify-content: center; gap: 8px; margin-top: 8px; }
-        .pill { background: rgba(99, 102, 241, 0.1); color: var(--primary); padding: 4px 10px; border-radius: 50px; font-size: 11px; text-decoration: none; border: 1px solid var(--primary); }
+        /* Professional Header */
+        header { text-align: center; padding: 25px 0; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 20px; }
+        .contact-pills { display: flex; justify-content: center; gap: 10px; margin-top: 15px; }
+        .pill { background: rgba(99, 102, 241, 0.1); color: var(--primary); padding: 6px 14px; border-radius: 50px; font-size: 12px; text-decoration: none; border: 1px solid var(--primary); font-weight: 700; transition: 0.3s; }
+        .pill:hover { background: var(--primary); color: white; }
 
-        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 15px 0; }
-        .stat-card { background: var(--card); padding: 15px; border-radius: 15px; text-align: center; border: 1px solid rgba(255,255,255,0.05); }
-        .stat-label { font-size: 10px; color: #9ca3af; text-transform: uppercase; }
-        .stat-value { font-size: 18px; font-weight: 700; }
+        /* Dashboard Stats */
+        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+        .stat-card { background: var(--card); padding: 20px; border-radius: 20px; text-align: center; border: 1px solid rgba(255,255,255,0.05); box-shadow: 0 4px 20px rgba(0,0,0,0.2); }
+        .stat-label { font-size: 11px; color: #9ca3af; text-transform: uppercase; letter-spacing: 1px; }
+        .stat-value { font-size: 22px; font-weight: 800; margin-top: 5px; }
 
-        .glass-panel { background: rgba(17, 24, 39, 0.7); border: 1px solid rgba(255,255,255,0.05); border-radius: 20px; padding: 20px; margin-bottom: 15px; }
-        input, textarea, select { width: 100%; padding: 12px; margin: 8px 0; border-radius: 10px; border: 1px solid #374151; background: #1f2937; color: white; box-sizing: border-box; }
+        /* Panels */
+        .glass-panel { background: rgba(17, 24, 39, 0.7); border: 1px solid rgba(255,255,255,0.05); border-radius: 24px; padding: 25px; margin-bottom: 20px; backdrop-filter: blur(10px); }
+        h3 { margin-top: 0; font-size: 14px; color: var(--primary); text-transform: uppercase; letter-spacing: 1px; }
         
-        .btn-action { width: 100%; padding: 12px; border-radius: 10px; border: none; font-weight: 700; cursor: pointer; background: var(--primary); color: white; }
+        input, textarea, select { width: 100%; padding: 14px; margin: 10px 0; border-radius: 12px; border: 1px solid #374151; background: #1f2937; color: white; box-sizing: border-box; outline: none; font-size: 15px; }
+        input:focus { border-color: var(--primary); }
+        
+        .btn-action { width: 100%; padding: 16px; border-radius: 14px; border: none; font-weight: 800; cursor: pointer; background: var(--primary); color: white; transition: 0.3s; font-size: 15px; box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3); }
+        .btn-action:active { transform: scale(0.98); }
 
-        /* History Table */
-        .history-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 13px; }
-        .history-table th { text-align: left; color: #9ca3af; padding: 10px; border-bottom: 1px solid #374151; }
-        .history-table td { padding: 10px; border-bottom: 1px solid #1f2937; }
-        .dl-btn { background: var(--accent); color: white; padding: 4px 8px; border-radius: 6px; text-decoration: none; font-size: 11px; border:none; cursor:pointer; }
+        /* Advanced Search Results */
+        #searchResult { margin-top: 15px; padding: 15px; border-radius: 15px; background: rgba(239, 68, 68, 0.1); border: 1px dashed var(--danger); display: none; }
+        .debt-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #374151; }
 
-        /* Hidden Bill Template */
-        #bill-export { position: absolute; left: -9999px; width: 400px; background: white; color: #1a1a1a; padding: 30px; }
-        .bill-logo { font-size: 24px; font-weight: 900; color: #6366f1; text-align: center; }
-        .bill-table { width: 100%; border-collapse: collapse; margin: 20px 0; }
-        .bill-table td { padding: 8px; border-bottom: 1px solid #eee; }
+        /* Transaction List */
+        .history-item { background: #111827; padding: 18px; border-radius: 18px; margin-bottom: 12px; border: 1px solid #1f2937; display: flex; justify-content: space-between; align-items: center; }
+        .cust-meta b { font-size: 16px; display: block; }
+        .cust-meta small { color: #6b7280; font-size: 11px; }
+        .action-area { text-align: right; }
+        .settle-btn { background: var(--accent); color: white; border: none; padding: 6px 12px; border-radius: 8px; font-size: 11px; font-weight: 800; cursor: pointer; margin-left: 5px; }
+        .reprint-btn { background: #374151; color: white; border: none; padding: 6px 12px; border-radius: 8px; font-size: 11px; cursor: pointer; }
+
+        /* Professional Bill Template (Hidden) */
+        #bill-export { position: absolute; left: -9999px; width: 450px; background: white; color: black; padding: 40px; font-family: 'Inter', sans-serif; }
+        .bill-header { text-align: center; border-bottom: 3px solid black; padding-bottom: 15px; }
+        .bill-table { width: 100%; border-collapse: collapse; margin: 25px 0; }
+        .bill-table th { text-align: left; background: #f0f0f0; padding: 10px; border: 1px solid #ccc; }
+        .bill-table td { padding: 10px; border: 1px solid #eee; }
+        .stamp { position: absolute; bottom: 100px; right: 40px; border: 3px solid #10b981; color: #10b981; padding: 10px; border-radius: 10px; transform: rotate(-15deg); font-weight: 900; opacity: 0.6; }
     </style>
 </head>
 <body>
 
 <div class="container">
     <header>
-        <h1 style="margin:0; font-size: 24px;">THE AI HUB</h1>
-        <p style="color:#9ca3af; font-size: 12px; margin: 4px 0;">Founder: Harshwardhan Singh Lodhi (Karan)</p>
+        <h1 style="margin:0; font-weight: 900; font-size: 32px;">THE AI HUB</h1>
+        <p style="color:#9ca3af; font-size: 14px; margin: 5px 0;">Founder: Harshwardhan Singh Lodhi (Karan)</p>
+        <p style="color:var(--primary); font-size: 12px; font-weight: 700;">IIT PATNA AI/ML STUDENT</p>
         <div class="contact-pills">
-            <a href="https://www.instagram.com/_verma_karan08" target="_blank" class="pill">📸 Instagram</a>
-            <a href="mailto:kv2642240@gmail.com" class="pill">📧 Gmail</a>
+            <a href="https://www.instagram.com/_verma_karan08" target="_blank" class="pill">📸 INSTAGRAM</a>
+            <a href="mailto:kv2642240@gmail.com" class="pill">📧 GMAIL</a>
         </div>
     </header>
 
     <div class="stats-grid">
-        <div class="stat-card"><div class="stat-label">Total Debt</div><div class="stat-value" id="dispDebt" style="color:var(--danger)">₹0</div></div>
-        <div class="stat-card"><div class="stat-label">Total Profit</div><div class="stat-value" id="dispProfit" style="color:var(--accent)">₹0</div></div>
+        <div class="stat-card">
+            <div class="stat-label">Total Debt (Pending)</div>
+            <div class="stat-value" id="dispDebt" style="color:var(--danger)">₹0</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-label">Total Cash (Profit)</div>
+            <div class="stat-value" id="dispProfit" style="color:var(--accent)">₹0</div>
+        </div>
+    </div>
+
+    <div class="glass-panel" style="border: 1px solid var(--primary);">
+        <h3>🔍 Search Customer Khata</h3>
+        <input type="text" id="findCust" placeholder="Enter name to see total udhari..." onkeyup="checkLedger()">
+        
+        <div id="searchResult">
+            <div style="font-size: 13px; margin-bottom: 5px;">Showing Records for: <b id="resName"></b></div>
+            <div style="font-size: 24px; font-weight: 900; color: var(--danger);">Total Due: <span id="resTotal">₹0</span></div>
+            <div id="resList" style="margin-top: 15px;"></div>
+        </div>
     </div>
 
     <div class="glass-panel">
-        <h3 style="margin:0; font-size: 14px;">🔍 SEARCH DEBT</h3>
-        <input type="text" id="findCust" placeholder="Enter Name..." onkeyup="checkLedger()">
-        <div id="searchResult" style="margin-top:8px; font-weight:600; color:var(--accent);"></div>
-    </div>
-
-    <div class="glass-panel">
-        <h3 style="margin:0; font-size: 14px;">📄 CREATE INVOICE</h3>
-        <input type="text" id="custName" placeholder="Client Name">
-        <textarea id="itemList" rows="3" placeholder="Item Name | Price"></textarea>
+        <h3>📄 Create Official Invoice</h3>
+        <input type="text" id="custName" placeholder="Customer Name">
+        <textarea id="itemList" rows="3" placeholder="Items & Price (e.g. Potato 50)"></textarea>
         <select id="payStatus">
-            <option value="Credit">Credit (Debt)</option>
-            <option value="Paid">Paid (Profit)</option>
+            <option value="Credit">Credit (Udhari)</option>
+            <option value="Paid">Paid (Cash Profit)</option>
         </select>
-        <button class="btn-action" onclick="saveRecord()">Save & Generate Bill</button>
+        <button class="btn-action" onclick="processInvoice()">GENERATE & DOWNLOAD BILL</button>
     </div>
 
-    <div class="glass-panel">
-        <h3 style="margin:0; font-size: 14px;">📊 RECENT TRANSACTIONS</h3>
-        <table class="history-table">
-            <thead>
-                <tr><th>Client</th><th>Amount</th><th>Bill</th></tr>
-            </thead>
-            <tbody id="historyBody"></tbody>
-        </table>
-    </div>
+    <h3 style="padding-left:10px; color:#6b7280;">Business Activity Log</h3>
+    <div id="historyBody"></div>
 </div>
 
 <div id="bill-export">
-    <div class="bill-logo">THE AI HUB</div>
-    <p style="text-align:center; font-size:12px; color:#666; margin:0;">Official Invoice</p>
-    <hr>
-    <p style="font-size:14px;"><b>Client:</b> <span id="rCust"></span></p>
-    <p style="font-size:14px;"><b>Date:</b> <span id="rDate"></span></p>
-    <table class="bill-table" id="rTable"></table>
-    <div style="text-align: right; font-size: 18px; font-weight: bold; border-top: 2px solid #000; padding-top: 5px;">
-        Total: <span id="rGrand"></span>
+    <div class="bill-header">
+        <h1 style="margin:0; font-size: 28px;">THE AI HUB</h1>
+        <p style="margin:0; font-size: 12px;">Professional Tax Invoice | Rajnandgaon, CG</p>
     </div>
-    <div style="margin-top: 30px; text-align: center; font-size: 10px; color:#888;">
-        <p><b>Harshwardhan Singh Lodhi (Karan)</b></p>
-        <p>IIT Patna (AI/ML) | kv2642240@gmail.com</p>
+    
+    <div style="margin-top: 30px; display: flex; justify-content: space-between;">
+        <div>
+            <small style="color:#666">CUSTOMER:</small><br>
+            <strong id="rCust" style="font-size: 18px; text-transform: uppercase;"></strong>
+        </div>
+        <div style="text-align: right;">
+            <small style="color:#666">DATE & TIME:</small><br>
+            <strong id="rDate"></strong><br>
+            <small>INV NO: <span id="rInv"></span></small>
+        </div>
+    </div>
+
+    <table class="bill-table">
+        <thead>
+            <tr><th>Description</th><th style="text-align: right;">Amount</th></tr>
+        </thead>
+        <tbody id="rRows"></tbody>
+    </table>
+
+    <div style="text-align: right; font-size: 22px; font-weight: 900; border-top: 2px solid black; padding-top: 10px;">
+        GRAND TOTAL: <span id="rGrand"></span>
+    </div>
+
+    <div class="stamp">OFFICIAL<br>VERIFIED</div>
+
+    <div style="margin-top: 60px; text-align: center; border-top: 1px solid #eee; padding-top: 20px;">
+        <p style="font-size: 14px; margin:0;"><b>Authorized Signatory: Karan Lodhi</b></p>
+        <p style="font-size: 10px; color:#888;">IIT Patna Student | Managed via THE AI HUB Intelligence</p>
     </div>
 </div>
 
 <script>
-    let logs = JSON.parse(localStorage.getItem('aih_v4_ledger')) || [];
+    let logs = JSON.parse(localStorage.getItem('aih_final_suite_v1')) || [];
 
-    function saveRecord() {
-        const name = document.getElementById('custName').value;
-        const list = document.getElementById('itemList').value;
+    function processInvoice() {
+        const name = document.getElementById('custName').value.trim();
+        const list = document.getElementById('itemList').value.trim();
         const status = document.getElementById('payStatus').value;
 
-        if(!name || !list) return alert("Fill data!");
+        if(!name || !list) return alert("Bhai, Details fill karo!");
 
-        logs.push({ id: Date.now(), name, list, status, date: new Date().toLocaleDateString() });
-        localStorage.setItem('aih_v4_ledger', JSON.stringify(logs));
-        renderAll();
+        const now = new Date();
+        const timeStr = now.toLocaleDateString() + ' | ' + now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+        const invId = 'AIH-' + Math.floor(10000 + Math.random() * 90000);
+
+        logs.push({ id: Date.now(), invId, name, list, status, date: timeStr });
+        localStorage.setItem('aih_final_suite_v1', JSON.stringify(logs));
         
-        // Auto download last bill
+        renderAll();
         downloadBill(logs[logs.length-1].id);
         
         document.getElementById('custName').value = "";
         document.getElementById('itemList').value = "";
     }
 
-    function downloadBill(id) {
-        const record = logs.find(r => r.id === id);
-        if(!record) return;
+    function settleRecord(id) {
+        if(confirm("Confirm: Has the customer paid this debt?")) {
+            const index = logs.findIndex(i => i.id === id);
+            if(index !== -1) {
+                logs[index].status = "Paid";
+                localStorage.setItem('aih_final_suite_v1', JSON.stringify(logs));
+                renderAll();
+                checkLedger();
+                alert("Account Settled Successfully!");
+            }
+        }
+    }
 
-        document.getElementById('rCust').innerText = record.name;
-        document.getElementById('rDate').innerText = record.date;
+    function downloadBill(id) {
+        const r = logs.find(i => i.id === id);
+        if(!r) return;
+
+        document.getElementById('rCust').innerText = r.name;
+        document.getElementById('rDate').innerText = r.date;
+        document.getElementById('rInv').innerText = r.invId;
         
-        let total = 0;
-        let rowsHtml = '';
-        record.list.split('\n').forEach(line => {
+        let total = 0, rows = '';
+        r.list.split('\n').forEach(line => {
             const p = line.trim().split(' ');
-            const price = parseFloat(p[p.length-1]);
+            const price = parseFloat(p.pop());
             if(!isNaN(price)) {
                 total += price;
-                rowsHtml += `<tr><td>${line.replace(price, '')}</td><td style="text-align:right;">₹${price}</td></tr>`;
+                rows += `<tr><td>${line.replace(price, '')}</td><td style="text-align:right; font-weight:bold;">₹${price.toFixed(2)}</td></tr>`;
             }
         });
-        document.getElementById('rTable').innerHTML = rowsHtml;
-        document.getElementById('rGrand').innerText = '₹' + total;
+        document.getElementById('rRows').innerHTML = rows;
+        document.getElementById('rGrand').innerText = '₹' + total.toFixed(2);
 
-        html2canvas(document.getElementById('bill-export')).then(canvas => {
+        html2canvas(document.getElementById('bill-export'), {scale: 2}).then(canvas => {
             const link = document.createElement('a');
-            link.download = `Bill_${record.name}.png`;
+            link.download = `Bill_${r.name}_${r.invId}.png`;
             link.href = canvas.toDataURL();
             link.click();
         });
@@ -149,35 +207,54 @@
 
     function checkLedger() {
         const q = document.getElementById('findCust').value.toLowerCase();
-        let debt = 0;
-        logs.forEach(e => { if(e.name.toLowerCase().includes(q) && e.status === "Credit") {
-            // Re-calculate total from list
-            let t = 0;
-            e.list.split('\n').forEach(l => { let p = parseFloat(l.trim().split(' ').pop()); if(!isNaN(p)) t += p; });
-            debt += t;
-        }});
-        document.getElementById('searchResult').innerHTML = q ? `Debt: ₹${debt}` : "";
+        const resBox = document.getElementById('searchResult');
+        if(!q) { resBox.style.display = 'none'; return; }
+
+        resBox.style.display = 'block';
+        let totalDebt = 0, detailsHtml = '';
+
+        logs.forEach(e => {
+            if(e.name.toLowerCase().includes(q) && e.status === "Credit") {
+                let currentTotal = 0;
+                e.list.split('\n').forEach(l => { 
+                    let p = parseFloat(l.trim().split(' ').pop()); 
+                    if(!isNaN(p)) currentTotal += p; 
+                });
+                totalDebt += currentTotal;
+                detailsHtml += `<div class="debt-item">
+                    <div style="font-size:11px;">📅 ${e.date}<br>💰 ₹${currentTotal}</div>
+                    <button class="settle-btn" onclick="settleRecord(${e.id})">SETTLE NOW</button>
+                </div>`;
+            }
+        });
+
+        document.getElementById('resName').innerText = q.toUpperCase();
+        document.getElementById('resTotal').innerText = '₹' + totalDebt.toFixed(2);
+        document.getElementById('resList').innerHTML = detailsHtml || '<div style="color:gray; font-size:12px; margin-top:10px;">Clear! No pending debt found.</div>';
     }
 
     function renderAll() {
         let debt = 0, profit = 0, html = '';
-        
         logs.slice().reverse().forEach(r => {
             let t = 0;
             r.list.split('\n').forEach(l => { let p = parseFloat(l.trim().split(' ').pop()); if(!isNaN(p)) t += p; });
-            
             if(r.status === "Credit") debt += t; else profit += t;
 
-            html += `<tr>
-                <td><b>${r.name}</b><br><small>${r.date}</small></td>
-                <td style="color:${r.status === 'Credit' ? 'var(--danger)' : 'var(--accent)'}">₹${t}</td>
-                <td><button class="dl-btn" onclick="downloadBill(${r.id})">PNG</button></td>
-            </tr>`;
+            html += `<div class="history-item">
+                <div class="cust-meta">
+                    <b>${r.name}</b>
+                    <small>${r.date} • ${r.invId}</small>
+                </div>
+                <div class="action-area">
+                    <b style="font-size:16px; color:${r.status === 'Credit' ? 'var(--danger)' : 'var(--accent)'}">₹${t.toFixed(2)}</b><br>
+                    <button class="reprint-btn" onclick="downloadBill(${r.id})">BILL</button>
+                    ${r.status === 'Credit' ? `<button class="settle-btn" onclick="settleRecord(${r.id})">SETTLE</button>` : ''}
+                </div>
+            </div>`;
         });
-
-        document.getElementById('historyBody').innerHTML = html;
-        document.getElementById('dispDebt').innerText = '₹' + debt;
-        document.getElementById('dispProfit').innerText = '₹' + profit;
+        document.getElementById('dispDebt').innerText = '₹' + debt.toFixed(2);
+        document.getElementById('dispProfit').innerText = '₹' + profit.toFixed(2);
+        document.getElementById('historyBody').innerHTML = html || '<p style="text-align:center; color:gray;">No logs available.</p>';
     }
 
     renderAll();
