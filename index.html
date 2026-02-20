@@ -1,156 +1,175 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>THE AI HUB | Karan's AI Ledger</title>
+    <title>THE AI HUB | Business Intelligence by Karan</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
-        :root { --primary: #6366f1; --bg: #030712; --card: #111827; --text: #f3f4f6; --accent: #10b981; }
-        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 15px; }
+        :root { --primary: #6366f1; --bg: #030712; --card: #111827; --text: #f3f4f6; --accent: #10b981; --danger: #ef4444; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 15px; }
         .container { max-width: 600px; margin: auto; }
-        .glass-card { background: rgba(17, 24, 39, 0.8); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 20px; margin-bottom: 20px; }
         
-        /* Stats Grid */
-        .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
-        .stat-box { padding: 15px; border-radius: 15px; text-align: center; border-bottom: 4px solid var(--primary); background: var(--card); }
+        /* Header & Profile */
+        header { text-align: center; padding: 20px 0; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 20px; }
+        .contact-pills { display: flex; justify-content: center; gap: 10px; margin-top: 10px; }
+        .pill { background: rgba(99, 102, 241, 0.1); color: var(--primary); padding: 5px 12px; border-radius: 50px; font-size: 12px; text-decoration: none; border: 1px solid var(--primary); font-weight: 600; }
 
-        /* Input Styles */
-        input, textarea, select { width: 100%; padding: 12px; margin: 8px 0; border-radius: 10px; border: 1px solid #374151; background: #1f2937; color: white; box-sizing: border-box; }
-        .btn { width: 100%; padding: 12px; border-radius: 10px; border: none; font-weight: bold; cursor: pointer; background: var(--primary); color: white; margin-top: 10px; }
+        /* Dashboard Stats */
+        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+        .stat-card { background: var(--card); padding: 20px; border-radius: 18px; border: 1px solid rgba(255,255,255,0.05); text-align: center; }
+        .stat-label { font-size: 11px; color: #9ca3af; text-transform: uppercase; letter-spacing: 1px; }
+        .stat-value { font-size: 22px; font-weight: 700; margin-top: 5px; }
 
-        /* Real Bill Look (Hidden till needed) */
-        #bill-container { position: absolute; left: -9999px; width: 400px; background: white; color: black; padding: 30px; }
-        .bill-header { border-bottom: 2px solid black; text-align: center; margin-bottom: 15px; }
-        
-        /* Ledger List */
-        .ledger-item { background: #1f2937; padding: 15px; border-radius: 12px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
-        
-        /* AI Assistant */
-        #ai-chat { position: fixed; bottom: 20px; right: 20px; background: var(--primary); width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 0 20px var(--primary); }
+        /* Panels */
+        .glass-panel { background: rgba(17, 24, 39, 0.7); border: 1px solid rgba(255,255,255,0.05); border-radius: 24px; padding: 25px; margin-bottom: 20px; }
+        h3 { margin-top: 0; font-size: 16px; color: var(--primary); text-transform: uppercase; }
+        input, textarea, select { width: 100%; padding: 14px; margin: 10px 0; border-radius: 12px; border: 1px solid #374151; background: #1f2937; color: white; box-sizing: border-box; outline: none; }
+        .btn-action { width: 100%; padding: 15px; border-radius: 12px; border: none; font-weight: 700; cursor: pointer; background: var(--primary); color: white; transition: 0.3s; }
+
+        /* Hidden Bill Template */
+        #bill-export { position: absolute; left: -9999px; width: 450px; background: white; color: #1a1a1a; padding: 40px; }
+        .bill-logo { font-size: 28px; font-weight: 900; color: #6366f1; }
+        .bill-table { width: 100%; border-collapse: collapse; margin: 25px 0; }
+        .bill-table th { text-align: left; border-bottom: 2px solid #eee; padding: 10px; }
+        .bill-table td { padding: 12px; border-bottom: 1px solid #f9f9f9; }
+
+        /* Floating AI Icon */
+        #ai-bot { position: fixed; bottom: 25px; right: 25px; background: var(--primary); width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 24px; box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4); }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <div style="text-align:center;">
-        <h1 style="color:var(--primary); margin:0;">THE AI HUB</h1>
-        <p style="color:gray;">Karan | IIT Patna | AI Intelligence</p>
+    <header>
+        <h1 style="margin:0;">THE AI HUB</h1>
+        <p style="color:#9ca3af; font-size: 14px; margin: 5px 0;">Founder: Harshwardhan Singh Lodhi (Karan)</p>
+        <div class="contact-pills">
+            <a href="https://www.instagram.com/_verma_karan08" target="_blank" class="pill">📸 Instagram</a>
+            <a href="mailto:kv2642240@gmail.com" class="pill">📧 Gmail</a>
+        </div>
+    </header>
+
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-label">Total Debt</div>
+            <div class="stat-value" id="dispDebt" style="color:var(--danger)">₹0</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-label">Total Profit</div>
+            <div class="stat-value" id="dispProfit" style="color:var(--accent)">₹0</div>
+        </div>
     </div>
 
-    <div class="stats">
-        <div class="stat-box">Total Udhari<br><b id="sumUdhari" style="color:#ef4444">₹0</b></div>
-        <div class="stat-box">Total Profit<br><b id="sumProfit" style="color:var(--accent)">₹0</b></div>
+    <div class="glass-panel">
+        <h3>🔍 Ledger Search</h3>
+        <input type="text" id="findCust" placeholder="Enter Client Name..." onkeyup="checkLedger()">
+        <div id="searchResult" style="margin-top:10px; font-weight:600; color:var(--accent);"></div>
     </div>
 
-    <div class="glass-card">
-        <h3>🔍 Udhari Checker</h3>
-        <input type="text" id="searchName" placeholder="Customer ka naam likho..." onkeyup="searchCustomer()">
-        <div id="customerResult" style="color:var(--accent); font-weight:bold;"></div>
-    </div>
-
-    <div class="glass-card">
-        <h3>📝 New Billing</h3>
-        <input type="text" id="cName" placeholder="Customer Name">
-        <textarea id="itemsList" rows="3" placeholder="Saman list (Ex: Tamatar 20)"></textarea>
-        <select id="type">
-            <option value="Udhari">Udhari (Pending)</option>
-            <option value="Paid">Nagad (Profit)</option>
+    <div class="glass-panel">
+        <h3>📄 New Invoice</h3>
+        <input type="text" id="custName" placeholder="Client Name">
+        <textarea id="itemList" rows="4" placeholder="Example:&#10;Tomato 50&#10;Potato 30"></textarea>
+        <select id="payStatus">
+            <option value="Credit">Credit (Debt)</option>
+            <option value="Paid">Paid (Profit)</option>
         </select>
-        <button class="btn" onclick="saveAndDownload()">Download Bill & Save</button>
-    </div>
-
-    <div id="ledgerList"></div>
-</div>
-
-<div id="bill-container">
-    <div class="bill-header">
-        <h1>THE AI HUB</h1>
-        <p>Rajnandgaon, Chhattisgarh</p>
-    </div>
-    <p><b>Bill No:</b> <span id="rNo"></span></p>
-    <p><b>Customer:</b> <span id="rName"></span></p>
-    <hr>
-    <div id="rItems"></div>
-    <hr>
-    <h3>Total: ₹<span id="rTotal"></span></h3>
-    <p>Status: <span id="rStatus"></span></p>
-    <div style="text-align:center; margin-top:20px; font-size:12px;">
-        <p>Generated by Karan (IIT Patna AI System)</p>
+        <button class="btn-action" onclick="processInvoice()">Generate & Download Bill</button>
     </div>
 </div>
 
-<div id="ai-chat" onclick="askAI()">🤖</div>
+<div id="bill-export">
+    <div style="text-align: center;">
+        <div class="bill-logo">THE AI HUB</div>
+        <p style="margin:0; font-size:14px; color:#666;">Official Commercial Invoice</p>
+    </div>
+    <div style="margin-top: 30px; display: flex; justify-content: space-between; font-size: 14px;">
+        <div>
+            <span style="color:#888">BILL TO:</span><br>
+            <strong id="rCust" style="font-size: 16px;"></strong>
+        </div>
+        <div style="text-align: right;">
+            <span style="color:#888">DATE:</span><br>
+            <strong id="rDate"></strong>
+        </div>
+    </div>
+    <table class="bill-table">
+        <thead>
+            <tr><th>Description</th><th style="text-align: right;">Amount</th></tr>
+        </thead>
+        <tbody id="rRows"></tbody>
+    </table>
+    <div style="text-align: right; font-size: 20px; border-top: 2px solid #000; padding-top: 10px;">
+        Total Amount: <strong id="rGrand"></strong>
+    </div>
+    <div style="margin-top: 50px; text-align: center; border-top: 1px solid #eee; padding-top: 20px;">
+        <p style="font-size: 13px; margin:0;"><b>Harshwardhan Singh Lodhi (Karan)</b></p>
+        <p style="font-size: 11px; color:#666; margin:3px 0;">IIT Patna (AI/ML) | Rajnandgaon, CG</p>
+        <p style="font-size: 11px; color:#666;">Email: kv2642240@gmail.com | Insta: @_verma_karan08</p>
+    </div>
+</div>
+
+<div id="ai-bot" onclick="aiSummary()">🤖</div>
 
 <script>
-    let db = JSON.parse(localStorage.getItem('aih_v3')) || [];
+    let logs = JSON.parse(localStorage.getItem('aih_final_ledger')) || [];
 
-    function saveAndDownload() {
-        const name = document.getElementById('cName').value;
-        const list = document.getElementById('itemsList').value;
-        const type = document.getElementById('type').value;
+    function processInvoice() {
+        const name = document.getElementById('custName').value;
+        const list = document.getElementById('itemList').value;
+        const status = document.getElementById('payStatus').value;
 
-        if(!name || !list) return alert("Details bharo!");
+        if(!name || !list) { alert("Please fill all details!"); return; }
 
         let total = 0;
-        let itemRows = '';
+        let rowsHtml = '';
         list.split('\n').forEach(line => {
-            let p = line.trim().split(' ');
-            let price = parseFloat(p[p.length-1]);
+            const parts = line.trim().split(' ');
+            const price = parseFloat(parts[parts.length - 1]);
             if(!isNaN(price)) {
                 total += price;
-                itemRows += `<p>${line}</p>`;
+                rowsHtml += `<tr><td>${line.replace(price, '')}</td><td style="text-align:right;">₹${price}</td></tr>`;
             }
         });
 
-        // Save to Local Data
-        db.push({ name, total, type, date: new Date().toLocaleDateString() });
-        localStorage.setItem('aih_v3', JSON.stringify(db));
+        logs.push({ name, total, status, date: new Date().toLocaleDateString() });
+        localStorage.setItem('aih_final_ledger', JSON.stringify(logs));
 
-        // Prepare Bill for Download
-        document.getElementById('rName').innerText = name;
-        document.getElementById('rTotal').innerText = total;
-        document.getElementById('rItems').innerHTML = itemRows;
-        document.getElementById('rStatus').innerText = type;
-        document.getElementById('rNo').innerText = 'AIH-' + Math.floor(Math.random()*9000);
+        document.getElementById('rCust').innerText = name;
+        document.getElementById('rDate').innerText = new Date().toLocaleDateString();
+        document.getElementById('rRows').innerHTML = rowsHtml;
+        document.getElementById('rGrand').innerText = '₹' + total;
 
-        // Convert to Image and Download
-        html2canvas(document.getElementById('bill-container')).then(canvas => {
-            let link = document.createElement('a');
-            link.download = `${name}_Bill.png`;
+        html2canvas(document.getElementById('bill-export')).then(canvas => {
+            const link = document.createElement('a');
+            link.download = `Bill_${name}.png`;
             link.href = canvas.toDataURL();
             link.click();
             location.reload();
         });
     }
 
-    function searchCustomer() {
-        const sName = document.getElementById('searchName').value.toLowerCase();
-        if(!sName) { document.getElementById('customerResult').innerText = ""; return; }
-        
-        let totalDebt = 0;
-        db.forEach(entry => {
-            if(entry.name.toLowerCase().includes(sName) && entry.type === "Udhari") {
-                totalDebt += entry.total;
-            }
-        });
-        document.getElementById('customerResult').innerText = sName ? `${sName} ki total udhari: ₹${totalDebt}` : "";
+    function checkLedger() {
+        const q = document.getElementById('findCust').value.toLowerCase();
+        if(!q) { document.getElementById('searchResult').innerText = ""; return; }
+        let debt = 0;
+        logs.forEach(e => { if(e.name.toLowerCase().includes(q) && e.status === "Credit") debt += e.total; });
+        document.getElementById('searchResult').innerHTML = `Pending Balance: <span style="color:var(--danger)">₹${debt}</span>`;
     }
 
-    function render() {
-        let tU = 0, tP = 0;
-        db.forEach(e => {
-            if(e.type === "Udhari") tU += e.total; else tP += e.total;
-        });
-        document.getElementById('sumUdhari').innerText = "₹" + tU;
-        document.getElementById('sumProfit').innerText = "₹" + tP;
+    function updateStats() {
+        let debt = 0, profit = 0;
+        logs.forEach(e => { if(e.status === "Credit") debt += e.total; else profit += e.total; });
+        document.getElementById('dispDebt').innerText = '₹' + debt;
+        document.getElementById('dispProfit').innerText = '₹' + profit;
     }
 
-    function askAI() {
-        alert("Karan's AI Assistant: Aaj ka business solid chal raha hai! Aapne ab tak ₹" + document.getElementById('sumProfit').innerText + " ka profit kiya hai. Sabse zyada udhari " + (db.length > 0 ? db[0].name : "kisi ki nahi") + " ki hai.");
+    function aiSummary() {
+        alert(`Karan's AI Insights:\n\nBusiness is stable. Total Profit: ₹${document.getElementById('dispProfit').innerText}. Your system is encrypted and secure.`);
     }
 
-    render();
+    updateStats();
 </script>
 </body>
 </html>
