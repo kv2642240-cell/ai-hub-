@@ -5,184 +5,155 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <meta name="google-site-verification" content="ryKoSefcaCa9KEmGunISRagpfvqKzwgavcKRk7J2Njo" />
-    <meta name="description" content="THE AI HUB - Founded by Harshwardhan Singh Lodhi (Karan), IIT Patna student. Professional Business Ledger.">
-    <meta name="author" content="Harshwardhan Singh Lodhi">
 
-    <title>THE AI HUB | Admin Ledger</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Harshwardhan Singh Lodhi",
+      "alternateName": "Karan",
+      "description": "Founder & CEO of THE AI HUB. Student at IIT Patna (AI/ML). 12th Commerce (2024) from Rajnandgaon, Chhattisgarh.",
+      "url": "https://kv2642240-cell.github.io/ai-hub/",
+      "image": "https://kv2642240-cell.github.io/ai-hub/karan.jpg",
+      "jobTitle": "CEO & Founder",
+      "worksFor": { "@type": "Organization", "name": "THE AI HUB" },
+      "email": "kv2642240@gmail.com"
+    }
+    </script>
+
+    <title>THE AI HUB | Harshwardhan Singh Lodhi (Karan)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
     
     <style>
-        :root { --primary: #6366f1; --accent: #8b5cf6; --bg: #030712; --card: #111827; --green: #10b981; --red: #ef4444; --yellow: #f59e0b; --text-main: #f3f4f6; --text-dim: #9ca3af; }
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--bg); color: var(--text-main); margin: 0; padding: 15px; display: flex; flex-direction: column; align-items: center; }
-        .premium-card { background: rgba(17, 24, 39, 0.7); backdrop-filter: blur(15px); padding: 25px; border-radius: 24px; border: 1px solid rgba(255, 255, 255, 0.08); width: 100%; max-width: 850px; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4); margin-bottom: 20px; }
-        .summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 15px; width: 100%; max-width: 850px; margin-bottom: 20px; }
-        .stat-box { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); padding: 20px; border-radius: 20px; text-align: center; }
-        .stat-box h4 { margin: 0; font-size: 11px; text-transform: uppercase; color: var(--text-dim); }
-        .stat-box p { margin: 10px 0 0 0; font-size: 20px; font-weight: 800; }
-        h1 { font-size: 2.2rem; background: linear-gradient(to right, #818cf8, #c084fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .input-group { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin: 20px 0; }
-        input, select { background: #1f2937; border: 1px solid #374151; padding: 12px; border-radius: 10px; color: white; outline: none; width: 100%; box-sizing: border-box; }
-        .btn-main { background: linear-gradient(135deg, var(--primary), var(--accent)); color: white; padding: 12px; border-radius: 10px; border: none; font-weight: 700; cursor: pointer; width: 100%; transition: 0.3s; margin-bottom: 10px; }
-        .search-bar { width: 95%; padding: 14px; border-radius: 12px; border: 1px solid var(--primary); background: rgba(99, 102, 241, 0.1); color: white; outline: none; margin-bottom: 15px; }
+        :root { --primary: #6366f1; --accent: #8b5cf6; --bg: #030712; --card: #111827; --text: #f3f4f6; --dim: #9ca3af; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 15px; display: flex; flex-direction: column; align-items: center; }
+        .container { width: 100%; max-width: 800px; }
         
-        /* About/CEO Section */
-        .ceo-section { background: rgba(17, 24, 39, 0.9); padding: 30px; border-radius: 24px; border: 1px solid var(--primary); width: 100%; max-width: 850px; text-align: center; margin-top: 30px; }
-        .ceo-img { width: 130px; height: 130px; border-radius: 50%; border: 3px solid var(--primary); object-fit: cover; margin-bottom: 15px; }
+        /* Profile Card */
+        .profile-card { background: var(--card); border: 1px solid rgba(99, 102, 241, 0.3); border-radius: 24px; padding: 30px; text-align: center; margin-bottom: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .profile-img { width: 140px; height: 140px; border-radius: 50%; border: 4px solid var(--primary); object-fit: cover; margin-bottom: 15px; }
+        .badge { background: var(--primary); color: white; padding: 4px 12px; border-radius: 50px; font-size: 11px; font-weight: bold; text-transform: uppercase; }
         
-        /* Modal for Simple Bill */
-        #billModal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 10000; align-items: center; justify-content: center; padding: 20px; }
-        .bill-content { background: white; color: black; padding: 30px; border-radius: 15px; max-width: 500px; width: 100%; }
-        .bill-table { width: 100%; border-collapse: collapse; margin: 20px 0; }
-        .bill-table th, .bill-table td { border-bottom: 1px solid #eee; padding: 12px; text-align: left; }
-        .no-print { margin-top: 20px; display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+        /* Dashboard Card */
+        .premium-card { background: rgba(17, 24, 39, 0.7); backdrop-filter: blur(10px); padding: 25px; border-radius: 24px; border: 1px solid rgba(255,255,255,0.1); margin-bottom: 20px; }
+        .stat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-bottom: 20px; }
+        .stat-box { background: rgba(255,255,255,0.03); padding: 20px; border-radius: 15px; text-align: center; border-top: 4px solid var(--primary); }
+        
+        input, select { background: #1f2937; border: 1px solid #374151; padding: 12px; border-radius: 10px; color: white; width: 100%; margin-bottom: 12px; box-sizing: border-box; outline: none; }
+        .btn { background: linear-gradient(135deg, var(--primary), var(--accent)); color: white; padding: 14px; border-radius: 10px; border: none; font-weight: bold; width: 100%; cursor: pointer; transition: 0.3s; font-size: 1rem; }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(99, 102, 241, 0.4); }
+        
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        th { text-align: left; color: var(--dim); font-size: 0.8rem; text-transform: uppercase; padding: 10px; }
+        td { padding: 12px; border-bottom: 1px solid #1f2937; }
+        .whatsapp-btn { background: #25D366; color: white; padding: 6px 12px; border-radius: 8px; text-decoration: none; font-size: 12px; font-weight: bold; display: inline-block; }
     </style>
 </head>
 <body>
 
-    <div id="loginPage" class="premium-card" style="text-align: center; max-width: 400px; margin-top: 50px;">
-        <h1>THE AI HUB</h1>
-        <p style="color: var(--text-dim);">Enterprise Ledger System</p>
-        <input type="text" id="adminIn" placeholder="Admin Name (Karan)" style="width: 85%; margin-top: 20px;">
-        <button onclick="startApp()" class="btn-main" style="margin-top: 15px;">Launch Dashboard</button>
-    </div>
-
-    <div id="dashboard" style="display: none; width: 100%; max-width: 900px;">
-        <div class="summary-grid">
-            <div class="stat-box" style="border-top: 4px solid var(--yellow);"><h4 style="color:var(--yellow)">Udhari</h4><p id="totalU">₹0</p></div>
-            <div class="stat-box" style="border-top: 4px solid var(--green);"><h4 style="color:var(--green)">Profit</h4><p id="totalP">₹0</p></div>
-            <div class="stat-box" style="border-top: 4px solid var(--red);"><h4 style="color:var(--red)">Loss</h4><p id="totalL">₹0</p></div>
-        </div>
-
-        <div class="premium-card">
-            <h2 id="helloUser" style="margin:0;">Welcome, Admin</h2>
-            <div class="input-group">
-                <input type="text" id="cName" placeholder="Customer Name">
-                <input type="number" id="uIn" placeholder="Udhari (₹)">
-                <input type="number" id="pIn" placeholder="Profit (₹)">
-                <input type="number" id="lIn" placeholder="Loss (₹)">
-                <select id="entryType">
-                    <option value="General">General Transaction</option>
-                    <option value="Service">Service Provided</option>
-                    <option value="Product">Product Sold</option>
-                </select>
+    <div class="container">
+        <div class="profile-card">
+            <img src="https://kv2642240-cell.github.io/ai-hub/karan.jpg" alt="Harshwardhan Singh Lodhi" class="profile-img">
+            <div><span class="badge">Founder & CEO</span></div>
+            <h1 style="margin: 10px 0 5px 0; font-size: 1.8rem;">Harshwardhan Singh Lodhi</h1>
+            <p style="color: var(--primary); font-weight: 600; margin-top: 0;">(Karan) | Chhattisgarh, Rajnandgaon</p>
+            <p style="font-size: 14px; line-height: 1.6; color: var(--dim);">
+                12th Commerce (2024) | <b>IIT Patna AI/ML Student</b><br>
+                Owner of <b>THE AI HUB</b>
+            </p>
+            <div style="margin-top: 15px;">
+                <a href="https://www.instagram.com/_verma_karan08" target="_blank" style="color:var(--text); text-decoration:none; margin: 0 10px; font-size: 14px; border-bottom: 1px solid var(--primary);">Instagram</a>
+                <a href="mailto:kv2642240@gmail.com" style="color:var(--text); text-decoration:none; margin: 0 10px; font-size: 14px; border-bottom: 1px solid var(--primary);">Email</a>
             </div>
-            <button onclick="addEntry()" class="btn-main" style="background: var(--green);">+ Save Transaction</button>
-            <button onclick="exportToCSV()" class="btn-main" style="background: var(--primary);">⬇️ Download Excel Backup</button>
         </div>
 
-        <input type="text" id="liveSearch" class="search-bar" onkeyup="filterTable()" placeholder="🔍 Search Customer...">
+        <div class="stat-grid">
+            <div class="stat-box">
+                <h4 style="margin:0; font-size: 12px; color: var(--dim);">TOTAL UDHARI</h4>
+                <p id="tU" style="color:#f59e0b; font-size: 1.5rem; font-weight: bold; margin: 10px 0 0 0;">₹0</p>
+            </div>
+            <div class="stat-box">
+                <h4 style="margin:0; font-size: 12px; color: var(--dim);">TOTAL PROFIT</h4>
+                <p id="tP" style="color:#10b981; font-size: 1.5rem; font-weight: bold; margin: 10px 0 0 0;">₹0</p>
+            </div>
+        </div>
 
         <div class="premium-card">
+            <h3 style="margin-top:0;">Add New Entry</h3>
+            <input type="text" id="cName" placeholder="Customer Name">
+            <input type="number" id="amt" placeholder="Amount (₹)">
+            <select id="type">
+                <option value="Udhari">Udhari (Pending)</option>
+                <option value="Profit">Profit (Received)</option>
+            </select>
+            <button class="btn" onclick="save()">Save to Ledger</button>
+        </div>
+
+        <div class="premium-card">
+            <h3 style="margin-top:0;">Business Transactions</h3>
             <div style="overflow-x: auto;">
-                <table style="width:100%; border-collapse: collapse;">
+                <table>
                     <thead>
-                        <tr style="text-align: left; color: var(--text-dim);">
-                            <th style="padding:12px;">Customer</th>
+                        <tr>
+                            <th>Customer</th>
                             <th>Amount</th>
+                            <th>Type</th>
                             <th>Action</th>
                         </tr>
                     </thead>
-                    <tbody id="mTable"></tbody>
+                    <tbody id="logs"></tbody>
                 </table>
             </div>
         </div>
     </div>
 
-    <div class="ceo-section">
-        <img src="karan_profile.jpg" alt="Harshwardhan Singh Lodhi" class="ceo-img">
-        <h2 style="margin:0;">Harshwardhan Singh Lodhi</h2>
-        <p style="color:var(--primary); font-weight:700;">Founder & CEO, THE AI HUB</p>
-        <p style="font-size: 14px; color: var(--text-dim); line-height:1.6;">
-            Karan (Harshwardhan) from Rajnandgaon, Chhattisgarh. <br>
-            12th Commerce (2024) | Studying AI/ML at IIT Patna.
-        </p>
-    </div>
-
-    <div id="billModal">
-        <div class="bill-content">
-            <h2 style="text-align:center; color:#6366f1; margin:0;">THE AI HUB</h2>
-            <p style="text-align:center; font-size:12px; margin-bottom:20px;">Business Invoice</p>
-            <hr>
-            <p><strong>Customer:</strong> <span id="bC"></span></p>
-            <p><strong>Date:</strong> <span id="bDate"></span></p>
-            <p><strong>Type:</strong> <span id="bType"></span></p>
-            <table class="bill-table">
-                <tr><th>Description</th><th>Amount</th></tr>
-                <tr><td>Professional Service/Product</td><td id="bAmt"></td></tr>
-            </table>
-            <h3 style="text-align:right;">Total: <span id="bTotal"></span></h3>
-            <div class="no-print">
-                <button onclick="window.print()" style="background:#10b981; color:white; border:none; padding:10px 20px; border-radius:8px; cursor:pointer;">Print PDF</button>
-                <button onclick="shareWA()" style="background:#25D366; color:white; border:none; padding:10px 20px; border-radius:8px; cursor:pointer;">WhatsApp Share</button>
-                <button onclick="document.getElementById('billModal').style.display='none'" style="background:#eee; border:none; padding:10px 20px; border-radius:8px; cursor:pointer;">Close</button>
-            </div>
-        </div>
-    </div>
-
     <script>
-        let KEY = "aih_simple_db";
-        function startApp() {
-            let user = document.getElementById('adminIn').value;
-            if(!user) return alert("Enter Admin Name");
-            document.getElementById('loginPage').style.display='none';
-            document.getElementById('dashboard').style.display='block';
-            showData();
+        let data = JSON.parse(localStorage.getItem('aih_final_data')) || [];
+
+        function save() {
+            let name = document.getElementById('cName').value.trim();
+            let amt = parseFloat(document.getElementById('amt').value);
+            let type = document.getElementById('type').value;
+
+            if(!name || !amt) {
+                alert("Bhai, details toh bharo!");
+                return;
+            }
+
+            data.push({ name, amt, type, date: new Date().toLocaleDateString() });
+            localStorage.setItem('aih_final_data', JSON.stringify(data));
+            
+            document.getElementById('cName').value = "";
+            document.getElementById('amt').value = "";
+            render();
         }
-        function addEntry() {
-            let name = document.getElementById('cName').value;
-            let u = parseFloat(document.getElementById('uIn').value || 0);
-            let p = parseFloat(document.getElementById('pIn').value || 0);
-            let l = parseFloat(document.getElementById('lIn').value || 0);
-            let t = document.getElementById('entryType').value;
-            if(!name) return alert("Name?");
-            let db = JSON.parse(localStorage.getItem(KEY)) || [];
-            db.push({id: Date.now(), name, u, p, l, t, date: new Date().toLocaleDateString()});
-            localStorage.setItem(KEY, JSON.stringify(db));
-            showData();
-        }
-        function showData() {
-            let db = JSON.parse(localStorage.getItem(KEY)) || [];
-            let table = document.getElementById('mTable');
-            let sU=0, sP=0, sL=0; table.innerHTML = "";
-            db.forEach(item => {
-                sU+=item.u; sP+=item.p; sL+=item.l;
-                let displayAmt = item.u > 0 ? item.u : (item.p > 0 ? item.p : item.l);
-                table.innerHTML += `<tr>
-                    <td style="padding:12px;"><b>${item.name}</b><br><small>${item.date}</small></td>
-                    <td>₹${displayAmt}</td>
-                    <td>
-                        <button onclick="openBill('${item.name}', ${displayAmt}, '${item.t}')" style="background:var(--primary); color:white; border:none; padding:5px 10px; border-radius:5px;">Bill</button>
-                        <button onclick="del(${item.id})" style="color:var(--red); background:none; border:none; margin-left:10px;">✕</button>
-                    </td>
-                </tr>`;
+
+        function render() {
+            let logs = document.getElementById('logs');
+            let tU = 0, tP = 0;
+            logs.innerHTML = "";
+
+            data.forEach((item, i) => {
+                if(item.type === "Udhari") tU += item.amt; 
+                else tP += item.amt;
+
+                let msg = `*THE AI HUB - INVOICE*%0A--------------------------%0A*Customer:* ${item.name}%0A*Amount:* ₹${item.amt}%0A*Type:* ${item.type}%0A*Date:* ${item.date}%0A--------------------------%0A_Founder: Harshwardhan Singh Lodhi (Karan)_`;
+
+                logs.innerHTML += `
+                    <tr>
+                        <td><b>${item.name}</b><br><small style="color:var(--dim)">${item.date}</small></td>
+                        <td style="color:${item.type === 'Udhari' ? '#f59e0b' : '#10b981'}">₹${item.amt}</td>
+                        <td><small>${item.type}</small></td>
+                        <td><a href="https://wa.me/?text=${msg}" class="whatsapp-btn" target="_blank">Share</a></td>
+                    </tr>
+                `;
             });
-            document.getElementById('totalU').innerText = "₹"+sU;
-            document.getElementById('totalP').innerText = "₹"+sP;
-            document.getElementById('totalL').innerText = "₹"+sL;
+
+            document.getElementById('tU').innerText = "₹" + tU;
+            document.getElementById('tP').innerText = "₹" + tP;
         }
-        function openBill(n, a, t) {
-            document.getElementById('bC').innerText = n;
-            document.getElementById('bAmt').innerText = "₹"+a;
-            document.getElementById('bTotal').innerText = "₹"+a;
-            document.getElementById('bDate').innerText = new Date().toLocaleDateString();
-            document.getElementById('bType').innerText = t;
-            document.getElementById('billModal').style.display = 'flex';
-        }
-        function shareWA() {
-            let n = document.getElementById('bC').innerText;
-            let a = document.getElementById('bTotal').innerText;
-            let msg = `*THE AI HUB - INVOICE*%0A---%0ACustomer: ${n}%0ATotal: ${a}%0ADate: ${new Date().toLocaleDateString()}%0A---%0A_Founder: Karan (Harshwardhan)_`;
-            window.open(`https://wa.me/?text=${msg}`, '_blank');
-        }
-        function exportToCSV() {
-            let db = JSON.parse(localStorage.getItem(KEY)) || [];
-            let csv = "Name,Udhari,Profit,Loss,Date\n" + db.map(i => `${i.name},${i.u},${i.p},${i.l},${i.date}`).join("\n");
-            let link = document.createElement("a");
-            link.href = "data:text/csv;charset=utf-8," + encodeURI(csv);
-            link.download = "THE_AI_HUB_Data.csv";
-            link.click();
-        }
-        function del(id) { if(confirm("Delete?")) { let db = JSON.parse(localStorage.getItem(KEY)).filter(i => i.id !== id); localStorage.setItem(KEY, JSON.stringify(db)); showData(); } }
+
+        render();
     </script>
 </body>
 </html>
