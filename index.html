@@ -5,96 +5,80 @@
     <title>The AI Hub - Official Manager</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
-        body { background: #0f0f1a; color: white; font-family: sans-serif; padding: 10px; }
-        .box { max-width: 400px; margin: auto; background: #1a1a2e; padding: 15px; border-radius: 12px; border: 1px solid #7b2cbf; }
-        .stats { display: flex; justify-content: space-between; margin-bottom: 15px; background: #242442; padding: 10px; border-radius: 8px; font-weight: bold; }
-        input, select { width: 100%; padding: 10px; margin: 5px 0; border-radius: 5px; border: none; }
-        button { width: 100%; padding: 10px; background: #7b2cbf; color: white; border: none; border-radius: 5px; cursor: pointer; margin-top: 10px; }
-        .record { background: #242442; padding: 10px; margin-top: 8px; border-radius: 5px; border-left: 4px solid #7b2cbf; display: flex; justify-content: space-between; align-items: center; }
-        .social { text-align: center; margin-top: 20px; }
+        body { background: #0f0f1a; color: white; font-family: sans-serif; padding: 15px; }
+        .box { max-width: 400px; margin: auto; background: #1a1a2e; padding: 20px; border-radius: 15px; border: 1px solid #7b2cbf; }
+        input, select { width: 100%; padding: 10px; margin: 8px 0; border-radius: 5px; border: none; }
+        button { padding: 8px 12px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        .record { background: #242442; padding: 10px; margin-top: 10px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; }
+        .footer { text-align: center; margin-top: 20px; }
     </style>
 </head>
 <body>
 
 <div class="box">
     <h2 style="text-align:center;">THE AI HUB</h2>
-    <p style="text-align:center; font-size:0.8em;">Owner: Harshwardhan Singh Lodhi (Karan)</p>
-    
-    <div class="stats">
-        <span style="color:#00ff00;">Profit: ₹<span id="totalProfit">0</span></span>
-        <span style="color:#ff4d4d;">Udhaar: ₹<span id="totalUdhaar">0</span></span>
-    </div>
-    
     <input type="text" id="name" placeholder="Customer Name">
-    <input type="text" id="product" placeholder="Service Name">
+    <input type="text" id="product" placeholder="Service">
     <input type="number" id="amt" placeholder="Amount (₹)">
-    <select id="status">
-        <option value="Paid">Paid (Profit)</option>
-        <option value="Udhaar">Udhaar (Pending)</option>
+    <select id="type">
+        <option value="Paid">Paid</option>
+        <option value="Udhaar">Udhaar</option>
     </select>
+    <button onclick="addData()" style="width:100%; background:#7b2cbf; color:white;">ADD TO LEDGER</button>
     
-    <button onclick="saveData()">DOWNLOAD BILL & SAVE</button>
+    <div id="list" style="margin-top:20px;"></div>
     
-    <input type="text" id="search" placeholder="🔍 Search Customer..." onkeyup="loadData()">
-    <div id="list"></div>
-
-    <div class="social">
-        <a href="mailto:kv2642240@gmail.com" style="color:white; margin:10px;">📧 Gmail</a>
-        <a href="https://www.instagram.com/_verma_karan08" target="_blank" style="color:white; margin:10px;">📸 Instagram</a>
+    <div class="footer">
+        <a href="mailto:kv2642240@gmail.com" style="color:white; margin-right:15px;">📧 Gmail</a>
+        <a href="https://www.instagram.com/_verma_karan08" target="_blank" style="color:white;">📸 Instagram</a>
     </div>
 </div>
 
 <script>
-    function saveData() {
+    function addData() {
         let n = document.getElementById('name').value;
         let p = document.getElementById('product').value;
-        let a = parseInt(document.getElementById('amt').value);
-        let s = document.getElementById('status').value;
-        if(!n || !a || !p) return alert("Sabhi details bharein!");
-
-        // PDF Generation
-        const { jsPDF } = window.jspdf;
-        const doc = new jsPDF();
-        doc.text("THE AI HUB - INVOICE", 60, 20);
-        doc.text("Owner: Harshwardhan Singh Lodhi (Karan)", 20, 30);
-        doc.text("Customer: " + n, 20, 50);
-        doc.text("Service: " + p, 20, 60);
-        doc.text("Amount: ₹" + a, 20, 70);
-        doc.text("Status: " + s, 20, 80);
-        doc.save(n + "_bill.pdf");
-
+        let a = document.getElementById('amt').value;
+        let t = document.getElementById('type').value;
+        if(!n || !a) return alert("Details bharein!");
+        
         let db = JSON.parse(localStorage.getItem('hub') || "[]");
-        db.push({n, p, a, s, id: Date.now()});
+        db.push({id: Date.now(), n, p, a, t});
         localStorage.setItem('hub', JSON.stringify(db));
         location.reload();
     }
 
-    function loadData() {
-        let q = document.getElementById('search').value.toLowerCase();
+    function generateBill(n, p, a, t) {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+        doc.text("THE AI HUB - INVOICE", 60, 20);
+        doc.text("Customer: " + n, 20, 40);
+        doc.text("Service: " + p, 20, 50);
+        doc.text("Amount: ₹" + a, 20, 60);
+        doc.text("Status: " + t, 20, 70);
+        doc.save("Bill_" + n + ".pdf");
+    }
+
+    function loadLedger() {
         let db = JSON.parse(localStorage.getItem('hub') || "[]");
         let list = document.getElementById('list');
-        let profit = 0, udhaar = 0;
-        list.innerHTML = "";
-        
         db.forEach(i => {
-            if(i.s === 'Paid') profit += i.a; else udhaar += i.a;
-            if(i.n.toLowerCase().includes(q)) {
-                list.innerHTML += `<div class="record">
-                    <div><strong>${i.n}</strong> (${i.s})<br>${i.p} | ₹${i.a}</div>
-                    <button onclick="del(${i.id})" style="width:auto; padding:5px; background:red;">Clear</button>
-                </div>`;
-            }
+            list.innerHTML += `<div class="record">
+                <div><strong>${i.n} (${i.t})</strong><br>₹${i.a}</div>
+                <div>
+                    <button onclick="generateBill('${i.n}','${i.p}','${i.a}','${i.t}')" style="background:green; color:white;">Bill</button>
+                    <button onclick="del(${i.id})" style="background:red; color:white;">Clear</button>
+                </div>
+            </div>`;
         });
-        document.getElementById('totalProfit').innerText = profit;
-        document.getElementById('totalUdhaar').innerText = udhaar;
     }
     
     function del(id) {
         let db = JSON.parse(localStorage.getItem('hub')).filter(i => i.id !== id);
         localStorage.setItem('hub', JSON.stringify(db));
-        loadData();
+        location.reload();
     }
-    loadData();
+    loadLedger();
 </script>
 </body>
 </html>
