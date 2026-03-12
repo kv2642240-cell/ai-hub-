@@ -2,81 +2,46 @@
 <html lang="hi">
 <head>
     <meta charset="UTF-8">
-    <title>The AI Hub - Official Manager</title>
+    <title>The AI Hub - Official Bill</title>
     <style>
-        body { background: #0f0f1a; color: #e0e0e0; font-family: sans-serif; padding: 20px; }
-        .box { background: #1a1a2e; padding: 25px; border-radius: 20px; border: 1px solid #7b2cbf; max-width: 450px; margin: auto; }
-        input, select { width: 100%; padding: 12px; margin: 8px 0; background: #161625; color: white; border: 1px solid #7b2cbf; border-radius: 10px; }
-        button { width: 100%; padding: 12px; background: #7b2cbf; color: white; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; }
-        .record { background: #242442; padding: 15px; margin-top: 10px; border-radius: 12px; border-left: 5px solid #7b2cbf; }
-        .footer { text-align: center; margin-top: 25px; font-size: 0.9em; }
-        .footer a { color: #c77dff; text-decoration: none; }
+        body { font-family: sans-serif; background: #f4f4f4; padding: 20px; }
+        .bill-box { background: white; width: 300px; padding: 20px; border: 2px solid #000; margin: auto; box-shadow: 5px 5px 15px #ccc; }
+        .bill-header { text-align: center; border-bottom: 2px solid #000; margin-bottom: 15px; }
+        .bill-details { margin: 15px 0; }
+        .footer-note { text-align: center; font-size: 12px; margin-top: 20px; border-top: 1px dashed #000; }
+        @media print { .no-print { display: none; } }
     </style>
 </head>
 <body>
 
-<div class="box">
-    <h2 style="text-align:center; color:#c77dff;">THE AI HUB</h2>
-    <p style="text-align:center;">Founder: Harshwardhan Singh Lodhi</p>
-    
-    <input type="text" id="name" placeholder="Customer Name">
-    <input type="text" id="product" placeholder="Product / Service Name">
-    <input type="number" id="amt" placeholder="Amount (₹)">
-    <button onclick="saveData()">SAVE RECORD</button>
-    
-    <input type="text" id="search" placeholder="🔍 Search records..." onkeyup="displayData()">
-    <div id="list"></div>
+<div id="printArea" class="bill-box">
+    <div class="bill-header">
+        <h2 style="margin:0;">THE AI HUB</h2>
+        <p style="margin:0; font-size:12px;">Official Invoice</p>
+    </div>
+    <div class="bill-details">
+        <p><strong>Customer:</strong> <span id="cName"></span></p>
+        <p><strong>Service:</strong> <span id="cProduct"></span></p>
+        <p><strong>Amount:</strong> ₹<span id="cAmt"></span></p>
+        <p><strong>Date:</strong> <span id="cDate"></span></p>
+    </div>
+    <div class="footer-note">
+        <p>Owner: Harshwardhan Singh Lodhi</p>
+        <p>Thank you for choosing The AI Hub!</p>
+    </div>
 </div>
 
-<div class="footer">
-    <p>📧 <a href="mailto:kv2642240@gmail.com">Email Us</a> | 📸 <a href="https://www.instagram.com/_verma_karan08" target="_blank">Instagram</a></p>
+<div style="text-align:center; margin-top:20px;">
+    <button class="no-print" onclick="window.print()">PRINT / SAVE AS PDF</button>
 </div>
 
 <script>
-    function saveData() {
-        let name = document.getElementById('name').value;
-        let product = document.getElementById('product').value;
-        let amt = document.getElementById('amt').value;
-        if (!name || !amt || !product) return alert("Sabhi details bharein!");
-        
-        let db = JSON.parse(localStorage.getItem('hub') || "[]");
-        db.push({ id: Date.now(), name, product, amt });
-        localStorage.setItem('hub', JSON.stringify(db));
-        location.reload();
-    }
-
-    function displayData() {
-        let db = JSON.parse(localStorage.getItem('hub') || "[]");
-        let q = document.getElementById('search').value.toLowerCase();
-        let list = document.getElementById('list');
-        list.innerHTML = "";
-        db.filter(i => i.name.toLowerCase().includes(q)).forEach(i => {
-            list.innerHTML += `<div class="record">
-                <strong>${i.name}</strong><br>
-                Product: ${i.product} | ₹${i.amt}<br>
-                <div style="margin-top:10px;">
-                    <button onclick="dlBill('${i.name}', '${i.product}', '${i.amt}')" style="width:auto; padding:5px;">Download Bill</button>
-                    <button onclick="del(${i.id})" style="width:auto; padding:5px; background:red;">Clear</button>
-                </div>
-            </div>`;
-        });
-    }
-
-    function dlBill(n, p, a) {
-        let billTxt = `--- THE AI HUB BILL ---\nOwner: Harshwardhan Singh Lodhi\n------------------------\nCustomer: ${n}\nProduct/Service: ${p}\nAmount Paid: ₹${a}\nStatus: Settled\n------------------------\nThank you for choosing The AI Hub!`;
-        let blob = new Blob([billTxt], {type: 'text/plain'});
-        let link = document.createElement('a');
-        link.href = URL.createObjectURL(blob);
-        link.download = n + "_Bill.txt";
-        link.click();
-    }
-
-    function del(id) {
-        let db = JSON.parse(localStorage.getItem('hub')).filter(i => i.id !== id);
-        localStorage.setItem('hub', JSON.stringify(db));
-        displayData();
-    }
-    displayData();
+    // URL se data lena
+    const params = new URLSearchParams(window.location.search);
+    document.getElementById('cName').innerText = params.get('name');
+    document.getElementById('cProduct').innerText = params.get('product');
+    document.getElementById('cAmt').innerText = params.get('amt');
+    document.getElementById('cDate').innerText = new Date().toLocaleDateString();
 </script>
 </body>
 </html>
