@@ -1,71 +1,70 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>The AI Hub - Purple Finance</title>
+  <title>The AI Hub - Official Manager</title>
   <style>
-    body { background: #1a1a2e; color: #e0e0e0; font-family: 'Segoe UI', sans-serif; padding: 20px; }
-    .card { background: #242442; padding: 20px; border-radius: 15px; border: 1px solid #4a4a75; box-shadow: 0 4px 15px rgba(128, 0, 128, 0.3); margin-bottom: 20px; }
-    input, select { background: #161625; color: #fff; border: 1px solid #4a4a75; padding: 10px; border-radius: 8px; width: 100%; box-sizing: border-box; margin-bottom: 10px; }
-    button { background: #7b2cbf; color: white; border: none; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: bold; }
-    button:hover { background: #9d4edd; }
-    .status-udhaar { color: #ff4d4d; }
-    .status-paid { color: #00ff9d; }
+    body { background: #1a1a2e; color: #fff; font-family: 'Segoe UI', sans-serif; padding: 20px; }
+    .card { background: #242442; padding: 20px; border-radius: 15px; border: 1px solid #4a4a75; box-shadow: 0 4px 15px rgba(128, 0, 128, 0.3); max-width: 600px; margin: auto; }
+    input, select { background: #161625; color: #fff; border: 1px solid #7b2cbf; padding: 12px; width: 100%; margin-bottom: 10px; border-radius: 8px; box-sizing: border-box; }
+    button { background: #7b2cbf; color: white; border: none; padding: 12px; width: 100%; border-radius: 8px; cursor: pointer; font-weight: bold; }
+    .footer { text-align: center; color: #aaa; margin-top: 20px; }
+    .record { border-bottom: 1px solid #4a4a75; padding: 10px 0; }
   </style>
 </head>
 <body>
-  <h1 style="color: #c77dff;">The AI Hub - Purple Manager 💜</h1>
+
+<div class="card">
+  <h2 style="color: #c77dff; text-align: center;">THE AI HUB</h2>
+  <h4 style="text-align: center;">Harshwardhan Singh Lodhi</h4>
   
-  <div class="card">
-    <input type="text" id="search" placeholder="🔍 Search customer name..." onkeyup="filterData()">
-    <input type="text" id="name" placeholder="Customer Name">
-    <input type="number" id="amount" placeholder="Amount">
-    <select id="type"><option value="Udhaar">Udhaar</option><option value="Profit">Profit</option></select>
-    <button onclick="saveRecord()">Add Record</button>
-  </div>
-
+  <input type="text" id="name" placeholder="Customer Name">
+  <input type="number" id="amount" placeholder="Amount">
+  <select id="type"><option value="Udhaar">Udhaar</option><option value="Profit">Profit</option></select>
+  <button onclick="saveRecord()">ADD RECORD</button>
+  
+  <input type="text" id="search" placeholder="🔍 Search Customer..." onkeyup="filterData()">
   <div id="dataList"></div>
+</div>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script>
-    const supabase = supabase.createClient('https://ageofnbquxjwwfpflskn.supabase.co', 'YOUR_SUPABASE_KEY');
+<div class="footer">
+  <p>Contact: kv2642240@gmail.com | Insta: @_verma_karan08</p>
+</div>
 
-    async function saveRecord() {
-      const name = document.getElementById('name').value;
-      const amount = document.getElementById('amount').value;
-      const type = document.getElementById('type').value;
-      
-      await supabase.from('transactions').insert([{ name, amount, type, status: 'Pending' }]);
-      alert("Saved!");
-      loadData();
-    }
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  const supabase = supabase.createClient('https://ageofnbquxjwwfpflskn.supabase.co', 'YO
+https://ageofnbquxjwwfpflskn.supabase.co');
 
-    async function loadData() {
-      const { data } = await supabase.from('transactions').select('*');
-      let html = "";
-      data.forEach(item => {
-        html += `<div class="card" data-name="${item.name.toLowerCase()}">
-          <strong>${item.name}</strong> - ₹${item.amount} <br>
-          Status: <span class="${item.status === 'Pending' ? 'status-udhaar' : 'status-paid'}">${item.status}</span><br>
-          <button onclick="clearUdhaar(${item.id})">Mark as Paid & Bill</button>
-        </div>`;
-      });
-      document.getElementById('dataList').innerHTML = html;
-    }
+  async function saveRecord() {
+    const name = document.getElementById('name').value;
+    const amount = document.getElementById('amount').value;
+    const type = document.getElementById('type').value;
+    await supabase.from('transactions').insert([{ name, amount, type, status: 'Pending' }]);
+    location.reload();
+  }
 
-    function filterData() {
-      let query = document.getElementById('search').value.toLowerCase();
-      document.querySelectorAll('.card[data-name]').forEach(c => {
-        c.style.display = c.getAttribute('data-name').includes(query) ? '' : 'none';
-      });
-    }
+  async function loadData() {
+    const { data } = await supabase.from('transactions').select('*');
+    let html = "<h3>Transactions:</h3>";
+    data.forEach(item => {
+      html += `<div class="record">
+        <strong>${item.name}</strong> - ₹${item.amount} (${item.status}) 
+        <button onclick="generateBill('${item.name}', '${item.amount}')">Bill</button>
+      </div>`;
+    });
+    document.getElementById('dataList').innerHTML = html;
+  }
 
-    async function clearUdhaar(id) {
-      await supabase.from('transactions').update({ status: 'Paid' }).eq('id', id);
-      alert("Payment Settled! Generating Bill...");
-      loadData();
-    }
+  function generateBill(n, a) {
+    const bill = `BILL FOR ${n}\nAmount: ₹${a}\nStatus: Paid\nPowered by: The AI Hub\nOwner: Harshwardhan Singh Lodhi`;
+    const blob = new Blob([bill], {type: "text/plain"});
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = n + "_Bill.txt";
+    link.click();
+  }
 
-    loadData();
-  </script>
+  loadData();
+</script>
 </body>
 </html>
