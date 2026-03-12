@@ -1,78 +1,80 @@
 <!DOCTYPE html>
 <html lang="hi">
 <head>
-  <meta charset="UTF-8">
-  <title>The AI Hub - Official Manager</title>
-  <style>
-    :root { --primary: #7b2cbf; --bg: #0f0f1a; --card: #1a1a2e; --text: #e0e0e0; }
-    body { background: var(--bg); color: var(--text); font-family: 'Poppins', sans-serif; padding: 20px; display: flex; justify-content: center; }
-    .app-container { background: var(--card); padding: 30px; border-radius: 25px; border: 1px solid #4a4a75; width: 100%; max-width: 450px; box-shadow: 0 10px 30px rgba(123, 44, 191, 0.2); }
-    h2 { color: #c77dff; text-align: center; margin-bottom: 5px; }
-    .ceo { text-align: center; font-size: 0.9em; opacity: 0.7; margin-bottom: 25px; }
-    input, select { background: #161625; color: #fff; border: 1px solid #7b2cbf; padding: 14px; width: 100%; margin-bottom: 15px; border-radius: 12px; box-sizing: border-box; }
-    button { background: var(--primary); color: white; padding: 14px; width: 100%; border: none; border-radius: 12px; cursor: pointer; font-weight: bold; transition: 0.3s; }
-    button:hover { background: #9d4edd; transform: scale(1.02); }
-    .record { background: #242442; padding: 15px; margin-top: 10px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; border-left: 4px solid var(--primary); }
-    .footer { text-align: center; color: #777; margin-top: 30px; font-size: 0.85em; }
-  </style>
+    <meta charset="UTF-8">
+    <title>The AI Hub Manager</title>
+    <style>
+        :root { --primary: #7b2cbf; --bg: #0f0f1a; --card: #1a1a2e; }
+        body { background: var(--bg); color: #fff; font-family: sans-serif; padding: 20px; display: flex; justify-content: center; }
+        .box { background: var(--card); padding: 25px; border-radius: 20px; width: 100%; max-width: 450px; border: 1px solid #4a4a75; }
+        input, select { background: #161625; color: #fff; border: 1px solid var(--primary); padding: 12px; width: 100%; margin-bottom: 10px; border-radius: 10px; box-sizing: border-box; }
+        button { background: var(--primary); color: white; padding: 12px; width: 100%; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; }
+        .record { background: #242442; padding: 15px; margin-top: 10px; border-radius: 12px; border-left: 4px solid var(--primary); }
+        .footer { text-align: center; color: #aaa; margin-top: 25px; font-size: 0.85em; }
+    </style>
 </head>
 <body>
 
-<div class="app-container">
-  <h2>THE AI HUB</h2>
-  <p class="ceo">CEO Founder: Harshwardhan Singh Lodhi</p>
-  
-  <input type="text" id="name" placeholder="Customer Name">
-  <input type="number" id="amount" placeholder="Amount (₹)">
-  <select id="type"><option value="Udhaar">Udhaar</option><option value="Profit">Profit</option></select>
-  <button onclick="addEntry()">ADD RECORD</button>
-  
-  <input type="text" id="search" placeholder="🔍 Search records..." onkeyup="loadData()">
-  <div id="dataList"></div>
+<div class="box">
+    <h2 style="color: #c77dff; text-align: center;">THE AI HUB</h2>
+    <p style="text-align: center; font-weight: bold; opacity: 0.8;">CEO: Harshwardhan Singh Lodhi</p>
+    
+    <input type="text" id="name" placeholder="Customer Name">
+    <input type="number" id="amount" placeholder="Amount (₹)">
+    <select id="type"><option value="Udhaar">Udhaar</option><option value="Profit">Profit</option></select>
+    <button onclick="addRecord()">ADD RECORD</button>
+    
+    <input type="text" id="search" placeholder="🔍 Search by name..." onkeyup="showRecords()">
+    <div id="display"></div>
 </div>
 
 <div class="footer">
-  <p>Email: kv2642240@gmail.com</p>
-  <p>Instagram: @_verma_karan08</p>
+    <p>📧 kv2642240@gmail.com</p>
+    <p>📸 Instagram: @_verma_karan08</p>
 </div>
 
 <script>
-  function addEntry() {
-    const name = document.getElementById('name').value;
-    const amount = document.getElementById('amount').value;
-    const type = document.getElementById('type').value;
-    if(!name || !amount) return alert("Please fill all details!");
+    function addRecord() {
+        const name = document.getElementById('name').value;
+        const amount = document.getElementById('amount').value;
+        const type = document.getElementById('type').value;
+        if(!name || !amount) return alert("All fields required!");
+        
+        let db = JSON.parse(localStorage.getItem('hubData')) || [];
+        db.push({ id: Date.now(), name, amount, type });
+        localStorage.setItem('hubData', JSON.stringify(db));
+        location.reload();
+    }
 
-    let data = JSON.parse(localStorage.getItem('hubData')) || [];
-    data.push({ name, amount, type, id: Date.now() });
-    localStorage.setItem('hubData', JSON.stringify(data));
-    location.reload();
-  }
+    function showRecords() {
+        let db = JSON.parse(localStorage.getItem('hubData')) || [];
+        let query = document.getElementById('search').value.toLowerCase();
+        let html = "<h3>Transactions:</h3>";
+        db.filter(i => i.name.toLowerCase().includes(query)).forEach(i => {
+            html += `<div class="record">
+                <strong>${i.name}</strong> - ₹${i.amount} (${i.type})<br>
+                <button onclick="dlBill('${i.name}','${i.amount}')" style="width:auto; padding:5px 10px; margin-top:5px;">Bill</button>
+                <button onclick="del(${i.id})" style="width:auto; padding:5px 10px; margin-top:5px; background:#e63946;">Clear</button>
+            </div>`;
+        });
+        document.getElementById('display').innerHTML = html;
+    }
 
-  function loadData() {
-    let data = JSON.parse(localStorage.getItem('hubData')) || [];
-    let query = document.getElementById('search').value.toLowerCase();
-    let html = "<h3 style='margin-top:20px'>Transactions:</h3>";
-    
-    data.filter(i => i.name.toLowerCase().includes(query)).forEach(item => {
-      html += `<div class="record">
-        <span><strong>${item.name}</strong><br>₹${item.amount} (${item.type})</span>
-        <button onclick="downloadBill('${item.name}', '${item.amount}')" style="width:auto; padding:8px 15px;">Bill</button>
-      </div>`;
-    });
-    document.getElementById('dataList').innerHTML = html;
-  }
+    function del(id) {
+        let db = JSON.parse(localStorage.getItem('hubData')).filter(i => i.id !== id);
+        localStorage.setItem('hubData', JSON.stringify(db));
+        showRecords();
+    }
 
-  function downloadBill(n, a) {
-    const bill = `--- THE AI HUB BILL ---\nCustomer: ${n}\nAmount: ₹${a}\nStatus: Settled\nFounder: Harshwardhan Singh Lodhi\n-----------------------\nContact: kv2642240@gmail.com`;
-    const blob = new Blob([bill], {type: "text/plain"});
-    const aTag = document.createElement("a");
-    aTag.href = URL.createObjectURL(blob);
-    aTag.download = n + "_Bill.txt";
-    aTag.click();
-  }
-
-  loadData();
+    function dlBill(n, a) {
+        const txt = `--- THE AI HUB BILL ---\nCustomer: ${n}\nAmount: ₹${a}\nStatus: Settled\nCEO: Harshwardhan Singh Lodhi`;
+        const blob = new Blob([txt], {type: "text/plain"});
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = n + "_Bill.txt";
+        a.click();
+    }
+    showRecords();
 </script>
 </body>
 </html>
