@@ -5,11 +5,11 @@
     <title>The AI Hub - Official Manager</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
-        body { background: #0f0f1a; color: white; font-family: sans-serif; padding: 15px; }
+        body { background: #0f0f1a; color: white; font-family: sans-serif; padding: 10px; }
         .box { max-width: 400px; margin: auto; background: #1a1a2e; padding: 20px; border-radius: 15px; border: 1px solid #7b2cbf; }
-        .about { font-size: 0.85em; color: #ccc; text-align: center; margin-bottom: 15px; }
-        input, select { width: 100%; padding: 10px; margin: 8px 0; border-radius: 5px; border: none; }
-        button { padding: 8px 12px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        .about-section { text-align: center; margin-bottom: 15px; color: #ccc; font-size: 0.9em; border-bottom: 1px solid #333; padding-bottom: 10px; }
+        input, select { width: 100%; padding: 10px; margin: 8px 0; border-radius: 5px; border: none; box-sizing: border-box; }
+        button { padding: 8px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
         .record { background: #242442; padding: 10px; margin-top: 10px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; }
         .footer { text-align: center; margin-top: 20px; font-size: 0.9em; }
     </style>
@@ -17,8 +17,11 @@
 <body>
 
 <div class="box">
-    <h2 style="text-align:center;">THE AI HUB</h2>
-    <div class="about">Managed by: <b>Harshwardhan Singh Lodhi (Karan)</b><br>Professional AI/ML Solutions</div>
+    <h2 style="text-align:center; color:#c77dff;">THE AI HUB</h2>
+    <div class="about-section">
+        <p><strong>Founder:</strong> Harshwardhan Singh Lodhi (Karan)</p>
+        <p>Professional AI/ML Solutions & Ledger Management</p>
+    </div>
     
     <input type="text" id="name" placeholder="Customer Name">
     <input type="text" id="product" placeholder="Service">
@@ -27,9 +30,11 @@
         <option value="Paid">Paid</option>
         <option value="Udhaar">Udhaar</option>
     </select>
-    <button onclick="addData()" style="width:100%; background:#7b2cbf; color:white;">ADD TO LEDGER</button>
+    <button onclick="addData()" style="width:100%; background:#7b2cbf; color:white; padding:12px;">ADD TO LEDGER</button>
     
-    <div id="list" style="margin-top:20px;"></div>
+    <input type="text" id="search" placeholder="🔍 Search Customer..." onkeyup="loadLedger()" style="margin-top:15px;">
+    
+    <div id="list" style="margin-top:10px;"></div>
     
     <div class="footer">
         <a href="mailto:kv2642240@gmail.com" style="color:#c77dff; margin-right:15px;">📧 Gmail</a>
@@ -43,7 +48,7 @@
         let p = document.getElementById('product').value;
         let a = document.getElementById('amt').value;
         let t = document.getElementById('type').value;
-        if(!n || !a) return alert("Details bharein!");
+        if(!n || !a || !p) return alert("Sabhi details bharein!");
         
         let db = JSON.parse(localStorage.getItem('hub') || "[]");
         db.push({id: Date.now(), n, p, a, t});
@@ -54,21 +59,27 @@
     function generateBill(n, p, a, t) {
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
+        doc.setFontSize(18);
         doc.text("THE AI HUB - INVOICE", 60, 20);
-        doc.text("Manager: Harshwardhan Singh Lodhi (Karan)", 20, 30);
+        doc.setFontSize(12);
+        doc.text("Founder: Harshwardhan Singh Lodhi (Karan)", 20, 30);
+        doc.text("------------------------------------------", 20, 35);
         doc.text("Customer: " + n, 20, 50);
         doc.text("Service: " + p, 20, 60);
         doc.text("Amount: ₹" + a, 20, 70);
         doc.text("Status: " + t, 20, 80);
-        doc.save("Bill_" + n + ".pdf");
+        doc.save(n + "_Bill.pdf");
     }
 
     function loadLedger() {
+        let q = document.getElementById('search').value.toLowerCase();
         let db = JSON.parse(localStorage.getItem('hub') || "[]");
         let list = document.getElementById('list');
-        db.forEach(i => {
+        list.innerHTML = "";
+        
+        db.filter(i => i.n.toLowerCase().includes(q)).forEach(i => {
             list.innerHTML += `<div class="record">
-                <div><strong>${i.n} (${i.t})</strong><br>₹${i.a}</div>
+                <div><strong>${i.n}</strong> (${i.t})<br>${i.p} | ₹${i.a}</div>
                 <div>
                     <button onclick="generateBill('${i.n}','${i.p}','${i.a}','${i.t}')" style="background:green; color:white;">Bill</button>
                     <button onclick="del(${i.id})" style="background:red; color:white;">Clear</button>
@@ -80,7 +91,7 @@
     function del(id) {
         let db = JSON.parse(localStorage.getItem('hub')).filter(i => i.id !== id);
         localStorage.setItem('hub', JSON.stringify(db));
-        location.reload();
+        loadLedger();
     }
     loadLedger();
 </script>
