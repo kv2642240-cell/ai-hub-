@@ -2,72 +2,85 @@
 <html lang="hi">
 <head>
     <meta charset="UTF-8">
-    <title>The AI Hub - Official Manager</title>
+    <title>The AI Hub - Ledger Manager</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
-        body { background: #0f0f1a; color: #fff; font-family: sans-serif; padding: 20px; }
-        .container { max-width: 450px; margin: auto; background: #1a1a2e; padding: 20px; border-radius: 15px; border: 1px solid #7b2cbf; }
-        input, select { width: 100%; padding: 12px; margin: 8px 0; background: #161625; color: white; border: 1px solid #7b2cbf; border-radius: 8px; box-sizing: border-box; }
-        button { width: 100%; padding: 12px; background: #7b2cbf; color: white; border: none; border-radius: 8px; cursor: pointer; margin-top: 10px; }
-        .record { background: #242442; padding: 10px; margin: 5px 0; border-radius: 5px; display: flex; justify-content: space-between; }
+        body { background: #0f0f1a; color: white; font-family: sans-serif; padding: 15px; }
+        .box { max-width: 400px; margin: auto; background: #1a1a2e; padding: 20px; border-radius: 15px; border: 1px solid #7b2cbf; }
+        input, select { width: 100%; padding: 10px; margin: 8px 0; border-radius: 5px; border: none; }
+        button { width: 100%; padding: 10px; background: #7b2cbf; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        .record { background: #242442; padding: 10px; margin-top: 8px; border-radius: 5px; border-left: 4px solid #7b2cbf; display: flex; justify-content: space-between; align-items: center; }
     </style>
 </head>
 <body>
 
-<div class="container">
+<div class="box">
     <h2 style="text-align:center;">THE AI HUB</h2>
-    <p style="text-align:center; font-size: 0.8em; color: #aaa;">Owner: Harshwardhan Singh Lodhi (Karan)</p>
+    <p style="text-align:center; font-size:0.8em;">Owner: Harshwardhan Singh Lodhi (Karan)</p>
     
-    <input type="text" id="cName" placeholder="Customer Name">
-    <input type="text" id="cService" placeholder="Service">
-    <input type="number" id="cAmount" placeholder="Amount (₹)">
-    <select id="cType">
-        <option value="Profit">Profit</option>
-        <option value="Loss/Udhaar">Loss / Udhaar</option>
+    <input type="text" id="name" placeholder="Customer Name">
+    <input type="text" id="product" placeholder="Service / Product Name">
+    <input type="number" id="amt" placeholder="Amount (₹)">
+    <select id="status">
+        <option value="Paid">Paid (Paisa Mila)</option>
+        <option value="Udhaar">Udhaar (Pending)</option>
     </select>
     
-    <button onclick="saveAndDownload()">DOWNLOAD BILL & SAVE</button>
+    <button onclick="saveData()">DOWNLOAD BILL & SAVE</button>
     
-    <h3>Dashboard (Ledger)</h3>
-    <div id="list"></div>
+    <input type="text" id="search" placeholder="🔍 Search Customer Name..." onkeyup="loadData()">
+    <div id="list" style="margin-top:20px;"></div>
+    
+    <div style="text-align:center; margin-top:20px; font-size: 0.8em;">
+        📧 kv2642240@gmail.com | 📸 @_verma_karan08
+    </div>
 </div>
 
 <script>
-    function saveAndDownload() {
+    function saveData() {
+        let n = document.getElementById('name').value;
+        let p = document.getElementById('product').value;
+        let a = document.getElementById('amt').value;
+        let s = document.getElementById('status').value;
+
+        if(!n || !a || !p) return alert("Sabhi details bharein!");
+
+        // 1. PDF Download
         const { jsPDF } = window.jspdf;
-        let n = document.getElementById('cName').value;
-        let s = document.getElementById('cService').value;
-        let a = document.getElementById('cAmount').value;
-        let t = document.getElementById('cType').value;
-
-        if (!n || !a) return alert("Sab bharein!");
-
-        // 1. PDF Download Logic
         const doc = new jsPDF();
-        doc.text("THE AI HUB - INVOICE", 70, 20);
+        doc.text("THE AI HUB - OFFICIAL RECEIPT", 50, 20);
         doc.text("Owner: Harshwardhan Singh Lodhi (Karan)", 20, 30);
-        doc.text("------------------------------------", 20, 40);
-        doc.text("Customer: " + n, 20, 50);
-        doc.text("Service: " + s, 20, 60);
-        doc.text("Amount: ₹" + a, 20, 70);
-        doc.text("Type: " + t, 20, 80);
-        doc.save("Bill_" + n + ".pdf");
+        doc.text("---------------------------------------", 20, 35);
+        doc.text("Customer: " + n, 20, 45);
+        doc.text("Service: " + p, 20, 55);
+        doc.text("Amount: ₹" + a, 20, 65);
+        doc.text("Status: " + s, 20, 75);
+        doc.save(n + "_bill.pdf");
 
         // 2. Save to Ledger
         let db = JSON.parse(localStorage.getItem('hub') || "[]");
-        db.push({ n, s, a, t });
+        db.push({n, p, a, s, id: Date.now()});
         localStorage.setItem('hub', JSON.stringify(db));
         location.reload();
     }
 
     function loadData() {
+        let q = document.getElementById('search').value.toLowerCase();
         let db = JSON.parse(localStorage.getItem('hub') || "[]");
         let list = document.getElementById('list');
-        db.forEach(i => {
+        list.innerHTML = "";
+        db.filter(i => i.n.toLowerCase().includes(q)).forEach(i => {
             list.innerHTML += `<div class="record">
-                <span>${i.n} (${i.t})</span> <b>₹${i.a}</b>
+                <div><strong>${i.n}</strong> (${i.s})<br>${i.p} | ₹${i.a}</div>
+                <button onclick="del(${i.id})" style="width:auto; padding:5px; background:red;">Clear</button>
             </div>`;
         });
+    }
+    
+    function del(id) {
+        let db = JSON.parse(localStorage.getItem('hub')).filter(i => i.id !== id);
+        localStorage.setItem('hub', JSON.stringify(db));
+        loadData();
     }
     loadData();
 </script>
