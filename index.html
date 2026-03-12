@@ -2,90 +2,74 @@
 <html lang="hi">
 <head>
     <meta charset="UTF-8">
-    <title>The AI Hub - Official Ledger</title>
+    <title>The AI Hub - Official Manager</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
-        body { background: #0f0f1a; color: #e0e0e0; font-family: sans-serif; padding: 20px; }
-        .box { background: #1a1a2e; padding: 20px; border-radius: 15px; border: 1px solid #7b2cbf; max-width: 450px; margin: auto; }
+        body { background: #0f0f1a; color: #fff; font-family: sans-serif; padding: 20px; }
+        .container { max-width: 450px; margin: auto; background: #1a1a2e; padding: 20px; border-radius: 15px; border: 1px solid #7b2cbf; }
         input, select { width: 100%; padding: 12px; margin: 8px 0; background: #161625; color: white; border: 1px solid #7b2cbf; border-radius: 8px; box-sizing: border-box; }
-        button { width: 100%; padding: 12px; background: #7b2cbf; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; }
-        .record { background: #242442; padding: 12px; margin-top: 10px; border-radius: 8px; border-left: 4px solid #7b2cbf; display: flex; justify-content: space-between; align-items: center; }
-        .profit { color: #00ff00; font-weight: bold; }
-        .loss { color: #ff4d4d; font-weight: bold; }
-        
-        #billArea { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: white; color: black; padding: 20px; z-index: 9999; }
-        .bill-content { max-width: 400px; margin: auto; border: 2px solid #000; padding: 30px; }
+        button { width: 100%; padding: 12px; background: #7b2cbf; color: white; border: none; border-radius: 8px; cursor: pointer; margin-top: 10px; }
+        .record { background: #242442; padding: 10px; margin: 5px 0; border-radius: 5px; display: flex; justify-content: space-between; }
     </style>
 </head>
 <body>
 
-<div class="box">
-    <h2 style="text-align:center; color:#c77dff;">THE AI HUB</h2>
-    <input type="text" id="name" placeholder="Customer Name">
-    <input type="text" id="product" placeholder="Service / Product">
-    <input type="number" id="amt" placeholder="Amount (₹)">
-    <select id="type">
-        <option value="Profit">Profit (+)</option>
-        <option value="Loss">Loss / Udhaar (-)</option>
+<div class="container">
+    <h2 style="text-align:center;">THE AI HUB</h2>
+    <p style="text-align:center; font-size: 0.8em; color: #aaa;">Owner: Harshwardhan Singh Lodhi (Karan)</p>
+    
+    <input type="text" id="cName" placeholder="Customer Name">
+    <input type="text" id="cService" placeholder="Service">
+    <input type="number" id="cAmount" placeholder="Amount (₹)">
+    <select id="cType">
+        <option value="Profit">Profit</option>
+        <option value="Loss/Udhaar">Loss / Udhaar</option>
     </select>
-    <button onclick="saveData()">SAVE & BILL</button>
-    <input type="text" id="search" placeholder="🔍 Search records..." onkeyup="displayData()">
+    
+    <button onclick="saveAndDownload()">DOWNLOAD BILL & SAVE</button>
+    
+    <h3>Dashboard (Ledger)</h3>
     <div id="list"></div>
 </div>
 
-<div id="billArea">
-    <div class="bill-content">
-        <h1 style="text-align:center;">THE AI HUB</h1>
-        <p><strong>Owner:</strong> Harshwardhan Singh Lodhi</p>
-        <hr>
-        <p><strong>Customer:</strong> <span id="bName"></span></p>
-        <p><strong>Service:</strong> <span id="bProd"></span></p>
-        <p><strong>Amount:</strong> ₹<span id="bAmt"></span></p>
-        <p><strong>Type:</strong> <span id="bType"></span></p>
-        <hr>
-        <button onclick="window.print()">PRINT / SAVE PDF</button>
-        <button onclick="location.reload()" style="background:#555;">Close</button>
-    </div>
-</div>
-
 <script>
-    function saveData() {
-        let name = document.getElementById('name').value;
-        let product = document.getElementById('product').value;
-        let amt = document.getElementById('amt').value;
-        let type = document.getElementById('type').value;
-        if (!name || !amt || !product) return alert("Sabhi details bharein!");
+    function saveAndDownload() {
+        const { jsPDF } = window.jspdf;
+        let n = document.getElementById('cName').value;
+        let s = document.getElementById('cService').value;
+        let a = document.getElementById('cAmount').value;
+        let t = document.getElementById('cType').value;
+
+        if (!n || !a) return alert("Sab bharein!");
+
+        // 1. PDF Download Logic
+        const doc = new jsPDF();
+        doc.text("THE AI HUB - INVOICE", 70, 20);
+        doc.text("Owner: Harshwardhan Singh Lodhi (Karan)", 20, 30);
+        doc.text("------------------------------------", 20, 40);
+        doc.text("Customer: " + n, 20, 50);
+        doc.text("Service: " + s, 20, 60);
+        doc.text("Amount: ₹" + a, 20, 70);
+        doc.text("Type: " + t, 20, 80);
+        doc.save("Bill_" + n + ".pdf");
+
+        // 2. Save to Ledger
         let db = JSON.parse(localStorage.getItem('hub') || "[]");
-        db.push({ id: Date.now(), name, product, amt, type });
+        db.push({ n, s, a, t });
         localStorage.setItem('hub', JSON.stringify(db));
-        showBill(name, product, amt, type);
+        location.reload();
     }
 
-    function showBill(n, p, a, t) {
-        document.getElementById('bName').innerText = n;
-        document.getElementById('bProd').innerText = p;
-        document.getElementById('bAmt').innerText = a;
-        document.getElementById('bType').innerText = t;
-        document.getElementById('billArea').style.display = 'block';
-    }
-
-    function displayData() {
+    function loadData() {
         let db = JSON.parse(localStorage.getItem('hub') || "[]");
         let list = document.getElementById('list');
-        list.innerHTML = "";
         db.forEach(i => {
             list.innerHTML += `<div class="record">
-                <div><strong>${i.name}</strong><br>${i.product} | <span class="${i.type === 'Profit' ? 'profit' : 'loss'}">${i.type}: ₹${i.amt}</span></div>
-                <button onclick="del(${i.id})" style="background:red;">X</button>
+                <span>${i.n} (${i.t})</span> <b>₹${i.a}</b>
             </div>`;
         });
     }
-
-    function del(id) {
-        let db = JSON.parse(localStorage.getItem('hub')).filter(i => i.id !== id);
-        localStorage.setItem('hub', JSON.stringify(db));
-        displayData();
-    }
-    displayData();
+    loadData();
 </script>
 </body>
 </html>
