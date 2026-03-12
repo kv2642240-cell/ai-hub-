@@ -1,67 +1,75 @@
 <!DOCTYPE html>
-<html>
+<html lang="hi">
 <head>
+  <meta charset="UTF-8">
   <title>The AI Hub - Official Manager</title>
   <style>
-    body { background: #1a1a2e; color: #fff; font-family: 'Segoe UI', sans-serif; padding: 20px; }
-    .card { background: #242442; padding: 20px; border-radius: 15px; border: 1px solid #4a4a75; box-shadow: 0 4px 15px rgba(128, 0, 128, 0.3); max-width: 600px; margin: auto; }
-    input, select { background: #161625; color: #fff; border: 1px solid #7b2cbf; padding: 12px; width: 100%; margin-bottom: 10px; border-radius: 8px; box-sizing: border-box; }
-    button { background: #7b2cbf; color: white; border: none; padding: 12px; width: 100%; border-radius: 8px; cursor: pointer; font-weight: bold; }
-    .footer { text-align: center; color: #aaa; margin-top: 20px; }
-    .record { border-bottom: 1px solid #4a4a75; padding: 10px 0; }
+    :root { --primary: #7b2cbf; --bg: #0f0f1a; --card: #1a1a2e; --text: #e0e0e0; }
+    body { background: var(--bg); color: var(--text); font-family: 'Poppins', sans-serif; padding: 20px; display: flex; justify-content: center; }
+    .app-container { background: var(--card); padding: 30px; border-radius: 25px; border: 1px solid #4a4a75; width: 100%; max-width: 450px; box-shadow: 0 10px 30px rgba(123, 44, 191, 0.2); }
+    h2 { color: #c77dff; text-align: center; margin-bottom: 5px; }
+    .ceo { text-align: center; font-size: 0.9em; opacity: 0.7; margin-bottom: 25px; }
+    input, select { background: #161625; color: #fff; border: 1px solid #7b2cbf; padding: 14px; width: 100%; margin-bottom: 15px; border-radius: 12px; box-sizing: border-box; }
+    button { background: var(--primary); color: white; padding: 14px; width: 100%; border: none; border-radius: 12px; cursor: pointer; font-weight: bold; transition: 0.3s; }
+    button:hover { background: #9d4edd; transform: scale(1.02); }
+    .record { background: #242442; padding: 15px; margin-top: 10px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; border-left: 4px solid var(--primary); }
+    .footer { text-align: center; color: #777; margin-top: 30px; font-size: 0.85em; }
   </style>
 </head>
 <body>
 
-<div class="card">
-  <h2 style="color: #c77dff; text-align: center;">THE AI HUB</h2>
-  <h4 style="text-align: center;">Harshwardhan Singh Lodhi</h4>
+<div class="app-container">
+  <h2>THE AI HUB</h2>
+  <p class="ceo">CEO Founder: Harshwardhan Singh Lodhi</p>
   
   <input type="text" id="name" placeholder="Customer Name">
-  <input type="number" id="amount" placeholder="Amount">
+  <input type="number" id="amount" placeholder="Amount (₹)">
   <select id="type"><option value="Udhaar">Udhaar</option><option value="Profit">Profit</option></select>
-  <button onclick="saveRecord()">ADD RECORD</button>
+  <button onclick="addEntry()">ADD RECORD</button>
   
-  <input type="text" id="search" placeholder="🔍 Search Customer..." onkeyup="filterData()">
+  <input type="text" id="search" placeholder="🔍 Search records..." onkeyup="loadData()">
   <div id="dataList"></div>
 </div>
 
 <div class="footer">
-  <p>Contact: kv2642240@gmail.com | Insta: @_verma_karan08</p>
+  <p>Email: kv2642240@gmail.com</p>
+  <p>Instagram: @_verma_karan08</p>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-  const supabase = supabase.createClient('https://ageofnbquxjwwfpflskn.supabase.co', 'YO
-https://ageofnbquxjwwfpflskn.supabase.co');
-
-  async function saveRecord() {
+  function addEntry() {
     const name = document.getElementById('name').value;
     const amount = document.getElementById('amount').value;
     const type = document.getElementById('type').value;
-    await supabase.from('transactions').insert([{ name, amount, type, status: 'Pending' }]);
+    if(!name || !amount) return alert("Please fill all details!");
+
+    let data = JSON.parse(localStorage.getItem('hubData')) || [];
+    data.push({ name, amount, type, id: Date.now() });
+    localStorage.setItem('hubData', JSON.stringify(data));
     location.reload();
   }
 
-  async function loadData() {
-    const { data } = await supabase.from('transactions').select('*');
-    let html = "<h3>Transactions:</h3>";
-    data.forEach(item => {
+  function loadData() {
+    let data = JSON.parse(localStorage.getItem('hubData')) || [];
+    let query = document.getElementById('search').value.toLowerCase();
+    let html = "<h3 style='margin-top:20px'>Transactions:</h3>";
+    
+    data.filter(i => i.name.toLowerCase().includes(query)).forEach(item => {
       html += `<div class="record">
-        <strong>${item.name}</strong> - ₹${item.amount} (${item.status}) 
-        <button onclick="generateBill('${item.name}', '${item.amount}')">Bill</button>
+        <span><strong>${item.name}</strong><br>₹${item.amount} (${item.type})</span>
+        <button onclick="downloadBill('${item.name}', '${item.amount}')" style="width:auto; padding:8px 15px;">Bill</button>
       </div>`;
     });
     document.getElementById('dataList').innerHTML = html;
   }
 
-  function generateBill(n, a) {
-    const bill = `BILL FOR ${n}\nAmount: ₹${a}\nStatus: Paid\nPowered by: The AI Hub\nOwner: Harshwardhan Singh Lodhi`;
+  function downloadBill(n, a) {
+    const bill = `--- THE AI HUB BILL ---\nCustomer: ${n}\nAmount: ₹${a}\nStatus: Settled\nFounder: Harshwardhan Singh Lodhi\n-----------------------\nContact: kv2642240@gmail.com`;
     const blob = new Blob([bill], {type: "text/plain"});
-    const link = document.createElement("a");
-    link.href = URL.createObjectURL(blob);
-    link.download = n + "_Bill.txt";
-    link.click();
+    const aTag = document.createElement("a");
+    aTag.href = URL.createObjectURL(blob);
+    aTag.download = n + "_Bill.txt";
+    aTag.click();
   }
 
   loadData();
