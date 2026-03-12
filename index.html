@@ -1,48 +1,66 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>The AI Hub - Digital Khata</title>
+  <title>The AI Hub - Official Manager</title>
+  <style>
+    body { font-family: 'Segoe UI', sans-serif; padding: 20px; background: #eef2f3; }
+    .card { background: white; padding: 20px; margin: 10px 0; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+    .footer { margin-top: 20px; padding: 10px; background: #333; color: white; border-radius: 5px; }
+  </style>
 </head>
 <body>
-  <h2>The AI Hub: Transaction Entry</h2>
+  <h1>The AI Hub - Manager</h1>
   
-  <input type="text" id="name" placeholder="Customer Name">
-  <input type="number" id="amount" placeholder="Amount">
-  <select id="type">
-    <option value="Cash">Cash</option>
-    <option value="Udhaar">Udhaar</option>
-  </select>
-  <button onclick="saveData()">Save Data</button>
+  <div class="card">
+    <input type="text" id="name" placeholder="Customer Name">
+    <input type="number" id="amount" placeholder="Amount">
+    <select id="type"><option value="Profit">Profit</option><option value="Loss">Loss</option></select>
+    <button onclick="saveData()">Save Record</button>
+  </div>
+
+  <div id="dataList"></div>
+
+  <div class="footer">
+    <p>Contact Me: 
+      <a href="https://www.instagram.com/_verma_karan08" style="color: cyan;">Instagram</a> | 
+      <a href="mailto:kv2642240@gmail.com" style="color: cyan;">Email</a>
+    </p>
+  </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
-    // Aapka URL yahan set ho gaya hai
-    const supabaseUrl = 'https://ageofnbquxjwwfpflskn.supabase.co';
-    
-    // Yahan apni 'anon' wali API Key paste karein
-    const supabaseKey = Https://ageofnbquxjwwfpflskn.supabase.co
-    
-    const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+    const supabase = supabase.createClient('https://ageofnbquxjwwfpflskn.supabase.co', 'YOUR_SUPABASE_KEY');
 
     async function saveData() {
       const name = document.getElementById('name').value;
       const amount = document.getElementById('amount').value;
       const type = document.getElementById('type').value;
+      const date = new Date().toLocaleDateString();
 
-      // Supabase ke table mein data insert karna
-      const { data, error } = await supabase
-        .from('transactions') // Table ka naam
-        .insert([{ name: name, amount: amount, type: type }]);
-      
-      if (error) {
-        alert("Error: " + error.message);
-      } else {
-        alert("Data saved successfully!");
-        // Input fields ko khali karne ke liye
-        document.getElementById('name').value = '';
-        document.getElementById('amount').value = '';
-      }
+      const { error } = await supabase.from('transactions').insert([{ name, amount, type, date }]);
+      if (error) alert("Error: " + error.message);
+      else { alert("Saved!"); loadData(); }
     }
+
+    async function loadData() {
+      const { data } = await supabase.from('transactions').select('*');
+      let html = "<h3>All Records:</h3>";
+      data.forEach(item => {
+        html += `<div class="card">
+          <strong>${item.name}</strong> - ${item.amount} (${item.type})<br>
+          <small>Date: ${item.date}</small><br>
+          <button onclick="downloadBill('${item.name}', '${item.amount}')">Download Bill</button>
+        </div>`;
+      });
+      document.getElementById('dataList').innerHTML = html;
+    }
+
+    function downloadBill(n, a) {
+      const text = `The AI Hub Bill\nName: ${n}\nAmount: ${a}\nDate: ${new Date().toLocaleDateString()}\n------------------\nContact: kv2642240@gmail.com`;
+      const blob = new Blob([text], {type: "text/plain"});
+      const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = "Bill.txt"; a.click();
+    }
+    loadData();
   </script>
 </body>
 </html>
