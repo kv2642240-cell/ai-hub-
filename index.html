@@ -1,373 +1,523 @@
-import React, { useState, useEffect } from 'react';
-import { 
-  LayoutDashboard, 
-  IndianRupee, 
-  Users, 
-  PlusCircle, 
-  History, 
-  TrendingUp, 
-  TrendingDown,
-  Trash2,
-  Search,
-  UserPlus,
-  Package,
-  BrainCircuit,
-  Wallet,
-  ArrowUpRight,
-  ArrowDownRight,
-  AlertCircle,
-  Mail,
-  Instagram,
-  ExternalLink,
-  ShieldCheck
-} from 'lucide-react';
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE AI HUB - Shopkeeper Dashboard</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-const App = () => {
-  const [activeTab, setActiveTab] = useState('dashboard');
-  const [transactions, setTransactions] = useState([]);
-  const [udhari, setUdhari] = useState([]);
-  const [inventory, setInventory] = useState([
-    { id: 1, item: 'Luxury Item A', stock: 12, minStock: 5 }
-  ]);
-  
-  const [profitForm, setProfitForm] = useState({ amount: '', note: '', type: 'profit', method: 'cash' });
-  const [udhariForm, setUdhariForm] = useState({ name: '', amount: '', phone: '' });
-  const [inventoryForm, setInventoryForm] = useState({ item: '', stock: '', minStock: '' });
-  const [searchTerm, setSearchTerm] = useState('');
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
 
-  // Calculations
-  const totalProfit = transactions.filter(t => t.type === 'profit').reduce((acc, curr) => acc + Number(curr.amount), 0);
-  const totalExpense = transactions.filter(t => t.type === 'expense').reduce((acc, curr) => acc + Number(curr.amount), 0);
-  const netProfit = totalProfit - totalExpense;
-  const totalUdhari = udhari.reduce((acc, curr) => acc + Number(curr.amount), 0);
-  const lowStockItems = inventory.filter(i => i.stock <= i.minStock);
+        .header {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            padding: 1rem 0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
 
-  const getBusinessInsight = () => {
-    if (netProfit > totalUdhari && netProfit > 0) return "Capital Strength: Liquid cash exceeds outstanding debts. Ideal for reinvestment.";
-    if (totalUdhari > netProfit) return "Asset Alert: Your market credit (Udhari) is high. Prioritize collection cycle.";
-    if (netProfit < 0) return "Operational Risk: Burn rate is higher than income. Review fixed costs.";
-    return "THE AI HUB is ready for analysis. Input your data.";
-  };
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
 
-  const addTransaction = (e) => {
-    e.preventDefault();
-    if (!profitForm.amount) return;
-    setTransactions([{ ...profitForm, id: Date.now(), date: new Date().toLocaleString() }, ...transactions]);
-    setProfitForm({ amount: '', note: '', type: 'profit', method: 'cash' });
-  };
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
 
-  const addUdhari = (e) => {
-    e.preventDefault();
-    if (!udhariForm.name || !udhariForm.amount) return;
-    setUdhari([{ ...udhariForm, id: Date.now(), date: new Date().toLocaleDateString() }, ...udhari]);
-    setUdhariForm({ name: '', amount: '', phone: '' });
-  };
+        .contact-info {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
 
-  const addInventory = (e) => {
-    e.preventDefault();
-    if (!inventoryForm.item || !inventoryForm.stock) return;
-    setInventory([{ ...inventoryForm, id: Date.now(), stock: Number(inventoryForm.stock), minStock: Number(inventoryForm.minStock || 0) }, ...inventory]);
-    setInventoryForm({ item: '', stock: '', minStock: '' });
-  };
+        .contact-item {
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            background: rgba(255,255,255,0.2);
+        }
 
-  return (
-    <div className="min-h-screen bg-[#0a0a0c] text-slate-200 font-sans pb-24">
-      {/* Premium Header */}
-      <nav className="bg-[#111114]/80 backdrop-blur-md sticky top-0 z-50 border-b border-yellow-500/20 px-4 py-3">
-        <div className="max-w-7xl mx-auto flex justify-between items-center">
-          <div className="flex items-center gap-3">
-            <div className="bg-gradient-to-tr from-yellow-400 to-yellow-600 p-2 rounded-xl shadow-lg shadow-yellow-500/20">
-              <BrainCircuit className="text-black" size={24} />
-            </div>
-            <div>
-              <h1 className="text-xl font-black tracking-tighter text-white">THE AI HUB</h1>
-              <p className="text-[9px] uppercase tracking-widest text-yellow-500 font-bold">Founder: Harshwardhan Singh Lodhi</p>
-            </div>
-          </div>
-          
-          <div className="hidden lg:flex items-center space-x-2">
-            {['dashboard', 'profit', 'udhari', 'inventory'].map((tab) => (
-              <button 
-                key={tab}
-                onClick={() => setActiveTab(tab)}
-                className={`px-5 py-2 rounded-xl text-xs font-bold uppercase tracking-widest transition-all ${activeTab === tab ? 'bg-yellow-500 text-black shadow-lg shadow-yellow-500/20' : 'text-slate-400 hover:text-white hover:bg-white/5'}`}
-              >
-                {tab}
-              </button>
-            ))}
-          </div>
-        </div>
-      </nav>
+        .contact-item:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
 
-      <main className="max-w-7xl mx-auto p-4 lg:p-8">
-        
-        {activeTab === 'dashboard' && (
-          <div className="space-y-8 animate-in fade-in duration-700">
-            {/* AI Insight Card */}
-            <div className="relative group overflow-hidden bg-gradient-to-br from-[#1a1a1e] to-[#111114] p-8 rounded-[2rem] border border-white/5 shadow-2xl">
-              <div className="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity">
-                <BrainCircuit size={120} className="text-yellow-500" />
-              </div>
-              <div className="relative z-10 max-w-2xl">
-                <div className="flex items-center gap-2 mb-4 text-yellow-500">
-                  <ShieldCheck size={20} />
-                  <span className="text-xs font-black uppercase tracking-[0.2em]">Strategy Insight</span>
-                </div>
-                <h2 className="text-2xl md:text-3xl font-light text-white leading-tight">
-                  "{getBusinessInsight()}"
-                </h2>
-              </div>
-            </div>
+        .main-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 2rem;
+        }
 
-            {/* Stats Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {[
-                { label: 'Net Profit', val: netProfit, icon: TrendingUp, color: 'text-green-400', bg: 'bg-green-500/10' },
-                { label: 'Udhari', val: totalUdhari, icon: History, color: 'text-orange-400', bg: 'bg-orange-500/10' },
-                { label: 'Revenue', val: totalProfit, icon: IndianRupee, color: 'text-yellow-400', bg: 'bg-yellow-500/10' },
-                { label: 'Low Stock', val: lowStockItems.length, icon: Package, color: 'text-purple-400', bg: 'bg-purple-500/10' }
-              ].map((item, i) => (
-                <div key={i} className="bg-[#111114] border border-white/5 p-6 rounded-3xl hover:border-yellow-500/30 transition-all shadow-xl">
-                  <div className={`${item.bg} ${item.color} w-10 h-10 rounded-xl flex items-center justify-center mb-4`}>
-                    <item.icon size={20} />
-                  </div>
-                  <p className="text-slate-500 text-[10px] font-bold uppercase tracking-widest mb-1">{item.label}</p>
-                  <h3 className="text-2xl font-black text-white">
-                    {item.label !== 'Low Stock' ? `₹${item.val}` : item.val}
-                  </h3>
-                </div>
-              ))}
-            </div>
+        .sidebar {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            height: fit-content;
+        }
 
-            {/* Activity & Stock Preview */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-              <div className="lg:col-span-2 bg-[#111114] rounded-3xl border border-white/5 overflow-hidden">
-                <div className="p-6 border-b border-white/5 flex justify-between items-center">
-                  <h3 className="text-sm font-black uppercase tracking-widest text-white">Recent Ledger activity</h3>
-                  <button onClick={() => setActiveTab('profit')} className="text-[10px] font-bold text-yellow-500 uppercase">Manage All &rarr;</button>
-                </div>
-                <div className="divide-y divide-white/5">
-                  {transactions.slice(0, 5).map(tx => (
-                    <div key={tx.id} className="p-5 flex justify-between items-center hover:bg-white/5 transition-all">
-                      <div className="flex items-center gap-4">
-                        <div className={`w-2 h-2 rounded-full ${tx.type === 'profit' ? 'bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.5)]' : 'bg-red-500 shadow-[0_0_8px_rgba(239,44,44,0.5)]'}`}></div>
-                        <div>
-                          <p className="text-sm font-bold text-white">{tx.note}</p>
-                          <p className="text-[9px] text-slate-500 uppercase">{tx.date} • {tx.method}</p>
-                        </div>
-                      </div>
-                      <p className={`text-sm font-black ${tx.type === 'profit' ? 'text-green-400' : 'text-red-400'}`}>
-                        {tx.type === 'profit' ? '+' : '-'}₹{tx.amount}
-                      </p>
-                    </div>
-                  ))}
-                  {transactions.length === 0 && <div className="p-12 text-center text-slate-600 italic">No ledger activity recorded.</div>}
-                </div>
-              </div>
+        .sidebar h3 {
+            color: #4ecdc4;
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+        }
 
-              <div className="bg-yellow-500 rounded-3xl p-8 text-black flex flex-col justify-between">
-                <div>
-                  <h4 className="text-xs font-black uppercase tracking-[0.2em] mb-4">The AI Hub Mindset</h4>
-                  <p className="text-xl font-bold italic leading-tight">"Profit is a byproduct of efficient operations and a clear mind."</p>
-                </div>
-                <div className="mt-8 pt-8 border-t border-black/10">
-                   <p className="text-[10px] font-black uppercase opacity-60">System Security</p>
-                   <p className="text-xs font-bold">Encrypted Local Storage Active</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
+        .nav-btn {
+            width: 100%;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border: none;
+            border-radius: 15px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
 
-        {/* Tab contents (Simplified for focus) */}
-        {activeTab === 'profit' && (
-          <div className="max-w-4xl mx-auto space-y-6">
-            <div className="bg-[#111114] p-8 rounded-3xl border border-white/5 shadow-2xl">
-              <h2 className="text-xl font-black text-white mb-6 uppercase tracking-widest">New Entry</h2>
-              <form onSubmit={addTransaction} className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <input 
-                  type="number" 
-                  value={profitForm.amount}
-                  onChange={(e) => setProfitForm({...profitForm, amount: e.target.value})}
-                  className="bg-black/40 border border-white/10 p-4 rounded-2xl focus:border-yellow-500 outline-none text-white font-bold"
-                  placeholder="Amount ₹"
-                />
-                <select 
-                  value={profitForm.type}
-                  onChange={(e) => setProfitForm({...profitForm, type: e.target.value})}
-                  className="bg-black/40 border border-white/10 p-4 rounded-2xl focus:border-yellow-500 outline-none text-white font-bold"
-                >
-                  <option value="profit">Income (+)</option>
-                  <option value="expense">Expense (-)</option>
-                </select>
-                <input 
-                  type="text" 
-                  value={profitForm.note}
-                  onChange={(e) => setProfitForm({...profitForm, note: e.target.value})}
-                  className="bg-black/40 border border-white/10 p-4 rounded-2xl focus:border-yellow-500 outline-none text-white md:col-span-2"
-                  placeholder="Reference Note (e.g., Monthly Sales)"
-                />
-                <button type="submit" className="md:col-span-2 bg-yellow-500 text-black p-4 rounded-2xl font-black uppercase tracking-widest hover:bg-yellow-400 transition-all">
-                  Commit to Ledger
-                </button>
-              </form>
-            </div>
-          </div>
-        )}
+        .nav-btn:hover, .nav-btn.active {
+            transform: translateX(10px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
 
-        {activeTab === 'udhari' && (
-          <div className="space-y-6">
-            <div className="bg-[#111114] p-8 rounded-3xl border border-white/5">
-              <h2 className="text-xl font-black text-white mb-6 uppercase tracking-widest">Market Credit Entry</h2>
-              <form onSubmit={addUdhari} className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <input 
-                  type="text" 
-                  value={udhariForm.name}
-                  onChange={(e) => setUdhariForm({...udhariForm, name: e.target.value})}
-                  className="bg-black/40 border border-white/10 p-4 rounded-2xl focus:border-yellow-500 outline-none text-white"
-                  placeholder="Customer Name"
-                />
-                <input 
-                  type="number" 
-                  value={udhariForm.amount}
-                  onChange={(e) => setUdhariForm({...udhariForm, amount: e.target.value})}
-                  className="bg-black/40 border border-white/10 p-4 rounded-2xl focus:border-yellow-500 outline-none text-white font-bold"
-                  placeholder="Due Amount ₹"
-                />
-                <button type="submit" className="bg-orange-500 text-black p-4 rounded-2xl font-black uppercase tracking-widest hover:bg-orange-400">
-                  Add to Khata
-                </button>
-              </form>
-            </div>
+        .content {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        .profit-card {
+            background: linear-gradient(45deg, #ffecd2, #fcb69f);
+            padding: 2rem;
+            border-radius: 20px;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .profit-amount {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #27ae60;
+            margin: 0.5rem 0;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #555;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: #4ecdc4;
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #4ecdc4, #44a08d);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            margin-right: 1rem;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(78, 205, 196, 0.4);
+        }
+
+        .btn-danger {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a52);
+        }
+
+        .btn-success {
+            background: linear-gradient(45deg, #27ae60, #2ecc71);
+        }
+
+        .customer-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .customer-item {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .customer-item:hover {
+            background: #e3f2fd;
+            transform: translateX(5px);
+        }
+
+        .bill-btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .main-container {
+                grid-template-columns: 1fr;
+                padding: 0 1rem;
+            }
             
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-               {udhari.map(u => (
-                  <div key={u.id} className="bg-[#111114] p-6 rounded-3xl border border-white/5 relative group">
-                    <button onClick={() => setUdhari(udhari.filter(x => x.id !== u.id))} className="absolute top-4 right-4 text-slate-600 hover:text-red-500 transition-colors">
-                      <Trash2 size={16} />
-                    </button>
-                    <div className="w-12 h-12 bg-yellow-500/10 rounded-2xl flex items-center justify-center text-yellow-500 font-black text-xl mb-4">
-                      {u.name.charAt(0)}
-                    </div>
-                    <h4 className="text-white font-black uppercase tracking-tight text-lg leading-tight mb-4">{u.name}</h4>
-                    <div className="bg-black/50 p-4 rounded-2xl border border-white/5">
-                       <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Balance Due</p>
-                       <p className="text-2xl font-black text-orange-500">₹{u.amount}</p>
-                    </div>
-                  </div>
-               ))}
+            .nav-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-brain"></i> THE AI HUB
             </div>
-          </div>
-        )}
-
-        {/* Inventory View Integrated */}
-        {activeTab === 'inventory' && (
-           <div className="space-y-6 animate-in slide-in-from-bottom-4 duration-500">
-            <div className="bg-[#111114] p-8 rounded-3xl border border-white/5">
-               <h2 className="text-xl font-black mb-4 flex items-center gap-2 text-white">
-                <Package className="text-yellow-500" /> Asset Management
-              </h2>
-              <form onSubmit={addInventory} className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                <input 
-                  type="text" 
-                  value={inventoryForm.item}
-                  onChange={(e) => setInventoryForm({...inventoryForm, item: e.target.value})}
-                  className="bg-black/40 border border-white/10 p-4 rounded-2xl focus:border-yellow-500 outline-none text-white"
-                  placeholder="Item Name"
-                />
-                <input 
-                  type="number" 
-                  value={inventoryForm.stock}
-                  onChange={(e) => setInventoryForm({...inventoryForm, stock: e.target.value})}
-                  className="bg-black/40 border border-white/10 p-4 rounded-2xl focus:border-yellow-500 outline-none text-white font-bold"
-                  placeholder="Qty"
-                />
-                <input 
-                  type="number" 
-                  value={inventoryForm.minStock}
-                  onChange={(e) => setInventoryForm({...inventoryForm, minStock: e.target.value})}
-                  className="bg-black/40 border border-white/10 p-4 rounded-2xl focus:border-yellow-500 outline-none text-white"
-                  placeholder="Min Alert"
-                />
-                <button type="submit" className="bg-yellow-500 text-black p-4 rounded-2xl font-black uppercase tracking-widest">
-                  Update Stock
-                </button>
-              </form>
-            </div>
-            {/* Grid display same as Udhari for consistency */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {inventory.map(item => (
-                <div key={item.id} className="bg-[#111114] p-6 rounded-3xl border border-white/5 flex justify-between items-center group">
-                  <div>
-                    <h4 className="font-bold text-white uppercase tracking-widest text-xs mb-1">{item.item}</h4>
-                    <p className={`text-xl font-black ${item.stock <= item.minStock ? 'text-red-500' : 'text-yellow-500'}`}>
-                      {item.stock} <span className="text-[10px] text-slate-500 font-bold uppercase">In Stock</span>
-                    </p>
-                  </div>
-                  <button onClick={() => setInventory(inventory.filter(i => i.id !== item.id))} className="text-slate-600 hover:text-red-500">
-                    <Trash2 size={18} />
-                  </button>
+            <div class="contact-info">
+                <a href="mailto:KV2642240@gmail.com" class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    KV2642240@gmail.com
+                </a>
+                <a href="https://instagram.com/_verma_karan08" target="_blank" class="contact-item">
+                    <i class="fab fa-instagram"></i>
+                    _verma_karan08
+                </a>
+                <div class="contact-item">
+                    <i class="fas fa-user"></i>
+                    Founder: Harshwardhan Singh Lodhi
                 </div>
-              ))}
             </div>
-           </div>
-        )}
-      </main>
-
-      {/* Modern Contact Section */}
-      <section className="max-w-7xl mx-auto px-4 lg:px-8 mt-12">
-        <div className="bg-[#111114] p-10 rounded-[2.5rem] border border-white/5 text-center relative overflow-hidden">
-           <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-yellow-500 to-transparent opacity-30"></div>
-           <h3 className="text-sm font-black text-yellow-500 uppercase tracking-[0.3em] mb-4">Connect with Founder</h3>
-           <p className="text-slate-400 mb-8 max-w-md mx-auto">For custom business AI solutions or technical support, reach out to me directly.</p>
-           
-           <div className="flex flex-col md:flex-row justify-center items-center gap-4">
-              <a href="mailto:KV2642240@GMAIL.com" className="w-full md:w-auto flex items-center justify-center gap-3 bg-white/5 border border-white/10 px-8 py-4 rounded-2xl hover:bg-white/10 transition-all group">
-                <Mail className="text-yellow-500 group-hover:scale-110 transition-transform" />
-                <span className="font-bold text-white">KV2642240@GMAIL.com</span>
-              </a>
-              <a href="https://instagram.com/_verma_karan08" target="_blank" rel="noopener noreferrer" className="w-full md:w-auto flex items-center justify-center gap-3 bg-white/5 border border-white/10 px-8 py-4 rounded-2xl hover:bg-white/10 transition-all group">
-                <Instagram className="text-pink-500 group-hover:scale-110 transition-transform" />
-                <span className="font-bold text-white">@_verma_karan08</span>
-              </a>
-           </div>
         </div>
-      </section>
+    </header>
 
-      {/* Floating Bottom Nav for Mobile */}
-      <div className="lg:hidden fixed bottom-6 left-4 right-4 bg-[#111114]/90 backdrop-blur-xl border border-white/10 p-4 rounded-3xl flex justify-around shadow-2xl z-50">
-        {[
-          { id: 'dashboard', icon: LayoutDashboard },
-          { id: 'profit', icon: IndianRupee },
-          { id: 'udhari', icon: Users },
-          { id: 'inventory', icon: Package }
-        ].map(item => (
-          <button 
-            key={item.id}
-            onClick={() => setActiveTab(item.id)}
-            className={`p-3 rounded-2xl transition-all ${activeTab === item.id ? 'bg-yellow-500 text-black' : 'text-slate-500'}`}
-          >
-            <item.icon size={20} />
-          </button>
-        ))}
-      </div>
+    <div class="main-container">
+        <aside class="sidebar">
+            <h3><i class="fas fa-bars"></i> Quick Navigation</h3>
+            <button class="nav-btn active" onclick="showSection('profit')">
+                <i class="fas fa-chart-line"></i> Profit Calculator
+            </button>
+            <button class="nav-btn" onclick="showSection('udhari')">
+                <i class="fas fa-credit-card"></i> Udhari Management
+            </button>
+            <button class="nav-btn" onclick="showSection('customers')">
+                <i class="fas fa-users"></i> Customer Records
+            </button>
+        </aside>
 
-      {/* Premium Footer */}
-      <footer className="mt-20 border-t border-white/5 p-12 text-center">
-        <div className="flex flex-col items-center gap-4">
-          <div className="flex items-center gap-3 opacity-80">
-            <BrainCircuit className="text-yellow-500" />
-            <span className="text-2xl font-black text-white tracking-tighter">THE AI HUB</span>
-          </div>
-          <p className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.5em] mt-2">Intelligence meets Enterprise</p>
-          <div className="flex gap-6 mt-6">
-            <a href="mailto:KV2642240@GMAIL.com" className="text-slate-500 hover:text-white transition-colors"><Mail size={18} /></a>
-            <a href="https://instagram.com/_verma_karan08" target="_blank" rel="noopener noreferrer" className="text-slate-500 hover:text-white transition-colors"><Instagram size={18} /></a>
-          </div>
-          <div className="mt-8 text-[10px] font-bold text-slate-700">
-            &copy; 2024 THE AI HUB • CRAFTED BY HARSHWARDHAN SINGH LODHI
-          </div>
-        </div>
-      </footer>
+        <main class="content">
+            <!-- Profit Calculator Section -->
+            <section id="profit" class="section active">
+                <div class="profit-card">
+                    <h2><i class="fas fa-rupee-sign"></i> Total Profit</h2>
+                    <div class="profit-amount" id="totalProfit">₹ 0</div>
+                    <small>Updated Today</small>
+                </div>
+
+                <div class="form-group">
+                    <label>Selling Price (₹)</label>
+                    <input type="number" id="sellingPrice" placeholder="Enter selling price">
+                </div>
+                <div class="form-group">
+                    <label>Cost Price (₹)</label>
+                    <input type="number" id="costPrice" placeholder="Enter cost price">
+                </div>
+                <div class="form-group">
+                    <label>Quantity</label>
+                    <input type="number" id="quantity" placeholder="Enter quantity" value="1">
+                </div>
+                <button class="btn btn-success" onclick="calculateProfit()">
+                    <i class="fas fa-calculator"></i> Calculate Profit
+                </button>
+                <button class="btn" onclick="resetProfit()">
+                    <i class="fas fa-redo"></i> Reset
+                </button>
+            </section>
+
+            <!-- Udhari Management Section -->
+            <section id="udhari" class="section">
+                <h2><i class="fas fa-credit-card"></i> Udhari / Credit Management</h2>
+                <div class="form-group">
+                    <label>Customer Name</label>
+                    <input type="text" id="udhariCustomer" placeholder="Enter customer name">
+                </div>
+                <div class="form-group">
+                    <label>Udhari Amount (₹)</label>
+                    <input type="number" id="udhariAmount" placeholder="Enter udhari amount">
+                </div>
+                <div class="form-group">
+                    <label>Due Date</label>
+                    <input type="date" id="dueDate">
+                </div>
+                <button class="btn btn-success" onclick="addUdhari()">
+                    <i class="fas fa-plus"></i> Add Udhari
+                </button>
+                
+                <h3 style="margin-top: 2rem;">Udhari List</h3>
+                <div id="udhariList"></div>
+            </section>
+
+            <!-- Customer Records Section -->
+            <section id="customers" class="section">
+                <h2><i class="fas fa-users"></i> Customer Management</h2>
+                
+                <div class="form-group">
+                    <label>Search Customer</label>
+                    <input type="text" id="searchCustomer" placeholder="Search by name..." onkeyup="searchCustomers()">
+                </div>
+
+                <div style="display: flex; gap: 1rem; margin-bottom: 2rem;">
+                    <div class="form-group" style="flex: 1;">
+                        <label>New Customer Name</label>
+                        <input type="text" id="newCustomerName" placeholder="Enter customer name">
+                    </div>
+                    <div class="form-group" style="flex: 1;">
+                        <label>Amount (₹)</label>
+                        <input type="number" id="customerAmount" placeholder="Enter amount">
+                    </div>
+                    <button class="btn btn-success" onclick="addCustomer()" style="margin-top: 24px;">
+                        <i class="fas fa-user-plus"></i> Add Customer
+                    </button>
+                </div>
+
+                <div class="customer-list" id="customerList">
+                    <p>No customers found. Add your first customer!</p>
+                </div>
+            </section>
+        </main>
     </div>
-  );
+
+    <script>
+        let totalProfit = 0;
+        let customers = JSON.parse(localStorage.getItem('customers')) || [];
+        let udhariRecords = JSON.parse(localStorage.getItem('udhari')) || [];
+
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(sectionId).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        function calculateProfit() {
+            const sellingPrice = parseFloat(document.getElementById('sellingPrice').value) || 0;
+            const costPrice = parseFloat(document.getElementById('costPrice').value) || 0;
+            const quantity = parseInt(document.getElementById('quantity').value) || 1;
+
+            const profit = (sellingPrice - costPrice) * quantity;
+            totalProfit += profit;
+            
+            document.getElementById('totalProfit').textContent = `₹ ${totalProfit.toLocaleString()}`;
+            
+            // Save to localStorage
+            localStorage.setItem('totalProfit', totalProfit);
+            
+            alert(`Profit: ₹${profit.toLocaleString()} | Total Profit: ₹${totalProfit.toLocaleString()}`);
+        }
+
+        function resetProfit() {
+            totalProfit = 0;
+            document.getElementById('totalProfit').textContent = '₹ 0';
+            document.getElementById('sellingPrice').value = '';
+            document.getElementById('costPrice').value = '';
+            document.getElementById('quantity').value = '1';
+            localStorage.setItem('totalProfit', totalProfit);
+        }
+
+        function addUdhari() {
+            const customer = document.getElementById('udhariCustomer').value;
+            const amount = parseFloat(document.getElementById('udhariAmount').value) || 0;
+            const dueDate = document.getElementById('dueDate').value;
+
+            if (!customer || !amount) {
+                alert('Please fill customer name and amount');
+                return;
+            }
+
+            udhariRecords.push({
+                id: Date.now(),
+                customer,
+                amount,
+                dueDate,
+                date: new Date().toLocaleDateString()
+            });
+
+            localStorage.setItem('udhari', JSON.stringify(udhariRecords));
+            displayUdhari();
+            document.getElementById('udhariCustomer').value = '';
+            document.getElementById('udhariAmount').value = '';
+            document.getElementById('dueDate').value = '';
+        }
+
+        function displayUdhari() {
+            const list = document.getElementById('udhariList');
+            if (udhariRecords.length === 0) {
+                list.innerHTML = '<p>No udhari records found.</p>';
+                return;
+            }
+
+            list.innerHTML = udhariRecords.map(record => `
+                <div class="customer-item">
+                    <div>
+                        <strong>${record.customer}</strong><br>
+                        ₹${record.amount.toLocaleString()} - Due: ${record.dueDate}
+                    </div>
+                    <div>
+                        <small>${record.date}</small>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function addCustomer() {
+            const name = document.getElementById('newCustomerName').value;
+            const amount = parseFloat(document.getElementById('customerAmount').value) || 0;
+
+            if (!name) {
+                alert('Please enter customer name');
+                return;
+            }
+
+            const customer = {
+                id: Date.now(),
+                name,
+                amount,
+                date: new Date().toLocaleDateString()
+            };
+
+            customers.push(customer);
+            localStorage.setItem('customers', JSON.stringify(customers));
+            displayCustomers();
+            document.getElementById('newCustomerName').value = '';
+            document.getElementById('customerAmount').value = '';
+        }
+
+        function displayCustomers(filteredCustomers = customers) {
+            const list = document.getElementById('customerList');
+            if (filteredCustomers.length === 0) {
+                list.innerHTML = '<p>No customers found.</p>';
+                return;
+            }
+
+            list.innerHTML = filteredCustomers.map(customer => `
+                <div class="customer-item">
+                    <div>
+                        <strong>${customer.name}</strong><br>
+                        <small>Amount: ₹${customer.amount.toLocaleString()} | ${customer.date}</small>
+                    </div>
+                    <button class="bill-btn" onclick="generateBill(${customer.id})">
+                        <i class="fas fa-download"></i> Bill
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        function searchCustomers() {
+            const query = document.getElementById('searchCustomer').value.toLowerCase();
+            const filtered = customers.filter(c => c.name.toLowerCase().includes(query));
+            displayCustomers(filtered);
+        }
+
+        function generateBill(customerId) {
+            const customer = customers.find(c => c.id === customerId);
+            if (!customer) return;
+
+            const billContent = `
+                THE AI HUB
+                ================
+                Customer: ${customer.name}
+                Amount: ₹${customer.amount.toLocaleString()}
+                Date: ${customer.date}
+                Founder: Harshwardhan Singh Lodhi
+                Contact: KV2642240@gmail.com
+                ================
+                Thank You! Visit Again
+            `;
+
+            const blob = new Blob([billContent], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `bill_${customer.name}_${customer.date}.txt`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        // Initialize
+        window.onload = function() {
+            const savedProfit = parseFloat(localStorage.getItem('totalProfit')) || 0;
+            totalProfit = savedProfit;
+            document.getElementById('totalProfit').textContent = `₹ ${totalProfit.toLocaleString()}`;
+            displayCustomers();
+            displayUdhari();
+        }
+    </script>
+</body>
+</html>
