@@ -3,479 +3,92 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Hub - Shop Management System</title>
+    <title>The AI Hub - Dashboard</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-
-        .header {
-            text-align: center;
-            color: white;
-            margin-bottom: 30px;
-        }
-
-        .header h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-
-        .header p {
-            font-size: 1.2em;
-            opacity: 0.9;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background: rgba(255,255,255,0.95);
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-        }
-
-        .dashboard {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-
-        .card {
-            background: white;
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            text-align: center;
-            transition: transform 0.3s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-        }
-
-        .card h3 {
-            color: #667eea;
-            margin-bottom: 10px;
-            font-size: 1.3em;
-        }
-
-        .card .amount {
-            font-size: 2em;
-            font-weight: bold;
-            color: #333;
-        }
-
-        .btn {
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 25px;
-            cursor: pointer;
-            font-size: 1em;
-            transition: all 0.3s ease;
-            margin: 5px;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-        }
-
-        .form-section {
-            display: none;
-            background: #f8f9ff;
-            padding: 25px;
-            border-radius: 15px;
-            margin-top: 20px;
-        }
-
-        .form-section.active {
-            display: block;
-            animation: slideDown 0.3s ease;
-        }
-
-        @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: #333;
-        }
-
-        .form-group input, .form-group select {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #e1e5e9;
-            border-radius: 10px;
-            font-size: 1em;
-            transition: border-color 0.3s ease;
-        }
-
-        .form-group input:focus, .form-group select:focus {
-            outline: none;
-            border-color: #667eea;
-        }
-
-        .customer-list {
-            margin-top: 20px;
-        }
-
-        .customer-item {
-            background: white;
-            padding: 15px;
-            margin-bottom: 10px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .delete-btn {
-            background: #ff4757;
-            padding: 8px 15px;
-            font-size: 0.9em;
-        }
-
-        .profit-section {
-            background: linear-gradient(45deg, #2ed573, #1e90ff);
-            color: white;
-            text-align: center;
-            padding: 20px;
-            border-radius: 15px;
-            margin-top: 20px;
-        }
-
-        @media (max-width: 768px) {
-            .dashboard {
-                grid-template-columns: 1fr;
-            }
-            
-            .header h1 {
-                font-size: 2em;
-            }
-        }
+        body { font-family: 'Segoe UI', sans-serif; background: #0d1117; color: #c9d1d9; padding: 15px; }
+        .container { max-width: 500px; margin: auto; background: #161b22; padding: 20px; border-radius: 15px; border: 1px solid #30363d; }
+        h2 { text-align: center; color: #58a6ff; }
+        input, select { width: 100%; padding: 12px; margin: 8px 0; border-radius: 8px; border: 1px solid #30363d; background: #0d1117; color: white; box-sizing: border-box; }
+        .btn-add { width: 100%; padding: 12px; background: #238636; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; }
+        .stats { display: flex; justify-content: space-between; margin: 20px 0; padding: 15px; background: #21262d; border-radius: 10px; border-left: 5px solid #58a6ff; }
+        .item { background: #21262d; padding: 15px; margin-top: 10px; border-radius: 10px; border: 1px solid #30363d; display: flex; justify-content: space-between; align-items: center; }
+        .btn-pdf { background: #30363d; color: #58a6ff; border: 1px solid #58a6ff; padding: 5px 10px; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        .btn-clear { background: #d76e00; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        .founder-link { display: block; text-align: center; margin-top: 25px; color: #8b949e; text-decoration: none; font-weight: bold; }
     </style>
 </head>
 <body>
-    <div class="header">
-        <h1>🧠 AI Hub</h1>
-        <p>Shop Management System | Founder: Harshwardhan Singh Lodhi</p>
-        <p>Follow: <a href="https://www.instagram.com/_verma_karan08/" target="_blank" style="color: #ffd700;">@_verma_karan08</a></p>
+<div class="container">
+    <h2>THE AI HUB</h2>
+    <input type="text" id="search" placeholder="🔍 Search Customer..." onkeyup="filterData()">
+    <input type="text" id="custName" placeholder="Customer Name">
+    <input type="text" id="service" placeholder="Service Name">
+    <input type="number" id="amount" placeholder="Amount (₹)">
+    <select id="entryType"><option value="Paid">Paid (Profit)</option><option value="Udhari">Due (Udhari)</option></select>
+    <button class="btn-add" onclick="saveEntry()">ADD RECORD</button>
+    <div class="stats">
+        <div>Profit<br><span id="totalProfit" style="color:#3fb950;">₹0</span></div>
+        <div style="border-left: 1px solid #30363d;">Udhari<br><span id="totalUdhari" style="color:#f85149;">₹0</span></div>
     </div>
-
-    <div class="container">
-        <!-- Dashboard Cards -->
-        <div class="dashboard">
-            <div class="card">
-                <h3>Total Customers</h3>
-                <div class="amount" id="totalCustomers">0</div>
-            </div>
-            <div class="card">
-                <h3>Total Loans</h3>
-                <div class="amount" id="totalLoans">₹0</div>
-            </div>
-            <div class="card">
-                <h3>Total Profit</h3>
-                <div class="amount" id="totalProfit">₹0</div>
-            </div>
-            <div class="card">
-                <h3>Active Bills</h3>
-                <div class="amount" id="activeBills">0</div>
-            </div>
-        </div>
-
-        <!-- Action Buttons -->
-        <div style="text-align: center; margin-bottom: 30px;">
-            <button class="btn" onclick="showForm('addCustomer')">➕ Add Customer</button>
-            <button class="btn" onclick="showForm('addLoan')">💰 Add Loan</button>
-            <button class="btn" onclick="showForm('addBill')">📋 Create Bill</button>
-            <button class="btn" onclick="showForm('closeLoan')">✅ Close Loan</button>
-        </div>
-
-        <!-- Forms -->
-        <div id="addCustomerForm" class="form-section">
-            <h3>➕ Add New Customer</h3>
-            <div class="form-group">
-                <label>Customer Name</label>
-                <input type="text" id="customerName" placeholder="Enter customer name">
-            </div>
-            <div class="form-group">
-                <label>Phone Number</label>
-                <input type="tel" id="customerPhone" placeholder="Enter phone number">
-            </div>
-            <button class="btn" onclick="addCustomer()">Save Customer</button>
-        </div>
-
-        <div id="addLoanForm" class="form-section">
-            <h3>💰 Add Loan</h3>
-            <div class="form-group">
-                <label>Select Customer</label>
-                <select id="loanCustomer">
-                    <option value="">Choose customer</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>Loan Amount</label>
-                <input type="number" id="loanAmount" placeholder="Enter loan amount">
-            </div>
-            <button class="btn" onclick="addLoan()">Add Loan</button>
-        </div>
-
-        <div id="addBillForm" class="form-section">
-            <h3>📋 Create Bill</h3>
-            <div class="form-group">
-                <label>Select Customer</label>
-                <select id="billCustomer">
-                    <option value="">Choose customer</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>Bill Amount</label>
-                <input type="number" id="billAmount" placeholder="Enter bill amount">
-            </div>
-            <div class="form-group">
-                <label>Items</label>
-                <input type="text" id="billItems" placeholder="Enter items (comma separated)">
-            </div>
-            <button class="btn" onclick="addBill()">Create Bill</button>
-        </div>
-
-        <div id="closeLoanForm" class="form-section">
-            <h3>✅ Close Loan</h3>
-            <div class="form-group">
-                <label>Select Customer with Loan</label>
-                <select id="closeLoanCustomer">
-                    <option value="">Choose customer with loan</option>
-                </select>
-            </div>
-            <button class="btn" onclick="closeLoan()">Close Selected Loan</button>
-        </div>
-
-        <!-- Customer List -->
-        <div class="customer-list">
-            <h3>👥 Customer Records</h3>
-            <div id="customerRecords"></div>
-        </div>
-
-        <!-- Profit Summary -->
-        <div class="profit-section">
-            <h3>💹 Profit & Loan Summary</h3>
-            <p id="profitSummary">Loading...</p>
-        </div>
-    </div>
-
-    <script>
-        let customers = JSON.parse(localStorage.getItem('aiHubCustomers')) || [];
-        let bills = JSON.parse(localStorage.getItem('aiHubBills')) || [];
-        let loans = JSON.parse(localStorage.getItem('aiHubLoans')) || [];
-
-        function saveData() {
-            localStorage.setItem('aiHubCustomers', JSON.stringify(customers));
-            localStorage.setItem('aiHubBills', JSON.stringify(bills));
-            localStorage.setItem('aiHubLoans', JSON.stringify(loans));
-        }
-
-        function updateDashboard() {
-            const totalCustomers = customers.length;
-            const totalLoans = loans.reduce((sum, loan) => sum + loan.amount, 0);
-            const totalProfit = bills.reduce((sum, bill) => sum + bill.amount, 0);
-            const activeBills = bills.filter(bill => !bill.paid).length;
-
-            document.getElementById('totalCustomers').textContent = totalCustomers;
-            document.getElementById('totalLoans').textContent = `₹${totalLoans.toLocaleString()}`;
-            document.getElementById('totalProfit').textContent = `₹${totalProfit.toLocaleString()}`;
-            document.getElementById('activeBills').textContent = activeBills;
-
-            document.getElementById('profitSummary').innerHTML = `
-                Total Profit: ₹${totalProfit.toLocaleString()} | 
-                Total Loans: ₹${totalLoans.toLocaleString()} | 
-                Net Profit: ₹${(totalProfit - totalLoans).toLocaleString()}
-            `;
-        }
-
-        function showForm(formId) {
-            // Hide all forms
-            document.querySelectorAll('.form-section').forEach(form => {
-                form.classList.remove('active');
-            });
-            // Show selected form
-            document.getElementById(formId + 'Form').classList.add('active');
-            loadCustomerDropdowns();
-        }
-
-        function loadCustomerDropdowns() {
-            const selects = ['loanCustomer', 'billCustomer', 'closeLoanCustomer'];
-            selects.forEach(selectId => {
-                const select = document.getElementById(selectId);
-                select.innerHTML = '<option value="">Choose customer</option>';
-                
-                customers.forEach((customer, index) => {
-                    const option = document.createElement('option');
-                    option.value = index;
-                    option.textContent = `${customer.name} (${customer.phone})`;
-                    select.appendChild(option);
-                });
-
-                if (selectId === 'closeLoanCustomer') {
-                    // Only show customers with loans
-                    select.innerHTML = '<option value="">Choose customer with loan</option>';
-                    const customersWithLoans = customers.map((customer, index) => {
-                        const customerLoans = loans.filter(loan => loan.customerId == index);
-                        if (customerLoans.length > 0) {
-                            return { customer, index, totalLoan: customerLoans.reduce((sum, l) => sum + l.amount, 0) };
-                        }
-                    }).filter(Boolean);
-
-                    customersWithLoans.forEach(({ customer, index, totalLoan }) => {
-                        const option = document.createElement('option');
-                        option.value = index;
-                        option.textContent = `${customer.name} (${customer.phone}) - ₹${totalLoan.toLocaleString()}`;
-                        select.appendChild(option);
-                    });
-                }
-            });
-        }
-
-        function addCustomer() {
-            const name = document.getElementById('customerName').value;
-            const phone = document.getElementById('customerPhone').value;
-
-            if (!name || !phone) {
-                alert('Please fill all fields');
-                return;
-            }
-
-            customers.push({ name, phone, bills: [], loans: [] });
-            saveData();
-            updateDashboard();
-            document.getElementById('addCustomerForm').classList.remove('active');
-            document.getElementById('customerName').value = '';
-            document.getElementById('customerPhone').value = '';
-            displayCustomers();
-        }
-
-        function addLoan() {
-            const customerId = document.getElementById('loanCustomer').value;
-            const amount = parseFloat(document.getElementById('loanAmount').value);
-
-            if (!customerId || !amount) {
-                alert('Please fill all fields');
-                return;
-            }
-
-            loans.push({ customerId: parseInt(customerId), amount, date: new Date().toLocaleDateString() });
-            saveData();
-            updateDashboard();
-            document.getElementById('addLoanForm').classList.remove('active');
-            document.getElementById('loanAmount').value = '';
-        }
-
-        function addBill() {
-            const customerId = document.getElementById('billCustomer').value;
-            const amount = parseFloat(document.getElementById('billAmount').value);
-            const items = document.getElementById('billItems').value;
-
-            if (!customerId || !amount) {
-                alert('Please fill all fields');
-                return;
-            }
-
-            bills.push({ 
-                customerId: parseInt(customerId), 
-                amount, 
-                items: items || 'General items',
-                date: new Date().toLocaleDateString(),
-                paid: false
-            });
-            saveData();
-            updateDashboard();
-            document.getElementById('addBillForm').classList.remove('active');
-            document.getElementById('billAmount').value = '';
-            document.getElementById('billItems').value = '';
-        }
-
-        function closeLoan() {
-            const customerId = document.getElementById('closeLoanCustomer').value;
-            if (!customerId) {
-                alert('Please select a customer with loan');
-                return;
-            }
-
-            const customerLoans = loans.filter(loan => loan.customerId == customerId);
-            if (customerLoans.length === 0) {
-                alert('No loans found for this customer');
-                return;
-            }
-
-            // Remove all loans for this customer
-            loans = loans.filter(loan => loan.customerId != customerId);
-            saveData();
-            updateDashboard();
-            document.getElementById('closeLoanForm').classList.remove('active');
-            alert('All loans for this customer closed successfully!');
-        }
-
-        function displayCustomers() {
-            const container = document.getElementById('customerRecords');
-            container.innerHTML = '';
-
-            customers.forEach((customer, index) => {
-                const customerLoans = loans.filter(loan => loan.customerId == index);
-                const customerBills = bills.filter(bill => bill.customerId == index);
-                const totalLoans = customerLoans.reduce((sum, loan) => sum + loan.amount, 0);
-                const totalBills = customerBills.reduce((sum, bill) => sum + bill.amount, 0);
-
-                const customerDiv = document.createElement('div');
-                customerDiv.className = 'customer-item';
-                customerDiv.innerHTML = `
+    <div id="list"></div>
+    <a href="about.html" class="founder-link">About Founder (Karan)</a>
+</div>
+<script>
+    function saveEntry() {
+        const name = document.getElementById('custName').value;
+        const service = document.getElementById('service').value;
+        const amount = document.getElementById('amount').value;
+        const type = document.getElementById('entryType').value;
+        if(!name || !amount) return alert("Details bharo bhai!");
+        const entry = { id: Date.now(), name, service, amount, type, date: new Date().toLocaleString() };
+        let data = JSON.parse(localStorage.getItem('aiHubData') || "[]");
+        data.push(entry);
+        localStorage.setItem('aiHubData', JSON.stringify(data));
+        window.location.reload();
+    }
+    function render() {
+        let data = JSON.parse(localStorage.getItem('aiHubData') || "[]");
+        let p = 0, u = 0;
+        data.forEach((item, index) => {
+            if(item.type === "Paid") p += Number(item.amount); else u += Number(item.amount);
+            document.getElementById('list').innerHTML += `
+                <div class="item">
+                    <div><strong>${item.name}</strong> <small>(${item.type})</small><br>₹${item.amount} - ${item.service}</div>
                     <div>
-                        <strong>${customer.name}</strong><br>
-                        📞 ${customer.phone}<br>
-                        💰 Loans: ₹${totalLoans.toLocaleString()} | 
-                        💵 Bills: ₹${totalBills.toLocaleString()}
+                        <button class="btn-pdf" onclick="generatePDF(${index})">Bill</button>
+                        ${item.type === 'Udhari' ? `<button class="btn-clear" onclick="clearBill(${index})">Paid</button>` : ''}
                     </div>
-                    <button class="btn delete-btn" onclick="deleteCustomer(${index})">Delete</button>
-                `;
-                container.appendChild(customerDiv);
-            });
-        }
-
-        function deleteCustomer(index) {
-            if (confirm('Are you sure you want to delete this customer and all their data?')) {
-                customers.splice(index, 1);
-                bills = bills.filter(bill => bill.customerId != index);
-                loans = loans.filter(loan => loan.customerId != index);
-                saveData();
-                updateDashboard();
-                displayCustomers();
-            }
-        }
-
-        // Initialize app
-        updateDashboard();
-        displayCustomers();
-        loadCustomerDropdowns();
-    </script>
+                </div>`;
+        });
+        document.getElementById('totalProfit').innerText = "₹" + p;
+        document.getElementById('totalUdhari').innerText = "₹" + u;
+    }
+    function clearBill(i) {
+        let data = JSON.parse(localStorage.getItem('aiHubData'));
+        data[i].type = "Paid";
+        localStorage.setItem('aiHubData', JSON.stringify(data));
+        window.location.reload();
+    }
+    function filterData() {
+        const q = document.getElementById('search').value.toLowerCase();
+        document.querySelectorAll('.item').forEach(el => el.style.display = el.innerText.toLowerCase().includes(q) ? 'flex' : 'none');
+    }
+    function generatePDF(i) {
+        const d = JSON.parse(localStorage.getItem('aiHubData'))[i];
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+        doc.setFontSize(22); doc.text("THE AI HUB BILL", 105, 20, {align:"center"});
+        doc.setFontSize(12); doc.text(`Date: ${d.date}`, 20, 40);
+        doc.text(`Customer: ${d.name}`, 20, 50);
+        doc.text(`Service: ${d.service}`, 20, 60);
+        doc.text(`Status: ${item.type}`, 20, 70);
+        doc.line(20, 80, 190, 80);
+        doc.setFontSize(16); doc.text(`TOTAL: Rs. ${d.amount}`, 20, 95);
+        doc.setFontSize(10); doc.text("Founder: Harshwardhan Singh Lodhi", 20, 120);
+        doc.save(`Bill_${d.name}.pdf`);
+    }
+    render();
+</script>
 </body>
 </html>
