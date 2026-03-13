@@ -3,506 +3,336 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🚀 THE AI HUB - WORKING BILL SYSTEM</title>
+    <title>🚀 THE AI HUB - 100% WORKING BILL SYSTEM</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-            color: #333;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            overflow: hidden;
-        }
-
-        .header {
-            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
-            color: white;
-            padding: 2rem;
-            text-align: center;
-        }
-
-        .header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .header p {
-            font-size: 1.2rem;
-            opacity: 0.9;
-        }
-
-        .content {
-            padding: 2rem;
-        }
-
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .stat-card {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            color: white;
-            padding: 1.5rem;
-            border-radius: 15px;
-            text-align: center;
-        }
-
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: bold;
-            margin-bottom: 0.5rem;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: bold;
-            color: #333;
-        }
-
-        .form-group input, .form-group select, .form-group textarea {
-            width: 100%;
-            padding: 1rem;
-            border: 2px solid #ddd;
-            border-radius: 10px;
-            font-size: 1rem;
-            transition: border-color 0.3s;
-        }
-
-        .form-group input:focus {
-            outline: none;
-            border-color: #4ecdc4;
-        }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-        }
-
-        .btn {
-            background: linear-gradient(45deg, #4ecdc4, #44a08d);
-            color: white;
-            border: none;
-            padding: 1rem 2rem;
-            border-radius: 10px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            cursor: pointer;
-            margin-right: 1rem;
-            transition: transform 0.3s;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-        }
-
-        .btn-success {
-            background: linear-gradient(45deg, #56ab2f, #a8e6cf);
-        }
-
-        .btn-danger {
-            background: linear-gradient(45deg, #ff6b6b, #ee5a52);
-        }
-
-        #billPreview {
-            background: white;
-            border: 2px solid #4ecdc4;
-            border-radius: 15px;
-            padding: 2rem;
-            margin-top: 2rem;
-            display: none;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .customers-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 1.5rem;
-            margin-top: 2rem;
-        }
-
-        .customer-card {
-            background: #f8f9fa;
-            border: 2px solid #e9ecef;
-            border-radius: 15px;
-            padding: 1.5rem;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .customer-card:hover {
-            border-color: #4ecdc4;
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-        }
-
-        .customer-name {
-            font-size: 1.4rem;
-            font-weight: bold;
-            color: #333;
-            margin-bottom: 0.5rem;
-        }
-
-        .customer-amount {
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: #27ae60;
-            margin-bottom: 0.5rem;
-        }
-
-        .customer-date {
-            color: #666;
-            font-size: 0.9rem;
-        }
-
-        .search-box {
-            width: 100%;
-            max-width: 500px;
-            margin: 0 auto 2rem;
-            display: block;
-        }
-
-        .notification {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: #27ae60;
-            color: white;
-            padding: 1rem 2rem;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            transform: translateX(300px);
-            transition: transform 0.3s;
-            z-index: 1000;
-        }
-
-        .notification.show {
-            transform: translateX(0);
-        }
-
-        .notification.error {
-            background: #e74c3c;
-        }
-
-        @media (max-width: 768px) {
-            .form-row {
-                grid-template-columns: 1fr;
-            }
-        }
+        *{margin:0;padding:0;box-sizing:border-box;}
+        body{font-family:'Segoe UI',sans-serif;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);min-height:100vh;padding:20px;color:#333;}
+        .container{max-width:1000px;margin:0 auto;background:white;border-radius:20px;box-shadow:0 20px 40px rgba(0,0,0,0.2);overflow:hidden;}
+        .header{background:linear-gradient(45deg,#ff6b6b,#4ecdc4);color:white;padding:2rem;text-align:center;}
+        .header h1{font-size:2.2rem;margin-bottom:0.5rem;}
+        .header-info{font-size:1.1rem;opacity:0.95;}
+        .content{padding:2.5rem;}
+        
+        .status-bar{display:flex;justify-content:space-around;background:#f8f9fa;padding:1rem;border-radius:15px;margin-bottom:2rem;}
+        .status-item{text-align:center;}
+        .status-number{font-size:1.8rem;font-weight:bold;color:#27ae60;}
+        .status-label{font-size:0.9rem;color:#666;}
+        
+        .tabs{display:flex;gap:1rem;margin-bottom:2rem;}
+        .tab-btn{background:#e9ecef;border:none;padding:1rem 2rem;border-radius:10px;cursor:pointer;font-weight:500;transition:all 0.3s;}
+        .tab-btn.active{background:#4ecdc4;color:white;}
+        .tab-btn:hover{background:#44a08d;color:white;}
+        
+        .tab-content{display:none;}
+        .tab-content.active{display:block;}
+        
+        .form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.5rem;margin-bottom:2rem;}
+        .form-group{margin-bottom:1rem;}
+        .form-group label{display:block;margin-bottom:0.5rem;font-weight:600;color:#333;}
+        .form-group input,.form-group select,.form-group textarea{width:100%;padding:12px;border:2px solid #e1e8ed;border-radius:10px;font-size:1rem;transition:border-color 0.3s;}
+        .form-group input:focus{outline:none;border-color:#4ecdc4;}
+        .form-group textarea{resize:vertical;height:100px;}
+        
+        .btn-group{text-align:center;margin-top:2rem;}
+        .btn{background:linear-gradient(45deg,#4ecdc4,#44a08d);color:white;border:none;padding:14px 30px;border-radius:12px;font-size:1.1rem;font-weight:600;cursor:pointer;transition:all 0.3s;margin:0 10px;}
+        .btn:hover{transform:translateY(-3px);box-shadow:0 10px 25px rgba(78,205,196,0.4);}
+        .btn-success{background:linear-gradient(45deg,#27ae60,#2ecc71);}
+        .btn-danger{background:linear-gradient(45deg,#e74c3c,#c0392b);}
+        .btn-large{width:100%;padding:16px;font-size:1.2rem;}
+        
+        #billPreview{background:#f8f9fa;border:3px solid #4ecdc4;border-radius:20px;padding:2.5rem;margin:2rem auto;display:none;max-width:700px;text-align:center;}
+        .bill-title{font-size:2.5rem;color:#ff6b6b;margin-bottom:1rem;}
+        .bill-amount{font-size:3rem;color:#27ae60;font-weight:800;margin:1.5rem 0;}
+        
+        .bills-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1.5rem;}
+        .bill-card{background:#f8f9fa;border:2px solid #e9ecef;border-radius:15px;padding:1.5rem;cursor:pointer;transition:all 0.3s;}
+        .bill-card:hover{border-color:#4ecdc4;transform:translateY(-5px);box-shadow:0 15px 30px rgba(0,0,0,0.1);}
+        .bill-name{font-size:1.4rem;font-weight:bold;color:#333;margin-bottom:0.5rem;}
+        .bill-price{font-size:1.8rem;font-weight:bold;color:#27ae60;margin-bottom:0.5rem;}
+        .bill-meta{color:#666;font-size:0.9rem;}
+        
+        .search-box{width:100%;max-width:500px;margin:0 auto 2rem;display:block;padding:15px;border:2px solid #e1e8ed;border-radius:12px;font-size:1.1rem;}
+        
+        .notification{position:fixed;top:20px;right:20px;background:#27ae60;color:white;padding:1.5rem 2rem;border-radius:12px;font-weight:600;box-shadow:0 10px 30px rgba(0,0,0,0.2);transform:translateX(350px);transition:transform 0.4s;z-index:10000;}
+        .notification.show{transform:translateX(0);}
+        .notification.error{background:#e74c3c;}
+        
+        .social-links{display:flex;justify-content:center;gap:1.5rem;margin-top:2rem;}
+        .social-links a{color:#4ecdc4;font-size:1.5rem;transition:transform 0.3s;}
+        .social-links a:hover{transform:scale(1.3);color:#27ae60;}
+        
+        @media(max-width:768px){.form-grid{grid-template-columns:1fr;}.tabs{flex-direction:column;}}
     </style>
 </head>
 <body>
     <!-- Notification -->
-    <div id="notification" class="notification" style="display: none;"></div>
+    <div id="notify" class="notification"></div>
 
     <div class="container">
         <div class="header">
             <h1><i class="fas fa-brain"></i> THE AI HUB</h1>
-            <p>Harshwardhan Singh Lodhi | KV2642240@gmail.com | @_verma_karan08</p>
+            <p class="header-info">Harshwardhan Singh Lodhi | <a href="mailto:KV2642240@gmail.com" style="color:#fff;">KV2642240@gmail.com</a> | <a href="https://instagram.com/_verma_karan08" target="_blank" style="color:#fff;">@_verma_karan08</a></p>
         </div>
 
         <div class="content">
-            <!-- Live Stats -->
-            <div class="stats">
-                <div class="stat-card">
-                    <div class="stat-number" id="totalBills">0</div>
-                    <span>Total Bills</span>
+            <!-- LIVE STATS -->
+            <div class="status-bar">
+                <div class="status-item">
+                    <div class="status-number" id="totalBills">0</div>
+                    <div class="status-label">Total Bills</div>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-number" id="totalProfit">$0</div>
-                    <span>Total Profit</span>
+                <div class="status-item">
+                    <div class="status-number" id="udhariCount">0</div>
+                    <div class="status-label">Udhari Bills</div>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-number" id="udhariAmount">$0</div>
-                    <span>Udhari Pending</span>
+                <div class="status-item">
+                    <div class="status-number" id="totalProfit">₹0</div>
+                    <div class="status-label">Profit</div>
                 </div>
             </div>
 
-            <!-- Quick Buttons -->
-            <div style="text-align: center; margin-bottom: 2rem;">
-                <button class="btn" onclick="showSection('new-bill')">
-                    <i class="fas fa-plus"></i> New Bill
-                </button>
-                <button class="btn" onclick="showSection('search')">
-                    <i class="fas fa-search"></i> Search Bills
-                </button>
-                <button class="btn" onclick="showSection('profit')">
-                    <i class="fas fa-calculator"></i> Profit Calc
-                </button>
+            <!-- TABS -->
+            <div class="tabs">
+                <button class="tab-btn active" onclick="showTab('newbill')">➕ New Bill</button>
+                <button class="tab-btn" onclick="showTab('search')">🔍 Search</button>
+                <button class="tab-btn" onclick="showTab('profit')">💰 Profit</button>
             </div>
 
-            <!-- New Bill Section -->
-            <div id="new-bill" style="display: block;">
-                <h2 style="text-align: center; margin-bottom: 2rem; color: #333;">
-                    <i class="fas fa-receipt"></i> Create New Bill
+            <!-- NEW BILL TAB -->
+            <div id="newbill" class="tab-content active">
+                <h2 style="text-align:center;margin-bottom:2rem;color:#333;font-size:1.8rem;">
+                    <i class="fas fa-receipt"></i> Create Bill
                 </h2>
 
-                <div class="form-row">
-                    <div class="form-group">
-                        <label><i class="fas fa-user"></i> Customer Name *</label>
-                        <input type="text" id="customerName" placeholder="Enter name" required>
+                <form id="billForm">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label><i class="fas fa-user"></i> Customer Name <span style="color:red;">*</span></label>
+                            <input type="text" id="custName" required>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-phone"></i> Phone</label>
+                            <input type="tel" id="custPhone">
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-rupee-sign"></i> Amount <span style="color:red;">*</span></label>
+                            <input type="number" id="billAmt" required min="1">
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-credit-card"></i> Payment</label>
+                            <select id="payType">
+                                <option value="Cash">💵 Cash</option>
+                                <option value="UPI">📱 UPI</option>
+                                <option value="Card">💳 Card</option>
+                                <option value="Udhari">📝 Udhari</option>
+                            </select>
+                        </div>
                     </div>
                     <div class="form-group">
-                        <label><i class="fas fa-phone"></i> Phone</label>
-                        <input type="tel" id="customerPhone" placeholder="Phone number">
+                        <label><i class="fas fa-list"></i> Items</label>
+                        <textarea id="billItems" placeholder="Ex: Shirt ₹500 x2, Pant ₹800 x1"></textarea>
                     </div>
-                </div>
 
-                <div class="form-row">
-                    <div class="form-group">
-                        <label><i class="fas fa-rupee-sign"></i> Total Amount *</label>
-                        <input type="number" id="billAmount" placeholder="0" required>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-success btn-large" onclick="saveAndDownload()">
+                            ✅ SAVE BILL + DOWNLOAD PDF
+                        </button>
+                        <button type="button" class="btn" onclick="clearForm()">
+                            🔄 Clear Form
+                        </button>
                     </div>
-                    <div class="form-group">
-                        <label><i class="fas fa-credit-card"></i> Payment</label>
-                        <select id="paymentType">
-                            <option value="Cash">Cash</option>
-                            <option value="UPI">UPI</option>
-                            <option value="Card">Card</option>
-                            <option value="Udhari">Udhari</option>
-                        </select>
-                    </div>
-                </div>
+                </form>
 
-                <div class="form-group">
-                    <label><i class="fas fa-list"></i> Items</label>
-                    <textarea id="items" rows="3" placeholder="Shirt x2, Pant x1 etc..."></textarea>
-                </div>
-
-                <div style="text-align: center;">
-                    <button class="btn btn-success" onclick="saveBill()">
-                        <i class="fas fa-save"></i> SAVE BILL & DOWNLOAD PDF
-                    </button>
-                    <button class="btn" onclick="clearForm()">
-                        <i class="fas fa-redo"></i> Clear
-                    </button>
-                </div>
-
-                <!-- Bill Preview -->
-                <div id="billPreview"></div>
+                <div id="previewBill"></div>
             </div>
 
-            <!-- Search Section -->
-            <div id="search" style="display: none;">
-                <h2 style="text-align: center; margin-bottom: 2rem; color: #333;">
-                    <i class="fas fa-search"></i> Search Customer Bills
+            <!-- SEARCH TAB -->
+            <div id="search" class="tab-content">
+                <h2 style="text-align:center;margin-bottom:2rem;color:#333;font-size:1.8rem;">
+                    <i class="fas fa-search"></i> All Customer Bills
                 </h2>
-                
                 <div class="form-group">
-                    <label>Search by Name</label>
-                    <input type="text" id="searchInput" class="search-box" placeholder="Type customer name..." onkeyup="searchBills()">
+                    <input type="text" class="search-box" id="billSearch" placeholder="🔍 Search by customer name..." oninput="filterBills()">
                 </div>
-
-                <div id="billsList" style="min-height: 200px;">
-                    <p style="text-align: center; color: #666; padding: 3rem;">
-                        No bills yet. Create first bill above!
-                    </p>
+                <div id="allBills" class="bills-grid">
+                    <div style="grid-column:1/-1;text-align:center;padding:4rem;color:#999;">
+                        <i class="fas fa-inbox" style="font-size:4rem;margin-bottom:1rem;opacity:0.5;"></i>
+                        <p>No bills yet. Create your first bill!</p>
+                    </div>
                 </div>
             </div>
 
-            <!-- Profit Section -->
-            <div id="profit" style="display: none;">
-                <h2 style="text-align: center; margin-bottom: 2rem; color: #333;">
-                    <i class="fas fa-calculator"></i> Profit Calculator
+            <!-- PROFIT TAB -->
+            <div id="profit" class="tab-content">
+                <h2 style="text-align:center;margin-bottom:2rem;color:#333;font-size:1.8rem;">
+                    <i class="fas fa-chart-line"></i> Profit Calculator
                 </h2>
-                
-                <div class="form-row">
+                <div class="form-grid">
                     <div class="form-group">
-                        <label>Selling Price</label>
-                        <input type="number" id="sellPrice" placeholder="Selling price">
+                        <label>Selling Price ₹</label>
+                        <input type="number" id="sellPrice">
                     </div>
                     <div class="form-group">
-                        <label>Cost Price</label>
-                        <input type="number" id="costPrice" placeholder="Cost price">
+                        <label>Cost Price ₹</label>
+                        <input type="number" id="costPrice">
+                    </div>
+                    <div class="form-group">
+                        <label>Quantity</label>
+                        <input type="number" id="billQty" value="1">
                     </div>
                 </div>
-                
-                <div class="form-group">
-                    <label>Quantity</label>
-                    <input type="number" id="profitQty" value="1">
-                </div>
-                
-                <button class="btn btn-success" onclick="calcProfit()" style="width: 100%; margin-top: 1rem;">
+                <button class="btn btn-success btn-large" onclick="calculateProfit()" style="margin:0 auto;display:block;">
                     Calculate Profit
                 </button>
-                
-                <div id="profitResult" style="margin-top: 2rem; padding: 2rem; background: #f8f9fa; border-radius: 10px; text-align: center; display: none;">
-                    <h3>Today's Total Profit: <span id="totalProfit">$0</span></h3>
+                <div id="profitDisplay" style="margin-top:2rem;padding:2rem;background:#f0f8ff;border-radius:15px;text-align:center;display:none;">
+                    <h3 style="color:#27ae60;">Today's Total Profit: <span id="profitTotal">₹0</span></h3>
                 </div>
             </div>
         </div>
     </div>
 
-    <script>
-        // ==================== MAIN DATA ====================
-        let bills = JSON.parse(localStorage.getItem('aihub_bills')) || [];
-        let profitData = JSON.parse(localStorage.getItem('aihub_profit')) || { total: 0 };
+    <!-- Social Links -->
+    <div class="social-links">
+        <a href="mailto:KV2642240@gmail.com" title="Email"><i class="fas fa-envelope"></i></a>
+        <a href="https://instagram.com/_verma_karan08" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+    </div>
 
-        // ==================== NOTIFICATION ====================
-        function showNotification(message, type = 'success') {
-            const notif = document.getElementById('notification');
-            notif.textContent = message;
-            notif.className = `notification ${type} show`;
-            setTimeout(() => {
-                notif.classList.remove('show');
-            }, 3000);
+    <script>
+        // ==================== LOAD DATA ON START ====================
+        let allBills = JSON.parse(localStorage.getItem('THE_AIHUB_BILLS')) || [];
+        let profitTotal = parseFloat(localStorage.getItem('THE_AIHUB_PROFIT')) || 0;
+
+        // Update stats
+        function updateStats() {
+            document.getElementById('totalBills').textContent = allBills.length;
+            document.getElementById('totalProfit').textContent = '₹' + profitTotal.toLocaleString();
+            document.getElementById('udhariCount').textContent = allBills.filter(b => b.payment === 'Udhari').length;
+            loadBills();
         }
 
-        // ==================== SAVE BILL ====================
-        function saveBill() {
-            const name = document.getElementById('customerName').value.trim();
-            const phone = document.getElementById('customerPhone').value.trim();
-            const amount = parseFloat(document.getElementById('billAmount').value) || 0;
-            const payment = document.getElementById('paymentType').value;
-            const items = document.getElementById('items').value.trim();
+        // ==================== SAVE BILL (100% WORKING) ====================
+        function saveAndDownload() {
+            const name = document.getElementById('custName').value.trim();
+            const phone = document.getElementById('custPhone').value.trim();
+            const amount = parseFloat(document.getElementById('billAmt').value);
+            const payment = document.getElementById('payType').value;
+            const items = document.getElementById('billItems').value.trim();
 
             if (!name || amount <= 0) {
-                showNotification('Please enter name and valid amount!', 'error');
+                showNotify('❌ Name aur Amount fill karo!', 'error');
                 return;
             }
 
-            // Create bill object
-            const bill = {
+            // NEW BILL OBJECT
+            const newBill = {
                 id: Date.now(),
                 name: name,
                 phone: phone,
                 amount: amount,
                 payment: payment,
                 items: items,
-                date: new Date().toLocaleString()
+                date: new Date().toLocaleString('en-IN', { 
+                    year: 'numeric', 
+                    month: 'short', 
+                    day: 'numeric', 
+                    hour: '2-digit', 
+                    minute: '2-digit' 
+                })
             };
 
-            // Save to database
-            bills.unshift(bill);
-            localStorage.setItem('aihub_bills', JSON.stringify(bills));
+            // SAVE TO DATABASE
+            allBills.unshift(newBill);
+            localStorage.setItem('THE_AIHUB_BILLS', JSON.stringify(allBills));
 
-            // Show preview
-            showBillPreview(bill);
+            // SHOW PREVIEW
+            showPreview(newBill);
 
-            // Update stats
+            // UPDATE STATS
             updateStats();
 
-            // Clear form
-            clearForm();
+            // SUCCESS MESSAGE
+            showNotify(`✅ ${name} ka bill save ho gaya! PDF ready!`, 'success');
 
-            // Notification
-            showNotification(`✅ Bill saved for ${name}! PDF Ready!`);
+            // AUTO DOWNLOAD PDF
+            setTimeout(() => downloadBillPDF(newBill), 500);
         }
 
-        // ==================== SHOW BILL PREVIEW ====================
-        function showBillPreview(bill) {
-            const preview = document.getElementById('billPreview');
-            preview.innerHTML = `
-                <div class="bill-header">
-                    <h2 style="color: #ff6b6b; margin-bottom: 0.5rem;">THE AI HUB</h2>
-                    <p style="color: #666; font-size: 1.1rem;">Harshwardhan Singh Lodhi</p>
-                    <p style="color: #666;">KV2642240@gmail.com | @_verma_karan08</p>
-                </div>
-                <div style="text-align: center; margin: 2rem 0;">
+        // ==================== SHOW PREVIEW ====================
+        function showPreview(bill) {
+            document.getElementById('previewBill').innerHTML = `
+                <div>
+                    <h2 class="bill-title">THE AI HUB</h2>
+                    <p style="font-size:1.2rem;color:#666;">Harshwardhan Singh Lodhi</p>
+                    <div class="bill-amount">₹${bill.amount.toLocaleString()}</div>
                     <h3>${bill.name}</h3>
                     ${bill.phone ? `<p>📞 ${bill.phone}</p>` : ''}
-                    <div style="font-size: 2rem; color: #27ae60; margin: 1rem 0;">
-                        ₹${bill.amount.toLocaleString()}
-                    </div>
-                    <p><strong>Payment:</strong> ${bill.payment}</p>
-                    ${bill.items ? `<p><strong>Items:</strong> ${bill.items}</p>` : ''}
-                    <p style="color: #666; font-size: 0.9rem;">${bill.date}</p>
-                </div>
-                <div style="text-align: center; margin-top: 2rem;">
-                    <button class="btn btn-success" onclick="downloadPDF(${bill.id})">
-                        📥 DOWNLOAD PDF
+                    <p><strong>${bill.payment}</strong></p>
+                    ${bill.items ? `<p style="font-size:1.1rem;">${bill.items}</p>` : ''}
+                    <p style="color:#666;font-size:0.95rem;">${bill.date}</p>
+                    <button class="btn btn-success" onclick="downloadBillPDF(${bill.id})" style="margin-top:1.5rem;">
+                        📥 DOWNLOAD PDF AGAIN
                     </button>
                 </div>
             `;
-            preview.style.display = 'block';
+            document.getElementById('previewBill').style.display = 'block';
         }
 
         // ==================== DOWNLOAD PDF ====================
-        function downloadPDF(billId) {
-            const bill = bills.find(b => b.id === billId);
+        function downloadBillPDF(billId) {
+            const bill = allBills.find(b => b.id === billId);
             const { jsPDF } = window.jspdf;
-            const doc = new jsPDF();
+            const doc = new jsPDF('p', 'mm', 'a4');
 
+            // Header
+            doc.setFontSize(28);
+            doc.setFont(undefined, 'bold');
+            doc.text('THE AI HUB', 105, 40, { align: 'center' });
+            
+            doc.setFontSize(14);
+            doc.setFont(undefined, 'normal');
+            doc.text('Harshwardhan Singh Lodhi', 105, 60, { align: 'center' });
+            doc.text('KV2642240@gmail.com | @_verma_karan08', 105, 70, { align: 'center' });
+
+            // Bill Details
             doc.setFontSize(20);
-            doc.text('THE AI HUB', 105, 30, { align: 'center' });
-            doc.setFontSize(12);
-            doc.text('Harshwardhan Singh Lodhi', 105, 45, { align: 'center' });
-            doc.text('KV2642240@gmail.com | @_verma_karan08', 105, 55, { align: 'center' });
-
+            doc.setFont(undefined, 'bold');
+            doc.text(bill.name, 105, 100, { align: 'center' });
+            
+            doc.setFontSize(32);
+            doc.text('₹' + bill.amount.toLocaleString(), 105, 130, { align: 'center' });
+            
             doc.setFontSize(16);
-            doc.text(bill.name, 105, 80, { align: 'center' });
-            doc.text(`₹${bill.amount.toLocaleString()}`, 105, 100, { align: 'center' });
-            doc.text(`Payment: ${bill.payment}`, 105, 115, { align: 'center' });
+            doc.text('Payment: ' + bill.payment, 105, 155, { align: 'center' });
             
             if (bill.items) {
-                doc.text(bill.items, 20, 135);
+                doc.setFontSize(12);
+                const lines = doc.splitTextToSize(bill.items, 180);
+                doc.text(lines, 15, 180);
             }
-            
-            doc.text(bill.date, 105, doc.internal.pageSize.height - 20, { align: 'center' });
 
-            doc.save(`bill_${bill.name}_${new Date().getTime()}.pdf`);
-            showNotification('📥 PDF Downloaded Successfully!');
+            doc.setFontSize(10);
+            doc.text(bill.date, 105, 270, { align: 'center' });
+
+            // Save
+            doc.save(`AIHUB_Bill_${bill.name.replace(/ /g,'_')}_${Date.now()}.pdf`);
         }
 
-        // ==================== SEARCH BILLS ====================
-        function searchBills() {
-            const query = document.getElementById('searchInput').value.toLowerCase();
-            const container = document.getElementById('billsList');
-            
-            if (!query) {
-                container.innerHTML = '<p style="text-align: center; color: #666; padding: 3rem;">Type name to search...</p>';
-                return;
-            }
-
-            const filtered = bills.filter(bill => 
-                bill.name.toLowerCase().includes(query)
-            );
-
-            if (filtered.length === 0) {
-                container.innerHTML = '<p style="text-align: center; color: #666; padding: 3rem;">No bills found!</p>';
-                return;
-            }
-
-            container.innerHTML = filtered.map(bill => `
-                <div class="customer-card" onclick="showBillPreview(${bill.id})">
-                    <div class="customer-name">${bill.name}</div>
-                    <div class="customer-amount">₹${bill.amount.toLocaleString()}</div>
-                    <div class="customer-date">${bill.date}</div>
-                    <div style="margin-top: 1rem; color: #666; font-size: 0.9rem;">
-                        ${bill.payment} • ${bill.phone || 'No phone'}
+        // ==================== LOAD ALL BILLS ====================
+        function loadBills() {
+            const container = document.getElementById('allBills');
+            if (allBills.length === 0) {
+                container.innerHTML = `
+                    <div style="grid-column:1/-1;text-align:center;padding:4rem;color:#999;">
+                        <i class="fas fa-inbox" style="font-size:4rem;margin-bottom:1rem;opacity:0.5;"></i>
+                        <p>Koi bill nahi mila. Upar new bill banao!</p>
                     </div>
-                </div>
-            `).join('');
-        }
+                `;
+                return;
+            }
 
-        // ==================== UPDATE STATS ====================
-        function updateStats() {
-            document.getElementById('totalBills').textContent = bills.length;
-            document.getElementById('totalProfit').textContent = `$${profitData.total.toLocaleString()}`;
-            
-            const udhari = bills.filter
+            container.innerHTML = allBills.map(bill => `
+                <div class="bill-card" onclick="showPreview(${bill.id})">
+                    <div class="bill-name">${bill.name}</div>
+                    <div class="bill-price">₹${bill
