@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🚀 THE AI HUB - Premium Shopkeeper Dashboard</title>
+    <title>🚀 THE AI HUB - Public Shopkeeper Dashboard</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -12,9 +12,9 @@
         :root {
             --primary-gold: #FFD700;
             --primary-blue: #1E3A8A;
-            --dark-bg: #0F0F23;
-            --glass-bg: rgba(255,255,255,0.1);
-            --glass-border: rgba(255,255,255,0.2);
+            --dark-bg: linear-gradient(135deg, #0F0F23 0%, #1A1A3A 50%, #2A2A4A 100%);
+            --glass-bg: rgba(255,255,255,0.08);
+            --glass-border: rgba(255,255,255,0.15);
             --success: #10B981;
             --danger: #EF4444;
         }
@@ -27,207 +27,160 @@
 
         body {
             font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, var(--dark-bg) 0%, #1A1A3A 50%, #2A2A4A 100%);
+            background: var(--dark-bg);
             min-height: 100vh;
             color: white;
-            overflow-x: hidden;
+            line-height: 1.6;
         }
 
-        /* Premium Badge */
-        .premium-badge {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: linear-gradient(45deg, var(--primary-gold), #FFED4E);
-            color: var(--dark-bg);
-            padding: 1rem 1.8rem;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 1.1rem;
-            box-shadow: 0 15px 35px rgba(255,215,0,0.4);
-            z-index: 10000;
-            animation: premiumGlow 2s ease-in-out infinite alternate;
-        }
-
-        @keyframes premiumGlow {
-            0% { box-shadow: 0 10px 30px rgba(255,215,0,0.4); }
-            100% { box-shadow: 0 15px 45px rgba(255,215,0,0.6); }
-        }
-
-        /* Header */
-        .header {
+        /* Public Header */
+        .public-header {
             background: linear-gradient(135deg, var(--primary-blue), #3B82F6);
             padding: 1.5rem 0;
             box-shadow: 0 20px 60px rgba(0,0,0,0.4);
             position: sticky;
             top: 0;
             z-index: 1000;
-            backdrop-filter: blur(20px);
         }
 
-        .nav-container {
+        .header-content {
             max-width: 1400px;
             margin: 0 auto;
+            padding: 0 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
         }
 
         .logo {
-            font-size: 2.8rem;
+            font-size: 2.5rem;
             font-weight: 800;
             background: linear-gradient(45deg, var(--primary-gold), #FFED4E);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 40px rgba(255,215,0,0.6);
             display: flex;
             align-items: center;
             gap: 0.5rem;
         }
 
-        .contact-info {
+        .shop-info {
             display: flex;
-            gap: 1.5rem;
+            gap: 2rem;
             align-items: center;
+            flex-wrap: wrap;
         }
 
-        .contact-item {
-            color: white;
-            text-decoration: none;
+        .info-item {
             display: flex;
             align-items: center;
-            gap: 0.6rem;
-            padding: 1rem 1.8rem;
-            border-radius: 30px;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            gap: 0.5rem;
+            padding: 0.8rem 1.5rem;
             background: rgba(255,255,255,0.15);
+            border-radius: 25px;
             backdrop-filter: blur(15px);
             border: 1px solid var(--glass-border);
-            font-weight: 500;
+            transition: all 0.3s ease;
         }
 
-        .contact-item:hover {
+        .info-item:hover {
             background: rgba(255,255,255,0.25);
-            transform: translateY(-4px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            transform: translateY(-2px);
         }
 
-        /* Main Layout */
+        /* Main Container */
         .main-container {
             max-width: 1400px;
-            margin: 2.5rem auto;
+            margin: 3rem auto;
             padding: 0 2rem;
+        }
+
+        /* Quick Actions */
+        .quick-actions {
             display: grid;
-            grid-template-columns: 320px 1fr;
-            gap: 2.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
         }
 
-        /* Sidebar */
-        .sidebar {
+        .action-card {
             background: var(--glass-bg);
             backdrop-filter: blur(25px);
             border-radius: 30px;
-            padding: 2.5rem;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
-            border: 1px solid var(--glass-border);
-            height: fit-content;
-            position: sticky;
-            top: 120px;
-        }
-
-        .sidebar h3 {
-            color: var(--primary-gold);
-            margin-bottom: 2.5rem;
-            font-size: 1.5rem;
-            text-align: center;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.8rem;
-        }
-
-        .nav-btn {
-            width: 100%;
-            padding: 1.4rem 1.8rem;
-            margin-bottom: 1.5rem;
-            border: none;
-            border-radius: 25px;
-            background: rgba(255,255,255,0.15);
-            color: white;
-            cursor: pointer;
-            font-size: 1.1rem;
-            font-weight: 500;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            display: flex;
-            align-items: center;
-            gap: 1.2rem;
-            backdrop-filter: blur(15px);
-            border: 1px solid var(--glass-border);
-        }
-
-        .nav-btn:hover, .nav-btn.active {
-            background: linear-gradient(135deg, var(--primary-gold), #FFED4E);
-            color: var(--dark-bg);
-            transform: translateX(20px) scale(1.03);
-            box-shadow: 0 20px 50px rgba(255,215,0,0.5);
-        }
-
-        /* Content */
-        .content {
-            background: var(--glass-bg);
-            backdrop-filter: blur(25px);
-            border-radius: 30px;
-            padding: 3.5rem;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
-            border: 1px solid var(--glass-border);
-        }
-
-        .section {
-            display: none;
-        }
-
-        .section.active {
-            display: block;
-            animation: slideInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        @keyframes slideInUp {
-            from { opacity: 0; transform: translateY(40px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Profit Card */
-        .profit-card {
-            background: linear-gradient(135deg, rgba(255,215,0,0.2), rgba(255,237,78,0.15));
             padding: 3rem;
-            border-radius: 30px;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+            transition: all 0.4s ease;
+            cursor: pointer;
             text-align: center;
-            margin-bottom: 3rem;
-            border: 2px solid rgba(255,215,0,0.3);
-            backdrop-filter: blur(15px);
+            position: relative;
+            overflow: hidden;
         }
 
-        .profit-amount {
-            font-size: 4.5rem;
-            font-weight: 800;
-            background: linear-gradient(45deg, var(--primary-gold), #FFED4E);
+        .action-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-gold), #FFED4E);
+        }
+
+        .action-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 40px 80px rgba(0,0,0,0.4);
+        }
+
+        .action-icon {
+            font-size: 4rem;
+            background: linear-gradient(135deg, var(--primary-gold), #FFED4E);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin: 1rem 0;
-            text-shadow: 0 0 40px rgba(255,215,0,0.6);
+            margin-bottom: 1.5rem;
         }
 
-        /* Forms */
+        .action-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--primary-gold);
+        }
+
+        /* Entry Form */
+        .entry-section {
+            background: var(--glass-bg);
+            backdrop-filter: blur(25px);
+            border-radius: 30px;
+            padding: 4rem;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, var(--primary-gold), white);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+        }
+
         .form-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
-            margin-bottom: 2.5rem;
+            margin-bottom: 3rem;
         }
 
         .form-group {
             position: relative;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
         }
 
         .form-group label {
@@ -236,18 +189,15 @@
             font-weight: 600;
             color: var(--primary-gold);
             font-size: 1.1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
         }
 
         .form-group input, .form-group select, .form-group textarea {
             width: 100%;
-            padding: 1.4rem 1.5rem;
+            padding: 1.5rem 1.8rem;
             border: 2px solid var(--glass-border);
-            border-radius: 20px;
+            border-radius: 25px;
             font-size: 1.1rem;
-            background: rgba(255,255,255,0.12);
+            background: rgba(255,255,255,0.1);
             color: white;
             backdrop-filter: blur(15px);
             transition: all 0.4s ease;
@@ -255,244 +205,307 @@
         }
 
         .form-group input::placeholder {
-            color: rgba(255,255,255,0.6);
+            color: rgba(255,255,255,0.5);
         }
 
-        .form-group input:focus, .form-group select:focus {
+        .form-group input:focus {
             outline: none;
             border-color: var(--primary-gold);
-            box-shadow: 0 0 25px rgba(255,215,0,0.4);
-            background: rgba(255,255,255,0.18);
+            box-shadow: 0 0 30px rgba(255,215,0,0.3);
         }
 
         /* Buttons */
         .btn {
             background: linear-gradient(135deg, var(--primary-gold), #FFED4E);
-            color: var(--dark-bg);
+            color: #1a1a2e;
             border: none;
-            padding: 1.4rem 3rem;
+            padding: 1.5rem 3.5rem;
             border-radius: 25px;
             cursor: pointer;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             font-weight: 600;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 15px 35px rgba(255,215,0,0.4);
+            transition: all 0.4s ease;
+            box-shadow: 0 20px 40px rgba(255,215,0,0.4);
             display: inline-flex;
             align-items: center;
-            gap: 0.8rem;
-            text-decoration: none;
-            position: relative;
-            overflow: hidden;
+            gap: 1rem;
+            margin-right: 1.5rem;
         }
 
         .btn:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 25px 50px rgba(255,215,0,0.6);
-        }
-
-        .btn-secondary {
-            background: linear-gradient(135deg, #6B7280, #4B5563);
-            color: white;
-            box-shadow: 0 15px 35px rgba(107,114,128,0.4);
+            transform: translateY(-8px);
+            box-shadow: 0 30px 60px rgba(255,215,0,0.5);
         }
 
         .btn-success {
             background: linear-gradient(135deg, var(--success), #059669);
             color: white;
-            box-shadow: 0 15px 35px rgba(16,185,129,0.4);
+            box-shadow: 0 20px 40px rgba(16,185,129,0.4);
         }
 
-        .btn-danger {
-            background: linear-gradient(135deg, var(--danger), #DC2626);
-            color: white;
-            box-shadow: 0 15px 35px rgba(239,68,68,0.4);
-        }
-
-        /* List Items */
-        .entry-item {
-            background: rgba(255,255,255,0.12);
-            padding: 2rem;
+        /* Bill Preview */
+        .bill-preview {
+            background: white;
+            color: #1a1a2e;
+            padding: 3rem;
             border-radius: 25px;
+            margin-top: 2rem;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+            display: none;
+        }
+
+        .bill-header {
+            text-align: center;
             margin-bottom: 2rem;
+            border-bottom: 3px solid var(--primary-gold);
+            padding-bottom: 1.5rem;
+        }
+
+        .bill-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary-blue);
+            margin-bottom: 0.5rem;
+        }
+
+        .bill-content {
+            line-height: 2;
+            font-size: 1.2rem;
+        }
+
+        /* Customer List */
+        .customers-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .customer-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            padding: 2.5rem;
+            border-radius: 25px;
             border: 1px solid var(--glass-border);
             transition: all 0.4s ease;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            cursor: pointer;
         }
 
-        .entry-item:hover {
-            background: rgba(255,255,255,0.2);
-            transform: translateX(15px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        .customer-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
         }
 
-        .entry-info h4 {
-            color: var(--primary-gold);
-            margin-bottom: 0.5rem;
-            font-size: 1.3rem;
-        }
-
-        .entry-meta {
-            color: rgba(255,255,255,0.7);
-            font-size: 0.95rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .entry-amount {
+        .customer-name {
             font-size: 1.8rem;
             font-weight: 700;
-            color: var(--success);
-        }
-
-        .action-buttons {
-            display: flex;
-            gap: 1rem;
-        }
-
-        /* Stats Cards */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-bottom: 3rem;
-        }
-
-        .stat-card {
-            background: rgba(255,255,255,0.1);
-            padding: 2rem;
-            border-radius: 25px;
-            text-align: center;
-            border: 1px solid var(--glass-border);
-            transition: all 0.3s ease;
-        }
-
-        .stat-card:hover {
-            transform: translateY(-10px);
-        }
-
-        .stat-value {
-            font-size: 2.5rem;
-            font-weight: 700;
             color: var(--primary-gold);
-            margin-bottom: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .customer-amount {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--success);
+            margin: 1rem 0;
         }
 
         /* Search */
+        .search-section {
+            margin-bottom: 3rem;
+        }
+
         .search-container {
             position: relative;
-            margin-bottom: 2.5rem;
+            max-width: 500px;
+            margin: 0 auto 2rem;
         }
 
         .search-input {
             width: 100%;
-            padding: 1.4rem 1.5rem 1.4rem 4rem;
+            padding: 1.5rem 1.5rem 1.5rem 4.5rem;
             border: 2px solid var(--glass-border);
-            border-radius: 20px;
-            background: rgba(255,255,255,0.12);
+            border-radius: 25px;
+            background: rgba(255,255,255,0.1);
             color: white;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
+            backdrop-filter: blur(15px);
         }
 
         .search-icon {
             position: absolute;
-            left: 1.5rem;
+            left: 1.8rem;
             top: 50%;
             transform: translateY(-50%);
-            color: rgba(255,255,255,0.6);
+            color: var(--primary-gold);
+            font-size: 1.3rem;
         }
 
         /* Responsive */
-        @media (max-width: 1024px) {
-            .main-container {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-            .sidebar {
-                position: static;
-            }
-        }
-
         @media (max-width: 768px) {
+            .header-content, .shop-info {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+            
             .form-grid {
                 grid-template-columns: 1fr;
             }
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
+            
+            .quick-actions {
+                grid-template-columns: 1fr;
+            }
+            
+            .customers-list {
+                grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Premium Badge -->
-    <div class="premium-badge">
-        <i class="fas fa-crown"></i> PREMIUM PRO
-    </div>
-
-    <!-- Header -->
-    <header class="header">
-        <div class="nav-container">
+    <!-- Public Header -->
+    <header class="public-header">
+        <div class="header-content">
             <div class="logo">
                 <i class="fas fa-brain"></i>
                 THE AI HUB
             </div>
-            <div class="contact-info">
-                <a href="mailto:KV2642240@gmail.com" class="contact-item" title="Email">
+            <div class="shop-info">
+                <div class="info-item">
                     <i class="fas fa-envelope"></i>
-                    KV2642240@gmail.com
-                </a>
-                <a href="https://instagram.com/_verma_karan08" target="_blank" class="contact-item" title="Instagram">
+                    <strong>KV2642240@gmail.com</strong>
+                </div>
+                <div class="info-item">
                     <i class="fab fa-instagram"></i>
-                    _verma_karan08
-                </a>
-                <div class="contact-item" title="Founder">
+                    <a href="https://instagram.com/_verma_karan08" target="_blank">@_verma_karan08</a>
+                </div>
+                <div class="info-item">
                     <i class="fas fa-user-tie"></i>
-                    Harshwardhan Singh Lodhi
+                    <strong>Harshwardhan Singh Lodhi</strong>
                 </div>
             </div>
         </div>
     </header>
 
     <div class="main-container">
-        <!-- Sidebar Navigation -->
-        <aside class="sidebar">
-            <h3><i class="fas fa-rocket"></i> AI Dashboard</h3>
-            <button class="nav-btn active" onclick="showSection('dashboard')">
-                <i class="fas fa-tachometer-alt"></i> Dashboard
-            </button>
-            <button class="nav-btn" onclick="showSection('profit')">
-                <i class="fas fa-chart-line"></i> Profit Calculator
-            </button>
-            <button class="nav-btn" onclick="showSection('customers')">
-                <i class="fas fa-users"></i> Customer Bills
-            </button>
-            <button class="nav-btn" onclick="showSection('udhari')">
-                <i class="fas fa-credit-card"></i> Udhari Ledger
-            </button>
-            <button class="nav-btn" onclick="showSection('stock')">
-                <i class="fas fa-boxes"></i> Stock Manager
-            </button>
-            <button class="nav-btn" onclick="showSection('reports')">
-                <i class="fas fa-file-alt"></i> Reports
-            </button>
-        </aside>
+        <!-- Quick Action Cards -->
+        <div class="quick-actions">
+            <div class="action-card" onclick="showSection('bill-entry')">
+                <div class="action-icon">
+                    <i class="fas fa-receipt"></i>
+                </div>
+                <div class="action-title">New Bill Entry</div>
+                <p style="color: rgba(255,255,255,0.8);">Add customer bill & download PDF instantly</p>
+            </div>
+            
+            <div class="action-card" onclick="showSection('search-bills')">
+                <div class="action-icon">
+                    <i class="fas fa-search"></i>
+                </div>
+                <div class="action-title">Search Bills</div>
+                <p style="color: rgba(255,255,255,0.8);">Find any customer bill by name</p>
+            </div>
+            
+            <div class="action-card" onclick="showSection('profit')">
+                <div class="action-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <div class="action-title">Profit Calc</div>
+                <p style="color: rgba(255,255,255,0.8);">Calculate daily profit automatically</p>
+            </div>
+        </div>
 
-        <!-- Main Content -->
-        <main class="content">
-            <!-- Dashboard Section -->
-            <section id="dashboard" class="section active">
-                <h1 style="font-size: 2.5rem; margin-bottom: 1rem; background: linear-gradient(45deg, var(--primary-gold), white); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
-                    <i class="fas fa-tachometer-alt"></i> Dashboard Overview
-                </h1>
+        <!-- Bill Entry Section -->
+        <section id="bill-entry" class="entry-section" style="display: block;">
+            <h2 class="section-title">
+                <i class="fas fa-receipt"></i> Create New Customer Bill
+            </h2>
+            <p style="text-align: center; color: rgba(255,255,255,0.8); font-size: 1.2rem; margin-bottom: 3rem;">
+                Enter customer details and download professional PDF bill instantly!
+            </p>
 
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <i class="fas fa-rupee-sign" style="font-size: 2.5rem; color: var(--success); margin-bottom: 1rem;"></i>
-                        <div class="stat-value" id="totalProfit">₹0</div>
-                        <div style="color: rgba(255,255,255,0.8);">Total Profit</div>
-                    </div>
-                    <div class="stat-card">
-                        <i class="fas fa-users" style="font-size: 2.5rem; color: var(--primary-gold); margin-bottom: 1rem;"></i>
-                        <div class="stat-value" id="totalCustomers">0</div>
-                        <div style="color: rgba(255,255,255,0.8);">Total Customers</div>
-                   
+            <form id="billForm" class="form-grid">
+                <div class="form-group">
+                    <label><i class="fas fa-user"></i> Customer Name *</label>
+                    <input type="text" id="customerName" placeholder="Enter full name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label><i class="fas fa-phone"></i> Phone Number</label>
+                    <input type="tel" id="customerPhone" placeholder="Enter phone number">
+                </div>
+                
+                <div class="form-group">
+                    <label><i class="fas fa-rupee-sign"></i> Total Amount (₹) *</label>
+                    <input type="number" id="billAmount" placeholder="Enter total amount" required>
+                </div>
+                
+                <div class="form-group">
+                    <label><i class="fas fa-credit-card"></i> Payment Method</label>
+                    <select id="paymentMethod">
+                        <option value="Cash">💰 Cash</option>
+                        <option value="UPI">📱 UPI</option>
+                        <option value="Card">💳 Card</option>
+                        <option value="Udhari">📝 Udhari</option>
+                    </select>
+                </div>
+                
+                <div class="form-group full-width">
+                    <label><i class="fas fa-list"></i> Items Purchased (Optional)</label>
+                    <textarea id="itemsList" rows="3" placeholder="Ex: Shirt x2 - ₹500, Pant x1 - ₹800, ..."></textarea>
+                </div>
+            </form>
+
+            <div style="text-align: center;">
+                <button type="button" class="btn btn-success" onclick="generateBill()">
+                    <i class="fas fa-file-pdf"></i> Generate & Download PDF Bill
+                </button>
+                <button type="button" class="btn" onclick="addBillEntry()">
+                    <i class="fas fa-save"></i> Save Entry Only
+                </button>
+            </div>
+
+            <!-- Bill Preview -->
+            <div id="billPreview" class="bill-preview"></div>
+        </section>
+
+        <!-- Search Bills Section -->
+        <section id="search-bills" class="entry-section" style="display: none;">
+            <h2 class="section-title">
+                <i class="fas fa-search"></i> Search Customer Bills
+            </h2>
+            
+            <div class="search-section">
+                <div class="search-container">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" class="search-input" id="customerSearch" placeholder="🔍 Search by customer name..." onkeyup="searchCustomers()">
+                </div>
+            </div>
+
+            <div id="searchResults" class="customers-list">
+                <div style="grid-column: 1 / -1; text-align: center; padding: 4rem; color: rgba(255,255,255,0.5);">
+                    <i class="fas fa-users" style="font-size: 4rem; margin-bottom: 1rem; opacity: 0.5;"></i>
+                    <p>No bills found. Create your first bill above!</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Profit Calculator Section -->
+        <section id="profit" class="entry-section" style="display: none;">
+            <h2 class="section-title">
+                <i class="fas fa-chart-line"></i> Smart Profit Calculator
+            </h2>
+            
+            <div class="form-grid">
+                <div class="form-group">
+                    <label><i class="fas fa-tag"></i> Selling Price (₹)</label>
+                    <input type="number" id="sellingPrice" placeholder="Enter selling price">
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-coins"></i> Cost Price (₹)</label>
+                    <input type="number" id="costPrice" placeholder="Enter cost price">
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-hashtag"></i> Quantity Sold</label>
+                    <input type="number" id="quantitySold" value="
