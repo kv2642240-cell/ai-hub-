@@ -1,302 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Hub - Shop Management | Founder: Harshwardhan Singh Lodhi</title>
+    <title>AI Hub - Download Now!</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            overflow: hidden;
-        }
-        .header {
-            background: linear-gradient(45deg, #ff6b6b, #feca57);
+        body { 
+            font-family: Arial; 
+            text-align: center; 
+            padding: 50px; 
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
             color: white;
-            padding: 30px;
-            text-align: center;
         }
-        .header h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-        }
-        .header p {
-            font-size: 1.2em;
-            opacity: 0.9;
-        }
-        .dashboard {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            padding: 30px;
-        }
-        .card {
-            background: white;
-            border-radius: 15px;
-            padding: 25px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            text-align: center;
-            transition: transform 0.3s;
-        }
-        .card:hover {
-            transform: translateY(-5px);
-        }
-        .card h3 {
-            color: #333;
-            margin-bottom: 15px;
-            font-size: 1.3em;
-        }
-        .stats {
-            font-size: 2em;
-            font-weight: bold;
-            color: #667eea;
-            margin-bottom: 10px;
-        }
-        .profit { color: #51cf66; }
-        .loan { color: #ff6b6b; }
-        .total-sales { color: #339af0; }
-        button {
-            background: linear-gradient(45deg, #667eea, #764ba2);
+        .download-btn {
+            background: #333;
             color: white;
+            padding: 20px 40px;
+            font-size: 24px;
             border: none;
-            padding: 12px 25px;
-            border-radius: 25px;
+            border-radius: 50px;
             cursor: pointer;
-            font-size: 1em;
-            margin: 5px;
-            transition: all 0.3s;
-        }
-        button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            z-index: 1000;
-        }
-        .modal-content {
-            background: white;
-            margin: 5% auto;
-            padding: 30px;
-            border-radius: 15px;
-            width: 90%;
-            max-width: 500px;
-            max-height: 80vh;
-            overflow-y: auto;
-        }
-        .form-group {
-            margin-bottom: 20px;
-        }
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
-            color: #333;
-        }
-        input, select {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #e1e5e9;
-            border-radius: 10px;
-            font-size: 1em;
-            transition: border-color 0.3s;
-        }
-        input:focus, select:focus {
-            outline: none;
-            border-color: #667eea;
-        }
-        .customer-list {
-            margin-top: 20px;
-        }
-        .customer-item {
-            background: #f8f9fa;
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .delete-btn {
-            background: #ff6b6b;
-            padding: 8px 15px;
-            font-size: 0.9em;
-        }
-        .instagram-link {
             text-decoration: none;
-            color: white;
-            font-weight: bold;
-            margin-top: 10px;
             display: inline-block;
+            margin: 20px;
         }
-        @media (max-width: 768px) {
-            .dashboard {
-                grid-template-columns: 1fr;
-                padding: 20px;
-            }
-            .header h1 {
-                font-size: 2em;
-            }
-        }
+        h1 { font-size: 3em; margin: 20px 0; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>🛒 AI Hub</h1>
-            <p>Smart Shop Management System</p>
-            <p><strong>Founder: Harshwardhan Singh Lodhi</strong></p>
-            <a href="https://www.instagram.com/_verma_karan08/" target="_blank" class="instagram-link">
-                📱 Instagram: @_verma_karan08
-            </a>
-        </div>
-
-        <div class="dashboard">
-            <div class="card">
-                <h3>💰 Total Profit</h3>
-                <div class="stats profit" id="totalProfit">₹0</div>
-            </div>
-            <div class="card">
-                <h3>💸 Pending Loans</h3>
-                <div class="stats loan" id="totalLoan">₹0</div>
-            </div>
-            <div class="card">
-                <h3>📊 Total Sales</h3>
-                <div class="stats total-sales" id="totalSales">₹0</div>
-            </div>
-            <div class="card">
-                <h3>👥 Total Customers</h3>
-                <div class="stats" id="totalCustomers">0</div>
-            </div>
-        </div>
-
-        <div style="padding: 0 30px 30px;">
-            <div style="display: flex; gap: 15px; flex-wrap: wrap; justify-content: center;">
-                <button onclick="openModal('customerModal')">➕ Add Customer</button>
-                <button onclick="openModal('loanModal')">💰 Add Loan</button>
-                <button onclick="openModal('billModal')">📋 Create Bill</button>
-                <button onclick="openModal('closeLoanModal')">✅ Close Loan</button>
-                <button onclick="exportData()">💾 Export Data</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Customer Modal -->
-    <div id="customerModal" class="modal">
-        <div class="modal-content">
-            <h2>➕ Add New Customer</h2>
-            <form id="customerForm">
-                <div class="form-group">
-                    <label>Customer Name</label>
-                    <input type="text" id="customerName" required>
-                </div>
-                <div class="form-group">
-                    <label>Phone Number</label>
-                    <input type="tel" id="customerPhone" required>
-                </div>
-                <div class="form-group">
-                    <label>Address</label>
-                    <input type="text" id="customerAddress">
-                </div>
-                <button type="submit">Add Customer</button>
-                <button type="button" onclick="closeModal('customerModal')">Cancel</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- Loan Modal -->
-    <div id="loanModal" class="modal">
-        <div class="modal-content">
-            <h2>💰 Add Loan</h2>
-            <form id="loanForm">
-                <div class="form-group">
-                    <label>Select Customer</label>
-                    <select id="loanCustomer" required>
-                        <option value="">Choose Customer</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Loan Amount</label>
-                    <input type="number" id="loanAmount" required>
-                </div>
-                <div class="form-group">
-                    <label>Loan Date</label>
-                    <input type="date" id="loanDate" required>
-                </div>
-                <button type="submit">Add Loan</button>
-                <button type="button" onclick="closeModal('loanModal')">Cancel</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- Bill Modal -->
-    <div id="billModal" class="modal">
-        <div class="modal-content">
-            <h2>📋 Create Bill</h2>
-            <form id="billForm">
-                <div class="form-group">
-                    <label>Select Customer</label>
-                    <select id="billCustomer" required>
-                        <option value="">Choose Customer</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Bill Amount</label>
-                    <input type="number" id="billAmount" required>
-                </div>
-                <div class="form-group">
-                    <label>Items</label>
-                    <input type="text" id="billItems" placeholder="e.g., Rice 5kg, Oil 2L">
-                </div>
-                <div class="form-group">
-                    <label>Bill Date</label>
-                    <input type="date" id="billDate" required>
-                </div>
-                <button type="submit">Create Bill</button>
-                <button type="button" onclick="closeModal('billModal')">Cancel</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- Close Loan Modal -->
-    <div id="closeLoanModal" class="modal">
-        <div class="modal-content">
-            <h2>✅ Close Loan</h2>
-            <div class="form-group">
-                <label>Select Loan to Close</label>
-                <select id="closeLoanSelect" required>
-                    <option value="">Choose Loan</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>Payment Amount</label>
-                <input type="number" id="closeAmount" required>
-            </div>
-            <button onclick="closeSelectedLoan()">Close Loan</button>
-            <button type="button" onclick="closeModal('closeLoanModal')">Cancel</button>
-        </div>
-    </div>
-
-    <script>
-        let customers = JSON.parse(localStorage.getItem('aiHubCustomers')) || [];
-       
+    <h1>🛒 AI Hub</h1>
+    <p>Shop Management App by <strong>Harshwardhan Singh Lodhi</strong></p>
+    <p>Download & Share with Shopkeepers! 🚀</p>
+    
+    <a href="aihub.html" class="download-btn">🚀 Use AI Hub Now</a>
+    <br>
+    <a href="https://www.instagram.com/_verma_karan08/" target="_blank">📱 Instagram</a>
+</body>
+</html>
