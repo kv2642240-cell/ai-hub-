@@ -1,63 +1,99 @@
 <!DOCTYPE html>
-<html>
+<html lang="hi">
 <head>
-    <title>The AI Hub</title>
+    <meta charset="UTF-8">
+    <title>The AI Hub - Official Manager</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
-        body{background:#0f0f1a; color:white; font-family:sans-serif; padding:20px;}
-        .box{max-width:400px; margin:auto; background:#1a1a2e; padding:20px; border-radius:15px; border:1px solid #7b2cbf;}
-        input, select{width:100%; padding:10px; margin:5px 0; border-radius:5px;}
-        button{width:100%; padding:10px; background:#7b2cbf; color:white; border:none; border-radius:5px;}
+        body { background: #0f0f1a; color: white; font-family: sans-serif; padding: 10px; }
+        .box { max-width: 400px; margin: auto; background: #1a1a2e; padding: 20px; border-radius: 15px; border: 1px solid #7b2cbf; }
+        .about-section { text-align: center; margin-bottom: 15px; color: #ccc; font-size: 0.9em; border-bottom: 1px solid #333; padding-bottom: 10px; }
+        input, select { width: 100%; padding: 10px; margin: 8px 0; border-radius: 5px; border: none; box-sizing: border-box; }
+        button { padding: 8px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        .record { background: #242442; padding: 10px; margin-top: 10px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; }
+        .footer { text-align: center; margin-top: 20px; font-size: 0.9em; }
     </style>
 </head>
 <body>
+
 <div class="box">
-    <h2>THE AI HUB</h2>
-    <input type="text" id="name" placeholder="Name">
+    <h2 style="text-align:center; color:#c77dff;">THE AI HUB</h2>
+    <div class="about-section">
+        <p><strong>Founder:</strong> Harshwardhan Singh Lodhi (Karan)</p>
+        <p>Professional AI/ML Solutions & Ledger Management</p>
+    </div>
+    
+    <input type="text" id="name" placeholder="Customer Name">
     <input type="text" id="product" placeholder="Service">
-    <input type="number" id="amt" placeholder="Amount">
-    <select id="type"><option value="Paid">Paid</option><option value="Udhaar">Udhaar</option></select>
-    <button onclick="saveData()">SAVE TO CLOUD</button>
-    <div id="list"></div>
+    <input type="number" id="amt" placeholder="Amount (₹)">
+    <select id="type">
+        <option value="Paid">Paid</option>
+        <option value="Udhaar">Udhaar</option>
+    </select>
+    <button onclick="addData()" style="width:100%; background:#7b2cbf; color:white; padding:12px;">ADD TO LEDGER</button>
+    
+    <input type="text" id="search" placeholder="🔍 Search Customer..." onkeyup="loadLedger()" style="margin-top:15px;">
+    
+    <div id="list" style="margin-top:10px;"></div>
+    
+    <div class="footer">
+        <a href="mailto:kv2642240@gmail.com" style="color:#c77dff; margin-right:15px;">📧 Gmail</a>
+        <a href="https://www.instagram.com/_verma_karan08" target="_blank" style="color:#c77dff;">📸 Instagram</a>
+    </div>
 </div>
 
-<script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-
-    const config = {
-        apiKey: "AIzaSyA9Z3bDd3DRR6Qo0Y5J48WmYjbTOUaiHzU",
-        authDomain: "the-ai-hub-7ac90.firebaseapp.com",
-        projectId: "the-ai-hub-7ac90",
-        storageBucket: "the-ai-hub-7ac90.firebasestorage.app",
-        messagingSenderId: "994986142901",
-        appId: "1:994986142901:web:9082bf93a819d9d454a2fc"
-    };
-
-    const db = getFirestore(initializeApp(config));
-    window.db = db; window.collection = collection; window.addDoc = addDoc; 
-    window.getDocs = getDocs; window.deleteDoc = deleteDoc; window.doc = doc;
-
-    window.saveData = async () => {
+<script>
+    function addData() {
         let n = document.getElementById('name').value;
         let p = document.getElementById('product').value;
         let a = document.getElementById('amt').value;
         let t = document.getElementById('type').value;
-        await addDoc(collection(db, "ledger"), { n, p, a, t });
+        if(!n || !a || !p) return alert("Sabhi details bharein!");
+        
+        let db = JSON.parse(localStorage.getItem('hub') || "[]");
+        db.push({id: Date.now(), n, p, a, t});
+        localStorage.setItem('hub', JSON.stringify(db));
         location.reload();
     }
-</script>
-<script>
-    async function load() {
-        let snap = await getDocs(collection(window.db, "ledger"));
+
+    function generateBill(n, p, a, t) {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+        doc.setFontSize(18);
+        doc.text("THE AI HUB - INVOICE", 60, 20);
+        doc.setFontSize(12);
+        doc.text("Founder: Harshwardhan Singh Lodhi (Karan)", 20, 30);
+        doc.text("------------------------------------------", 20, 35);
+        doc.text("Customer: " + n, 20, 50);
+        doc.text("Service: " + p, 20, 60);
+        doc.text("Amount: ₹" + a, 20, 70);
+        doc.text("Status: " + t, 20, 80);
+        doc.save(n + "_Bill.pdf");
+    }
+
+    function loadLedger() {
+        let q = document.getElementById('search').value.toLowerCase();
+        let db = JSON.parse(localStorage.getItem('hub') || "[]");
         let list = document.getElementById('list');
-        snap.forEach(d => {
-            let i = d.data();
-            list.innerHTML += `<div style="background:#242442; margin-top:10px; padding:10px;">
-                ${i.n} - ₹${i.a} (${i.t}) <button onclick="del('${d.id}')">Clear</button></div>`;
+        list.innerHTML = "";
+        
+        db.filter(i => i.n.toLowerCase().includes(q)).forEach(i => {
+            list.innerHTML += `<div class="record">
+                <div><strong>${i.n}</strong> (${i.t})<br>${i.p} | ₹${i.a}</div>
+                <div>
+                    <button onclick="generateBill('${i.n}','${i.p}','${i.a}','${i.t}')" style="background:green; color:white;">Bill</button>
+                    <button onclick="del(${i.id})" style="background:red; color:white;">Clear</button>
+                </div>
+            </div>`;
         });
     }
-    window.del = async (id) => { await deleteDoc(doc(window.db, "ledger", id)); location.reload(); }
-    setTimeout(load, 2000);
+    
+    function del(id) {
+        let db = JSON.parse(localStorage.getItem('hub')).filter(i => i.id !== id);
+        localStorage.setItem('hub', JSON.stringify(db));
+        loadLedger();
+    }
+    loadLedger();
 </script>
 </body>
 </html>
