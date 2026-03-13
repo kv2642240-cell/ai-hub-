@@ -3,336 +3,531 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🚀 THE AI HUB - 100% WORKING BILL SYSTEM</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <title>AI Hub - Shop Management | Founded by Harshwardhan Singh Lodhi</title>
     <style>
-        *{margin:0;padding:0;box-sizing:border-box;}
-        body{font-family:'Segoe UI',sans-serif;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);min-height:100vh;padding:20px;color:#333;}
-        .container{max-width:1000px;margin:0 auto;background:white;border-radius:20px;box-shadow:0 20px 40px rgba(0,0,0,0.2);overflow:hidden;}
-        .header{background:linear-gradient(45deg,#ff6b6b,#4ecdc4);color:white;padding:2rem;text-align:center;}
-        .header h1{font-size:2.2rem;margin-bottom:0.5rem;}
-        .header-info{font-size:1.1rem;opacity:0.95;}
-        .content{padding:2.5rem;}
-        
-        .status-bar{display:flex;justify-content:space-around;background:#f8f9fa;padding:1rem;border-radius:15px;margin-bottom:2rem;}
-        .status-item{text-align:center;}
-        .status-number{font-size:1.8rem;font-weight:bold;color:#27ae60;}
-        .status-label{font-size:0.9rem;color:#666;}
-        
-        .tabs{display:flex;gap:1rem;margin-bottom:2rem;}
-        .tab-btn{background:#e9ecef;border:none;padding:1rem 2rem;border-radius:10px;cursor:pointer;font-weight:500;transition:all 0.3s;}
-        .tab-btn.active{background:#4ecdc4;color:white;}
-        .tab-btn:hover{background:#44a08d;color:white;}
-        
-        .tab-content{display:none;}
-        .tab-content.active{display:block;}
-        
-        .form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.5rem;margin-bottom:2rem;}
-        .form-group{margin-bottom:1rem;}
-        .form-group label{display:block;margin-bottom:0.5rem;font-weight:600;color:#333;}
-        .form-group input,.form-group select,.form-group textarea{width:100%;padding:12px;border:2px solid #e1e8ed;border-radius:10px;font-size:1rem;transition:border-color 0.3s;}
-        .form-group input:focus{outline:none;border-color:#4ecdc4;}
-        .form-group textarea{resize:vertical;height:100px;}
-        
-        .btn-group{text-align:center;margin-top:2rem;}
-        .btn{background:linear-gradient(45deg,#4ecdc4,#44a08d);color:white;border:none;padding:14px 30px;border-radius:12px;font-size:1.1rem;font-weight:600;cursor:pointer;transition:all 0.3s;margin:0 10px;}
-        .btn:hover{transform:translateY(-3px);box-shadow:0 10px 25px rgba(78,205,196,0.4);}
-        .btn-success{background:linear-gradient(45deg,#27ae60,#2ecc71);}
-        .btn-danger{background:linear-gradient(45deg,#e74c3c,#c0392b);}
-        .btn-large{width:100%;padding:16px;font-size:1.2rem;}
-        
-        #billPreview{background:#f8f9fa;border:3px solid #4ecdc4;border-radius:20px;padding:2.5rem;margin:2rem auto;display:none;max-width:700px;text-align:center;}
-        .bill-title{font-size:2.5rem;color:#ff6b6b;margin-bottom:1rem;}
-        .bill-amount{font-size:3rem;color:#27ae60;font-weight:800;margin:1.5rem 0;}
-        
-        .bills-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1.5rem;}
-        .bill-card{background:#f8f9fa;border:2px solid #e9ecef;border-radius:15px;padding:1.5rem;cursor:pointer;transition:all 0.3s;}
-        .bill-card:hover{border-color:#4ecdc4;transform:translateY(-5px);box-shadow:0 15px 30px rgba(0,0,0,0.1);}
-        .bill-name{font-size:1.4rem;font-weight:bold;color:#333;margin-bottom:0.5rem;}
-        .bill-price{font-size:1.8rem;font-weight:bold;color:#27ae60;margin-bottom:0.5rem;}
-        .bill-meta{color:#666;font-size:0.9rem;}
-        
-        .search-box{width:100%;max-width:500px;margin:0 auto 2rem;display:block;padding:15px;border:2px solid #e1e8ed;border-radius:12px;font-size:1.1rem;}
-        
-        .notification{position:fixed;top:20px;right:20px;background:#27ae60;color:white;padding:1.5rem 2rem;border-radius:12px;font-weight:600;box-shadow:0 10px 30px rgba(0,0,0,0.2);transform:translateX(350px);transition:transform 0.4s;z-index:10000;}
-        .notification.show{transform:translateX(0);}
-        .notification.error{background:#e74c3c;}
-        
-        .social-links{display:flex;justify-content:center;gap:1.5rem;margin-top:2rem;}
-        .social-links a{color:#4ecdc4;font-size:1.5rem;transition:transform 0.3s;}
-        .social-links a:hover{transform:scale(1.3);color:#27ae60;}
-        
-        @media(max-width:768px){.form-grid{grid-template-columns:1fr;}.tabs{flex-direction:column;}}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .card h3 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        .card-value {
+            font-size: 2em;
+            font-weight: bold;
+        }
+
+        .tabs {
+            display: flex;
+            background: #f8f9fa;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 15px;
+            background: transparent;
+            border: none;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        form {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        tr:hover {
+            background: #f8f9fa;
+        }
+
+        .status-paid { color: #28a745; font-weight: bold; }
+        .status-pending { color: #ffc107; font-weight: bold; }
+        .status-overdue { color: #dc3545; font-weight: bold; }
+
+        .total-section {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+        }
     </style>
 </head>
 <body>
-    <!-- Notification -->
-    <div id="notify" class="notification"></div>
-
-    <div class="container">
-        <div class="header">
-            <h1><i class="fas fa-brain"></i> THE AI HUB</h1>
-            <p class="header-info">Harshwardhan Singh Lodhi | <a href="mailto:KV2642240@gmail.com" style="color:#fff;">KV2642240@gmail.com</a> | <a href="https://instagram.com/_verma_karan08" target="_blank" style="color:#fff;">@_verma_karan08</a></p>
-        </div>
-
-        <div class="content">
-            <!-- LIVE STATS -->
-            <div class="status-bar">
-                <div class="status-item">
-                    <div class="status-number" id="totalBills">0</div>
-                    <div class="status-label">Total Bills</div>
-                </div>
-                <div class="status-item">
-                    <div class="status-number" id="udhariCount">0</div>
-                    <div class="status-label">Udhari Bills</div>
-                </div>
-                <div class="status-item">
-                    <div class="status-number" id="totalProfit">₹0</div>
-                    <div class="status-label">Profit</div>
-                </div>
-            </div>
-
-            <!-- TABS -->
-            <div class="tabs">
-                <button class="tab-btn active" onclick="showTab('newbill')">➕ New Bill</button>
-                <button class="tab-btn" onclick="showTab('search')">🔍 Search</button>
-                <button class="tab-btn" onclick="showTab('profit')">💰 Profit</button>
-            </div>
-
-            <!-- NEW BILL TAB -->
-            <div id="newbill" class="tab-content active">
-                <h2 style="text-align:center;margin-bottom:2rem;color:#333;font-size:1.8rem;">
-                    <i class="fas fa-receipt"></i> Create Bill
-                </h2>
-
-                <form id="billForm">
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label><i class="fas fa-user"></i> Customer Name <span style="color:red;">*</span></label>
-                            <input type="text" id="custName" required>
-                        </div>
-                        <div class="form-group">
-                            <label><i class="fas fa-phone"></i> Phone</label>
-                            <input type="tel" id="custPhone">
-                        </div>
-                        <div class="form-group">
-                            <label><i class="fas fa-rupee-sign"></i> Amount <span style="color:red;">*</span></label>
-                            <input type="number" id="billAmt" required min="1">
-                        </div>
-                        <div class="form-group">
-                            <label><i class="fas fa-credit-card"></i> Payment</label>
-                            <select id="payType">
-                                <option value="Cash">💵 Cash</option>
-                                <option value="UPI">📱 UPI</option>
-                                <option value="Card">💳 Card</option>
-                                <option value="Udhari">📝 Udhari</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label><i class="fas fa-list"></i> Items</label>
-                        <textarea id="billItems" placeholder="Ex: Shirt ₹500 x2, Pant ₹800 x1"></textarea>
-                    </div>
-
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-success btn-large" onclick="saveAndDownload()">
-                            ✅ SAVE BILL + DOWNLOAD PDF
-                        </button>
-                        <button type="button" class="btn" onclick="clearForm()">
-                            🔄 Clear Form
-                        </button>
-                    </div>
-                </form>
-
-                <div id="previewBill"></div>
-            </div>
-
-            <!-- SEARCH TAB -->
-            <div id="search" class="tab-content">
-                <h2 style="text-align:center;margin-bottom:2rem;color:#333;font-size:1.8rem;">
-                    <i class="fas fa-search"></i> All Customer Bills
-                </h2>
-                <div class="form-group">
-                    <input type="text" class="search-box" id="billSearch" placeholder="🔍 Search by customer name..." oninput="filterBills()">
-                </div>
-                <div id="allBills" class="bills-grid">
-                    <div style="grid-column:1/-1;text-align:center;padding:4rem;color:#999;">
-                        <i class="fas fa-inbox" style="font-size:4rem;margin-bottom:1rem;opacity:0.5;"></i>
-                        <p>No bills yet. Create your first bill!</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- PROFIT TAB -->
-            <div id="profit" class="tab-content">
-                <h2 style="text-align:center;margin-bottom:2rem;color:#333;font-size:1.8rem;">
-                    <i class="fas fa-chart-line"></i> Profit Calculator
-                </h2>
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label>Selling Price ₹</label>
-                        <input type="number" id="sellPrice">
-                    </div>
-                    <div class="form-group">
-                        <label>Cost Price ₹</label>
-                        <input type="number" id="costPrice">
-                    </div>
-                    <div class="form-group">
-                        <label>Quantity</label>
-                        <input type="number" id="billQty" value="1">
-                    </div>
-                </div>
-                <button class="btn btn-success btn-large" onclick="calculateProfit()" style="margin:0 auto;display:block;">
-                    Calculate Profit
-                </button>
-                <div id="profitDisplay" style="margin-top:2rem;padding:2rem;background:#f0f8ff;border-radius:15px;text-align:center;display:none;">
-                    <h3 style="color:#27ae60;">Today's Total Profit: <span id="profitTotal">₹0</span></h3>
-                </div>
-            </div>
-        </div>
+    <div class="header">
+        <h1>🛒 AI Hub</h1>
+        <p>Shop Management System | Founded by Harshwardhan Singh Lodhi</p>
+        <p><small>Follow: <a href="https://www.instagram.com/_verma_karan08/" target="_blank" style="color: #ffd700;">@_verma_karan08</a></small></p>
     </div>
 
-    <!-- Social Links -->
-    <div class="social-links">
-        <a href="mailto:KV2642240@gmail.com" title="Email"><i class="fas fa-envelope"></i></a>
-        <a href="https://instagram.com/_verma_karan08" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+    <div class="container">
+        <!-- Dashboard Cards -->
+        <div class="dashboard">
+            <div class="card">
+                <h3>Total Profit</h3>
+                <div class="card-value" id="totalProfit">₹0</div>
+            </div>
+            <div class="card">
+                <h3>Total Loans</h3>
+                <div class="card-value" id="totalLoans">₹0</div>
+            </div>
+            <div class="card">
+                <h3>Active Customers</h3>
+                <div class="card-value" id="activeCustomers">0</div>
+            </div>
+            <div class="card">
+                <h3>Pending Bills</h3>
+                <div class="card-value" id="pendingBills">0</div>
+            </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('customers')">Add Customer</button>
+            <button class="tab-btn" onclick="switchTab('bills')">Create Bill</button>
+            <button class="tab-btn" onclick="switchTab('customers-list')">Customers List</button>
+            <button class="tab-btn" onclick="switchTab('bills-list')">Bills List</button>
+        </div>
+
+        <!-- Add Customer Tab -->
+        <div id="customers" class="tab-content active">
+            <form onsubmit="addCustomer(event)">
+                <h2>👤 Add New Customer</h2>
+                <div class="form-group">
+                    <label>Customer Name</label>
+                    <input type="text" id="customerName" required>
+                </div>
+                <div class="form-group">
+                    <label>Phone Number</label>
+                    <input type="tel" id="customerPhone" required>
+                </div>
+                <div class="form-group">
+                    <label>Initial Loan Amount (₹)</label>
+                    <input type="number" id="initialLoan" min="0" step="0.01">
+                </div>
+                <button type="submit" class="btn">Add Customer</button>
+            </form>
+        </div>
+
+        <!-- Create Bill Tab -->
+        <div id="bills" class="tab-content">
+            <form onsubmit="createBill(event)">
+                <h2>💰 Create New Bill</h2>
+                <div class="form-group">
+                    <label>Select Customer</label>
+                    <select id="billCustomer" required>
+                        <option value="">Choose Customer</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Bill Amount (₹)</label>
+                    <input type="number" id="billAmount" min="0" step="0.01" required>
+                </div>
+                <div class="form-group">
+                    <label>Items Description</label>
+                    <input type="text" id="billItems" placeholder="e.g., Groceries, Electronics...">
+                </div>
+                <button type="submit" class="btn">Create & Send Bill</button>
+            </form>
+        </div>
+
+        <!-- Customers List Tab -->
+        <div id="customers-list" class="tab-content">
+            <h2>👥 Customers List</h2>
+            <table id="customersTable">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Phone</th>
+                        <th>Loan Amount</th>
+                        <th>Total Bills</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <!-- Bills List Tab -->
+        <div id="bills-list" class="tab-content">
+            <h2>📋 All Bills</h2>
+            <table id="billsTable">
+                <thead>
+                    <tr>
+                        <th>Customer</th>
+                        <th>Amount</th>
+                        <th>Items</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <!-- Total Summary -->
+        <div class="total-section">
+            <h3>📊 Business Summary</h3>
+            <div style="font-size: 1.5em; margin-top: 10px;">
+                Profit: <span id="summaryProfit">₹0</span> | 
+                Loans: <span id="summaryLoans">₹0</span> | 
+                Total Revenue: <span id="totalRevenue">₹0</span>
+            </div>
+        </div>
     </div>
 
     <script>
-        // ==================== LOAD DATA ON START ====================
-        let allBills = JSON.parse(localStorage.getItem('THE_AIHUB_BILLS')) || [];
-        let profitTotal = parseFloat(localStorage.getItem('THE_AIHUB_PROFIT')) || 0;
+        // Data Storage
+        let customers = JSON.parse(localStorage.getItem('aiHubCustomers')) || [];
+        let bills = JSON.parse(localStorage.getItem('aiHubBills')) || [];
 
-        // Update stats
-        function updateStats() {
-            document.getElementById('totalBills').textContent = allBills.length;
-            document.getElementById('totalProfit').textContent = '₹' + profitTotal.toLocaleString();
-            document.getElementById('udhariCount').textContent = allBills.filter(b => b.payment === 'Udhari').length;
-            loadBills();
+        // Initialize app
+        document.addEventListener('DOMContentLoaded', function() {
+            updateDashboard();
+            populateCustomerDropdown();
+            renderCustomersTable();
+            renderBillsTable();
+        });
+
+        function switchTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // Show selected tab
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
         }
 
-        // ==================== SAVE BILL (100% WORKING) ====================
-        function saveAndDownload() {
-            const name = document.getElementById('custName').value.trim();
-            const phone = document.getElementById('custPhone').value.trim();
-            const amount = parseFloat(document.getElementById('billAmt').value);
-            const payment = document.getElementById('payType').value;
-            const items = document.getElementById('billItems').value.trim();
-
-            if (!name || amount <= 0) {
-                showNotify('❌ Name aur Amount fill karo!', 'error');
-                return;
-            }
-
-            // NEW BILL OBJECT
-            const newBill = {
+        function addCustomer(event) {
+            event.preventDefault();
+            
+            const customer = {
                 id: Date.now(),
-                name: name,
-                phone: phone,
-                amount: amount,
-                payment: payment,
-                items: items,
-                date: new Date().toLocaleString('en-IN', { 
-                    year: 'numeric', 
-                    month: 'short', 
-                    day: 'numeric', 
-                    hour: '2-digit', 
-                    minute: '2-digit' 
-                })
+                name: document.getElementById('customerName').value,
+                phone: document.getElementById('customerPhone').value,
+                loan: parseFloat(document.getElementById('initialLoan').value) || 0,
+                bills: [],
+                createdAt: new Date().toLocaleDateString()
             };
 
-            // SAVE TO DATABASE
-            allBills.unshift(newBill);
-            localStorage.setItem('THE_AIHUB_BILLS', JSON.stringify(allBills));
-
-            // SHOW PREVIEW
-            showPreview(newBill);
-
-            // UPDATE STATS
-            updateStats();
-
-            // SUCCESS MESSAGE
-            showNotify(`✅ ${name} ka bill save ho gaya! PDF ready!`, 'success');
-
-            // AUTO DOWNLOAD PDF
-            setTimeout(() => downloadBillPDF(newBill), 500);
+            customers.push(customer);
+            localStorage.setItem('aiHubCustomers', JSON.stringify(customers));
+            
+            document.getElementById('customerName').value = '';
+            document.getElementById('customerPhone').value = '';
+            document.getElementById('initialLoan').value = '';
+            
+            alert('✅ Customer added successfully!');
+            updateDashboard();
+            populateCustomerDropdown();
+            renderCustomersTable();
         }
 
-        // ==================== SHOW PREVIEW ====================
-        function showPreview(bill) {
-            document.getElementById('previewBill').innerHTML = `
-                <div>
-                    <h2 class="bill-title">THE AI HUB</h2>
-                    <p style="font-size:1.2rem;color:#666;">Harshwardhan Singh Lodhi</p>
-                    <div class="bill-amount">₹${bill.amount.toLocaleString()}</div>
-                    <h3>${bill.name}</h3>
-                    ${bill.phone ? `<p>📞 ${bill.phone}</p>` : ''}
-                    <p><strong>${bill.payment}</strong></p>
-                    ${bill.items ? `<p style="font-size:1.1rem;">${bill.items}</p>` : ''}
-                    <p style="color:#666;font-size:0.95rem;">${bill.date}</p>
-                    <button class="btn btn-success" onclick="downloadBillPDF(${bill.id})" style="margin-top:1.5rem;">
-                        📥 DOWNLOAD PDF AGAIN
-                    </button>
-                </div>
-            `;
-            document.getElementById('previewBill').style.display = 'block';
-        }
-
-        // ==================== DOWNLOAD PDF ====================
-        function downloadBillPDF(billId) {
-            const bill = allBills.find(b => b.id === billId);
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF('p', 'mm', 'a4');
-
-            // Header
-            doc.setFontSize(28);
-            doc.setFont(undefined, 'bold');
-            doc.text('THE AI HUB', 105, 40, { align: 'center' });
+        function createBill(event) {
+            event.preventDefault();
             
-            doc.setFontSize(14);
-            doc.setFont(undefined, 'normal');
-            doc.text('Harshwardhan Singh Lodhi', 105, 60, { align: 'center' });
-            doc.text('KV2642240@gmail.com | @_verma_karan08', 105, 70, { align: 'center' });
-
-            // Bill Details
-            doc.setFontSize(20);
-            doc.setFont(undefined, 'bold');
-            doc.text(bill.name, 105, 100, { align: 'center' });
+            const customerId = parseInt(document.getElementById('billCustomer').value);
+            const customer = customers.find(c => c.id === customerId);
             
-            doc.setFontSize(32);
-            doc.text('₹' + bill.amount.toLocaleString(), 105, 130, { align: 'center' });
-            
-            doc.setFontSize(16);
-            doc.text('Payment: ' + bill.payment, 105, 155, { align: 'center' });
-            
-            if (bill.items) {
-                doc.setFontSize(12);
-                const lines = doc.splitTextToSize(bill.items, 180);
-                doc.text(lines, 15, 180);
-            }
-
-            doc.setFontSize(10);
-            doc.text(bill.date, 105, 270, { align: 'center' });
-
-            // Save
-            doc.save(`AIHUB_Bill_${bill.name.replace(/ /g,'_')}_${Date.now()}.pdf`);
-        }
-
-        // ==================== LOAD ALL BILLS ====================
-        function loadBills() {
-            const container = document.getElementById('allBills');
-            if (allBills.length === 0) {
-                container.innerHTML = `
-                    <div style="grid-column:1/-1;text-align:center;padding:4rem;color:#999;">
-                        <i class="fas fa-inbox" style="font-size:4rem;margin-bottom:1rem;opacity:0.5;"></i>
-                        <p>Koi bill nahi mila. Upar new bill banao!</p>
-                    </div>
-                `;
+            if (!customer) {
+                alert('❌ Please select a valid customer');
                 return;
             }
 
-            container.innerHTML = allBills.map(bill => `
-                <div class="bill-card" onclick="showPreview(${bill.id})">
-                    <div class="bill-name">${bill.name}</div>
-                    <div class="bill-price">₹${bill
+            const bill = {
+                id: Date.now(),
+                customerId: customerId,
+                customerName: customer.name,
+                amount: parseFloat(document.getElementById('billAmount').value),
+                items: document.getElementById('billItems').value,
+                date: new Date().toLocaleDateString(),
+                status: 'pending'
+            };
+
+            bills.push(bill);
+            customer.bills.push(bill.id);
+            
+            localStorage.setItem('aiHubBills', JSON.stringify(bills));
+            localStorage.setItem('aiHubCustomers', JSON.stringify(customers));
+            
+            document.getElementById('billAmount').value = '';
+            document.getElementById('billItems').value = '';
+            
+            alert('✅ Bill created successfully! 💌 Sent to customer.');
+            updateDashboard();
+            renderBillsTable();
+            renderCustomersTable();
+        }
+
+        function markPaid(billId) {
+            const bill = bills.find(b => b.id === billId);
+            if (bill) {
+                bill.status = 'paid';
+                localStorage.setItem('aiHubBills', JSON.stringify(bills));
+                updateDashboard();
+                renderBillsTable();
+                renderCustomersTable();
+                alert('✅ Bill marked as PAID!');
+            }
+        }
+
+        function closeLoan(customerId) {
+            const customer = customers.find(c => c.id === customerId);
+            if (customer) {
+                customer.loan = 0;
+                localStorage.setItem('aiHubCustomers', JSON.stringify(customers));
+                updateDashboard();
+                renderCustomersTable();
+                alert('✅ Loan closed successfully!');
+            }
+        }
+
+        function populateCustomerDropdown() {
+            const select = document.getElementById('billCustomer');
+            select.innerHTML = '<option value="">Choose Customer</option>';
+            
+            customers.forEach(customer => {
+                const option = document.createElement('option');
+                option.value = customer.id;
+                option.textContent = `${customer.name} (Loan: ₹${customer.loan})`;
+                select.appendChild(option);
+            });
+        }
+
+        function renderCustomersTable() {
+            const tbody = document.querySelector('#customersTable tbody');
+            tbody.innerHTML = '';
+
+            customers.forEach(customer => {
+                const totalBills = customer.bills.reduce((sum, billId) => {
+                    const bill = bills.find(b => b.id === billId);
+                    return sum + (bill ? bill.amount : 0);
+                }, 0);
+
+                const row = tbody.insertRow();
+                row.innerHTML = `
+                    <td>${customer.name}</td>
+                    <td>${customer.phone}</td>
+                    <td>₹${customer.loan.toFixed(2)}</td>
+                    <td>₹${totalBills.toFixed(2)}</td>
+                    <td class="status-${customer.loan > 0 ? 'pending' : 'paid'}">
+                        ${customer.loan > 0 ? 'Pending' : 'Cleared'}
+                    </td>
+                    <td>
+                        ${customer.loan > 0 ? `<button class="btn" onclick="closeLoan(${customer.id})" style="padding: 5px 10px; font-size: 0.9em;">Close Loan</button>` : ''}
+                    </td>
+                `;
+            });
+        }
+
+        function renderBillsTable() {
+            const tbody = document.querySelector('#billsTable tbody');
+            tbody.innerHTML = '';
+
+            bills.forEach(bill => {
+                const row = tbody.insertRow();
+                row.innerHTML = `
+                    <td>${bill.customerName}</td>
+                    <td>₹${bill.amount.toFixed(2)}</td>
+                    <td>${bill.items || 'General'}</td>
+                    <td>${bill.date}</td>
+                    <td class="status-${bill.status}">${bill.status.toUpperCase()}</td>
+                    <td>
+                        ${bill.status === 'pending' ? 
+                            `<button class="btn" onclick="markPaid(${bill.id})" style="padding: 5px 10px; font-size: 0.9em;">Mark Paid</button>` : 
+                            '✓ Paid'
+                        }
+                    </td>
+                `;
+            });
+        }
+
+        function updateDashboard() {
+            const totalProfit = bills.reduce((sum, bill) => bill.status === 'paid' ? sum + bill.amount : sum, 0);
+            const totalLoans = customers.reduce((sum, customer) => sum + customer.loan, 0);
+            const activeCustomers = customers.length;
+            const pendingBills = bills.filter(bill => bill.status === 'pending').length;
+            const totalRevenue = totalProfit;
+
+            document.getElementById('totalProfit').textContent = `₹${totalProfit.toFixed(2)}`;
+            document.getElementById('totalLoans').textContent = `₹${totalLoans.toFixed(2)}`;
+            document.getElementById('activeCustomers').textContent = activeCustomers;
+            document.getElementById('pendingBills').textContent = pendingBills;
+            document.getElementById('summaryProfit').textContent = totalProfit.toFixed(2);
+            document.getElementById('summaryLoans').textContent = totalLoans.toFixed(2);
+            document.getElementById('totalRevenue').textContent = totalRevenue.toFixed(2);
+        }
+
+        // Export data functionality
+        function exportData() {
+            const data = {
+                customers,
+                bills,
+                timestamp: new Date().toISOString()
+            };
+            const dataStr = JSON.stringify(data, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            const url = URL.createObjectURL(dataBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `AI_Hub_Backup_${new Date().toISOString().split('T')[0]
