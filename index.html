@@ -2,75 +2,96 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>The AI Hub</title>
+    <title>The AI Hub - Dashboard</title>
     <style>
-        body { font-family: sans-serif; background: #0f0f1a; color: white; padding: 20px; }
-        .card { background: #1a1a2e; padding: 20px; border-radius: 15px; max-width: 450px; margin: auto; }
-        input, select { width: 100%; padding: 12px; margin: 8px 0; border-radius: 8px; border: none; box-sizing: border-box; }
-        button { width: 100%; padding: 12px; background: #7b2cbf; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; }
-        .search-box { background: #333; color: white; }
-        .stats { display: flex; justify-content: space-between; margin: 20px 0; background: #242442; padding: 15px; border-radius: 10px; }
-        .item { background: #242442; padding: 10px; margin-top: 10px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; }
+        body { font-family: 'Segoe UI', sans-serif; background: #0b0e14; color: #e0e0e0; padding: 20px; }
+        .card { background: #161b22; padding: 25px; border-radius: 20px; max-width: 450px; margin: auto; border: 1px solid #30363d; }
+        input, select { width: 100%; padding: 12px; margin: 8px 0; border-radius: 10px; border: 1px solid #30363d; background: #0d1117; color: white; }
+        button { width: 100%; padding: 12px; background: #58a6ff; color: #000; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; margin-top: 5px; }
+        .item { background: #21262d; padding: 15px; margin-top: 12px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; }
+        .stats { display: flex; justify-content: space-between; margin: 20px 0; font-weight: bold; }
+        .badge { padding: 4px 8px; border-radius: 5px; font-size: 0.8em; }
     </style>
 </head>
 <body>
 <div class="card">
-    <h2>THE AI HUB</h2>
-    <input type="text" id="search" placeholder="🔍 Search Customer..." onkeyup="filterEntries()" class="search-box">
+    <h2 style="text-align:center; color:#58a6ff;">THE AI HUB</h2>
+    <input type="text" id="search" placeholder="🔍 Search Customer..." onkeyup="filterEntries()">
     <input type="text" id="name" placeholder="Customer Name">
     <input type="text" id="service" placeholder="Service">
     <input type="number" id="amt" placeholder="Amount">
-    <select id="type"><option value="Profit">Profit (Paid)</option><option value="Udhari">Udhari (Due)</option></select>
+    <select id="type"><option value="Profit">Paid</option><option value="Udhari">Due (Udhari)</option></select>
     <button onclick="addEntry()">ADD ENTRY</button>
     <div class="stats">
-        <div>Profit: ₹<span id="totalProfit">0</span></div>
-        <div>Udhari: ₹<span id="totalUdhari">0</span></div>
+        <div>Profit: ₹<span id="tP">0</span></div>
+        <div>Due: ₹<span id="tU">0</span></div>
     </div>
     <div id="history"></div>
-    <a href="about.html" style="color:#7b2cbf; display:block; margin-top:20px; text-align:center;">About Founder</a>
+    <a href="about.html" style="color:#8b949e; display:block; margin-top:20px; text-align:center; text-decoration:none;">About Founder</a>
 </div>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
     function addEntry() {
-        let entry = { n: document.getElementById('name').value, s: document.getElementById('service').value, a: document.getElementById('amt').value, t: document.getElementById('type').value };
+        let entry = { n: document.getElementById('name').value, s: document.getElementById('service').value, a: document.getElementById('amt').value, t: document.getElementById('type').value, d: new Date().toLocaleDateString() };
         let data = JSON.parse(localStorage.getItem('ledger') || "[]");
         data.push(entry);
         localStorage.setItem('ledger', JSON.stringify(data));
         location.reload();
     }
     function filterEntries() {
-        let query = document.getElementById('search').value.toLowerCase();
-        let items = document.querySelectorAll('.item');
-        items.forEach(item => {
-            let text = item.innerText.toLowerCase();
-            item.style.display = text.includes(query) ? 'flex' : 'none';
-        });
+        let q = document.getElementById('search').value.toLowerCase();
+        document.querySelectorAll('.item').forEach(i => i.style.display = i.innerText.toLowerCase().includes(q) ? 'flex' : 'none');
+    }
+    function clearUdhari(i) {
+        let d = JSON.parse(localStorage.getItem('ledger'));
+        d[i].t = "Profit"; 
+        localStorage.setItem('ledger', JSON.stringify(d));
+        location.reload();
     }
     let data = JSON.parse(localStorage.getItem('ledger') || "[]");
-    let p = 0, u = 0;
+    let p=0, u=0;
     data.forEach((item, i) => {
         if(item.t === "Profit") p += parseInt(item.a); else u += parseInt(item.a);
         document.getElementById('history').innerHTML += `
         <div class="item">
-            <div><strong>${item.n}</strong> (${item.t})<br>${item.s} - ₹${item.a}</div>
-            <button onclick="downloadBill(${i})" style="padding:5px 10px; background:#007bff; border:none; border-radius:4px; color:white;">Bill</button>
+            <div><strong>${item.n}</strong><br>${item.s} | ₹${item.a} <span class="badge" style="background:${item.t=='Profit'?'#238636':'#da3633'}">${item.t}</span></div>
+            <div>
+                <button onclick="downloadBill(${i})" style="background:#30363d; color:white; width:auto; padding:5px 10px;">PDF</button>
+                ${item.t=='Udhari' ? `<button onclick="clearUdhari(${i})" style="background:#f0883e; color:white; width:auto; padding:5px 10px;">Clear</button>` : ''}
+            </div>
         </div>`;
     });
-    document.getElementById('totalProfit').innerText = p;
-    document.getElementById('totalUdhari').innerText = u;
+    document.getElementById('tP').innerText = p; document.getElementById('tU').innerText = u;
     function downloadBill(i) {
         let d = JSON.parse(localStorage.getItem('ledger'))[i];
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
-        doc.text("THE AI HUB BILL", 70, 20);
-        doc.text(`Customer: ${d.n}`, 20, 40);
-        doc.text(`Type: ${d.t}`, 20, 50);
+        doc.setFontSize(22); doc.text("THE AI HUB - INVOICE", 55, 20);
+        doc.setFontSize(12); doc.text(`Date: ${d.d}`, 20, 40);
+        doc.text(`Customer: ${d.n}`, 20, 50);
         doc.text(`Service: ${d.s}`, 20, 60);
-        doc.text(`Amount: ₹${d.a}`, 20, 70);
-        doc.text(`Founder: Harshwardhan Singh Lodhi (Karan)`, 20, 90);
-        doc.save(`${d.n}_Bill.pdf`);
+        doc.text(`Status: ${d.t}`, 20, 70);
+        doc.line(20, 80, 190, 80);
+        doc.setFontSize(16); doc.text(`Amount: ₹${d.a}`, 20, 95);
+        doc.setFontSize(10); doc.text("Thank you for choosing The AI Hub!", 20, 110);
+        doc.save(`${d.n}_Invoice.pdf`);
     }
 </script>
 </body>
+    <!DOCTYPE html>
+<html>
+<body style="background:#0b0e14; color:#e0e0e0; padding:40px; font-family:sans-serif; text-align:center;">
+<div style="background:#161b22; padding:30px; border-radius:20px; max-width:400px; margin:auto; border:1px solid #30363d;">
+    <h1 style="color:#58a6ff;">Founder</h1>
+    <h2 style="margin: 10px 0;">Harshwardhan Singh Lodhi (Karan)</h2>
+    <p>AI/ML Scholar at IIT Patna.</p>
+    <p>Founder of <em>The AI Hub</em> - Shaping the future of AI.</p>
+    <div style="margin-top:20px; border-top:1px solid #30363d; padding-top:20px; text-align:left;">
+        <p>📧 <strong>Email:</strong> kv2642240@gmail.com</p>
+        <p>📸 <strong>Instagram:</strong> <a href="https://www.instagram.com/_verma_karan08" style="color:#58a6ff; text-decoration:none;">@_verma_karan08</a></p>
+    </div>
+    <a href="index.html" style="color:#8b949e; display:block; margin-top:20px; text-decoration:none; font-weight:bold;">← Back to Dashboard</a>
+</div>
+</body>
+</html>
 </html>
