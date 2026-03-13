@@ -184,8 +184,19 @@
             text-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
         }
 
-        .form-group {
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
             margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 0;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
         }
 
         .form-group label {
@@ -237,42 +248,13 @@
             box-shadow: 0 15px 40px rgba(255, 215, 0, 0.6);
         }
 
-        .stock-item {
+        .btn-secondary {
+            background: linear-gradient(45deg, #6c757d, #495057);
+        }
+
+        .customer-item, .udhari-item, .stock-item {
             background: rgba(255,255,255,0.1);
-            padding: 1.5rem;
-            border-radius: 20px;
-            margin-bottom: 1.5rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-left: 5px solid #ffd700;
-            transition: all 0.3s ease;
-        }
-
-        .stock-item:hover {
-            background: rgba(255,255,255,0.2);
-            transform: translateX(10px);
-        }
-
-        .stock-item.critical {
-            border-left-color: #ff6b6b;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(255,107,107,0.7); }
-            70% { box-shadow: 0 0 0 10px rgba(255,107,107,0); }
-            100% { box-shadow: 0 0 0 0 rgba(255,107,107,0); }
-        }
-
-        .customer-list, #udhariList {
-            max-height: 400px;
-            overflow-y: auto;
-        }
-
-        .customer-item {
-            background: rgba(255,255,255,0.1);
-            padding: 1.5rem;
+            padding: 1.8rem;
             border-radius: 20px;
             margin-bottom: 1.5rem;
             display: flex;
@@ -282,7 +264,7 @@
             border: 1px solid rgba(255,255,255,0.2);
         }
 
-        .customer-item:hover {
+        .customer-item:hover, .udhari-item:hover, .stock-item:hover {
             background: rgba(255,255,255,0.2);
             transform: translateX(10px);
         }
@@ -291,22 +273,45 @@
             background: linear-gradient(45deg, #4ecdc4, #44a08d);
             color: white;
             border: none;
-            padding: 0.8rem 1.5rem;
+            padding: 1rem 1.8rem;
             border-radius: 12px;
             cursor: pointer;
             font-size: 1rem;
             font-weight: bold;
         }
 
+        .bill-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(78, 205, 196, 0.4);
+        }
+
+        .list-container {
+            max-height: 450px;
+            overflow-y: auto;
+            padding-right: 1rem;
+        }
+
+        .list-container::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .list-container::-webkit-scrollbar-track {
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+        }
+
+        .list-container::-webkit-scrollbar-thumb {
+            background: #ffd700;
+            border-radius: 10px;
+        }
+
         @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
             .main-container {
                 grid-template-columns: 1fr;
                 padding: 0 1rem;
-            }
-            
-            .nav-container {
-                flex-direction: column;
-                gap: 1.5rem;
             }
         }
     </style>
@@ -344,8 +349,8 @@
             <button class="nav-btn active" onclick="showSection('profit')">
                 <i class="fas fa-chart-line"></i> 1. Profit Calculator
             </button>
-            <button class="nav-btn" onclick="showSection('udhari')">
-                <i class="fas fa-credit-card"></i> 2. Udhari Management
+            <button class="nav-btn" onclick="showSection('customers')">
+                <i class="fas fa-users"></i> 2. Customer Entries
             </button>
             <button class="nav-btn" onclick="showSection('stock')">
                 <i class="fas fa-boxes"></i> 3. Stock Reminder
@@ -361,13 +366,15 @@
                     <small>Premium Profit Tracking</small>
                 </div>
 
-                <div class="form-group">
-                    <label><i class="fas fa-tag"></i> Selling Price (₹)</label>
-                    <input type="number" id="sellingPrice" placeholder="Enter selling price">
-                </div>
-                <div class="form-group">
-                    <label><i class="fas fa-coins"></i> Cost Price (₹)</label>
-                    <input type="number" id="costPrice" placeholder="Enter cost price">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label><i class="fas fa-tag"></i> Selling Price (₹)</label>
+                        <input type="number" id="sellingPrice" placeholder="Enter selling price">
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-coins"></i> Cost Price (₹)</label>
+                        <input type="number" id="costPrice" placeholder="Enter cost price">
+                    </div>
                 </div>
                 <div class="form-group">
                     <label><i class="fas fa-box"></i> Quantity</label>
@@ -376,32 +383,56 @@
                 <button class="btn" onclick="calculateProfit()">
                     <i class="fas fa-calculator"></i> Calculate Profit
                 </button>
-                <button class="btn" onclick="resetProfit()" style="background: linear-gradient(45deg, #6c757d, #495057);">
+                <button class="btn btn-secondary" onclick="resetProfit()">
                     <i class="fas fa-redo"></i> Reset
                 </button>
             </section>
 
-            <!-- Udhari Management Section -->
-            <section id="udhari" class="section">
-                <h2><i class="fas fa-credit-card"></i> Premium Udhari Management</h2>
-                <div class="form-group">
-                    <label><i class="fas fa-user"></i> Customer Name</label>
-                    <input type="text" id="udhariCustomer" placeholder="Enter customer name">
+            <!-- Customer Entries Section -->
+            <section id="customers" class="section">
+                <h2><i class="fas fa-users"></i> Customer Bill Entries</h2>
+                <p style="color: #ffd700; margin-bottom: 2rem;">Add customer entry and download bill instantly! 📱</p>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label><i class="fas fa-user"></i> Customer Name</label>
+                        <input type="text" id="customerName" placeholder="Enter customer name">
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-phone"></i> Phone Number</label>
+                        <input type="tel" id="customerPhone" placeholder="Enter phone number">
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label><i class="fas fa-rupee-sign"></i> Udhari Amount (₹)</label>
-                    <input type="number" id="udhariAmount" placeholder="Enter udhari amount">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label><i class="fas fa-rupee-sign"></i> Total Amount (₹)</label>
+                        <input type="number" id="customerAmount" placeholder="Enter total amount">
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-credit-card"></i> Payment Type</label>
+                        <select id="paymentType">
+                            <option value="Cash">Cash</option>
+                            <option value="UPI">UPI</option>
+                            <option value="Card">Card</option>
+                            <option value="Udhari">Udhari</option>
+                        </select>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label><i class="fas fa-calendar"></i> Due Date</label>
-                    <input type="date" id="dueDate">
+                <div class="form-group full-width">
+                    <label><i class="fas fa-list"></i> Items (Optional)</label>
+                    <input type="text" id="itemsList" placeholder="Ex: Shirt x2, Pant x1">
                 </div>
-                <button class="btn" onclick="addUdhari()">
-                    <i class="fas fa-plus-circle"></i> Add Udhari Record
-                </button>
                 
-                <h3 style="margin-top: 3rem; color: #ffd700;">📋 Udhari Records</h3>
-                <div id="udhariList" style="margin-top: 1.5rem;"></div>
+                <button class="btn" onclick="addCustomerEntry()">
+                    <i class="fas fa-plus-circle"></i> Add Entry & Generate Bill
+                </button>
+
+                <h3 style="margin-top: 3rem; color: #ffd700;">👥 All Customer Entries</h3>
+                <div class="list-container" id="customerList">
+                    <div style="text-align: center; padding: 2rem; color: #888;">
+                        No customer entries yet. Add your first entry!
+                    </div>
+                </div>
             </section>
 
             <!-- Stock Reminder Section -->
@@ -409,16 +440,16 @@
                 <h2><i class="fas fa-boxes"></i> Premium Stock Reminder</h2>
                 <p style="color: #ffd700; margin-bottom: 2rem;">Get alerts when stock is low! 🔄</p>
 
-                <div style="display: flex; gap: 1.5rem; margin-bottom: 2.5rem;">
-                    <div class="form-group" style="flex: 1;">
+                <div class="form-row">
+                    <div class="form-group">
                         <label><i class="fas fa-cube"></i> Product Name</label>
                         <input type="text" id="productName" placeholder="Enter product name">
                     </div>
-                    <div class="form-group" style="flex: 1;">
+                    <div class="form-group">
                         <label><i class="fas fa-hashtag"></i> Current Stock</label>
                         <input type="number" id="currentStock" placeholder="Current quantity">
                     </div>
-                    <div class="form-group" style="flex: 1;">
+                    <div class="form-group">
                         <label><i class="fas fa-exclamation-triangle"></i> Min Stock Alert</label>
                         <input type="number" id="minStock" placeholder="Alert when below">
                     </div>
@@ -429,29 +460,15 @@
                 </button>
                 
                 <h3 style="margin-top: 3rem; color: #ffd700;">📦 Stock Status</h3>
-                <div id="stockList" style="margin-top: 1.5rem;"></div>
+                <div class="list-container" id="stockList"></div>
             </section>
         </main>
     </div>
 
     <script>
         let totalProfit = 0;
-        let udhariRecords = JSON.parse(localStorage.getItem('udhari')) || [];
+        let customers = JSON.parse(localStorage.getItem('customers')) || [];
         let stockItems = JSON.parse(localStorage.getItem('stockItems')) || [];
 
         function showSection(sectionId) {
-            document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
-            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
-            document.getElementById(sectionId).classList.add('active');
-            event.target.classList.add('active');
-        }
-
-        function calculateProfit() {
-            const sellingPrice = parseFloat(document.getElementById('sellingPrice').value) || 0;
-            const costPrice = parseFloat(document.getElementById('costPrice').value) || 0;
-            const quantity = parseInt(document.getElementById('quantity').value) || 1;
-
-            const profit = (sellingPrice - costPrice) * quantity;
-            totalProfit += profit;
-            
-           
+            document.querySelectorAll('.section').forEach
