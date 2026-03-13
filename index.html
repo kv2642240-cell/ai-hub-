@@ -1,37 +1,112 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>AI Hub - Download Now!</title>
+    <title>AI Hub - Harshwardhan Singh Lodhi</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
+        *{margin:0;padding:0;box-sizing:border-box;}
         body { 
-            font-family: Arial; 
+            font-family: 'Segoe UI', sans-serif; 
             text-align: center; 
-            padding: 50px; 
-            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            padding: 20px; 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        h1 { 
+            font-size: 3em; 
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #ff6b6b, #feca57);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .tagline {
+            font-size: 1.4em;
+            margin-bottom: 30px;
+            opacity: 0.9;
         }
         .download-btn {
-            background: #333;
+            background: linear-gradient(45deg, #ff6b6b, #feca57);
             color: white;
-            padding: 20px 40px;
-            font-size: 24px;
+            padding: 20px 50px;
+            font-size: 1.5em;
             border: none;
             border-radius: 50px;
             cursor: pointer;
             text-decoration: none;
             display: inline-block;
             margin: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            transition: all 0.3s;
+            font-weight: bold;
         }
-        h1 { font-size: 3em; margin: 20px 0; }
+        .download-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+        }
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+        }
+        .feature {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+        .instagram {
+            margin-top: 30px;
+            font-size: 1.2em;
+        }
+        .instagram a {
+            color: #feca57;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        @media (max-width: 768px) {
+            h1 { font-size: 2em; }
+            .download-btn { padding: 15px 30px; font-size: 1.2em; }
+        }
     </style>
 </head>
 <body>
-    <h1>🛒 AI Hub</h1>
-    <p>Shop Management App by <strong>Harshwardhan Singh Lodhi</strong></p>
-    <p>Download & Share with Shopkeepers! 🚀</p>
-    
-    <a href="aihub.html" class="download-btn">🚀 Use AI Hub Now</a>
-    <br>
-    <a href="https://www.instagram.com/_verma_karan08/" target="_blank">📱 Instagram</a>
+    <div class="container">
+        <h1>🛒 AI Hub</h1>
+        <p class="tagline">Smart Shop Management System</p>
+        
+        <a href="aihub.html" class="download-btn">🚀 START AI HUB NOW</a>
+        
+        <div class="features">
+            <div class="feature">💰 Loan Tracking</div>
+            <div class="feature">📋 Bill Creator</div>
+            <div class="feature">💵 Profit Calculator</div>
+            <div class="feature">👥 Customer Manager</div>
+        </div>
+        
+        <div style="margin-top: 40px; padding: 20px; background: rgba(255,255,255,0.1); border-radius: 15px;">
+            <p><strong>👨‍💼 Founder:</strong> Harshwardhan Singh Lodhi</p>
+            <div class="instagram">
+                📱 <a href="https://www.instagram.com/_verma_karan08/" target="_blank">@_verma_karan08</a>
+            </div>
+            <p style="margin-top: 10px; font-size: 1.1em;">
+                💾 Works Offline | 🔒 Data Safe | 100% FREE
+            </p>
+        </div>
+        
+        <p style="margin-top: 30px; opacity: 0.8;">
+            Share with Shopkeepers! Everyone Scores Runs! 🏏🔥
+        </p>
+    </div>
 </body>
 </html>
