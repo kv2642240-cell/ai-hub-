@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Hub - Shopkeeper Management System</title>
+    <title>AI Hub - दुकान प्रबंधन ऐप | Harshwardhan Singh Lodhi</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;700&display=swap" rel="stylesheet">
+    
     <style>
         * {
             margin: 0;
@@ -15,45 +17,89 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
+            font-family: 'Noto Sans Devanagari', sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
             color: #333;
+            line-height: 1.6;
         }
 
         .header {
-            background: linear-gradient(90deg, #ff6b6b, #4ecdc4);
-            padding: 1rem 2rem;
+            background: linear-gradient(90deg, #ff6b35, #f7931e);
+            padding: 1.5rem;
+            text-align: center;
             color: white;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
             position: sticky;
             top: 0;
             z-index: 100;
         }
 
         .header h1 {
-            font-size: 2rem;
-            display: flex;
-            align-items: center;
-            gap: 15px;
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .header .tagline {
+            font-size: 1.1rem;
+            opacity: 0.95;
         }
 
         .header .founder {
-            font-size: 0.9rem;
-            opacity: 0.9;
-            margin-top: 5px;
+            margin-top: 0.5rem;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
 
         .container {
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 2rem;
+            padding: 2rem 1rem;
         }
 
-        .dashboard {
+        .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-icon {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #2a5298;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        .action-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
             margin-bottom: 2rem;
         }
 
@@ -62,58 +108,13 @@
             border-radius: 20px;
             padding: 2rem;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 1rem;
             margin-bottom: 2rem;
         }
 
-        .stat-card {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 1.5rem;
-            border-radius: 15px;
-            text-align: center;
-            font-size: 1.1rem;
-        }
-
-        .stat-card i {
-            font-size: 2.5rem;
-            display: block;
-            margin-bottom: 0.5rem;
-        }
-
-        .btn {
-            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 25px;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            margin: 5px;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-
-        .btn-success {
-            background: linear-gradient(45deg, #56ab2f, #a8e6cf);
-        }
-
-        .btn-danger {
-            background: linear-gradient(45deg, #ff416c, #ff4b2b);
+        .card h3 {
+            color: #2a5298;
+            margin-bottom: 1.5rem;
+            font-size: 1.4rem;
         }
 
         .form-group {
@@ -124,50 +125,96 @@
             display: block;
             margin-bottom: 0.5rem;
             font-weight: 600;
-            color: #555;
+            color: #444;
         }
 
-        .form-group input, .form-group select {
+        .form-group input, .form-group select, .form-group textarea {
             width: 100%;
-            padding: 12px;
-            border: 2px solid #e1e5e9;
-            border-radius: 10px;
+            padding: 15px;
+            border: 2px solid #e1e8ed;
+            border-radius: 12px;
             font-size: 1rem;
-            transition: border-color 0.3s ease;
+            font-family: inherit;
+            transition: all 0.3s;
         }
 
-        .form-group input:focus, .form-group select:focus {
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
             outline: none;
-            border-color: #667eea;
+            border-color: #ff6b35;
+            box-shadow: 0 0 0 3px rgba(255,107,53,0.1);
         }
 
-        .table-container {
+        .btn {
+            background: linear-gradient(45deg, #ff6b35, #f7931e);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            font-family: inherit;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(255,107,53,0.4);
+        }
+
+        .btn-success {
+            background: linear-gradient(45deg, #00b894, #00cec9);
+        }
+
+        .btn-danger {
+            background: linear-gradient(45deg, #e17055, #d63031);
+        }
+
+        .table-responsive {
             overflow-x: auto;
-            background: white;
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            padding: 1rem;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-        }
-
-        th, td {
-            padding: 12px;
-            text-align: left;
-            border-bottom: 1px solid #eee;
+            background: white;
         }
 
         th {
-            background: linear-gradient(90deg, #667eea, #764ba2);
+            background: linear-gradient(90deg, #2a5298, #1e3c72);
             color: white;
+            padding: 18px 12px;
+            text-align: left;
             font-weight: 600;
+        }
+
+        td {
+            padding: 15px 12px;
+            border-bottom: 1px solid #eee;
         }
 
         tr:hover {
             background: #f8f9ff;
+        }
+
+        .status {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .status.pending {
+            background: #ffeaa7;
+            color: #fdcb6e;
+        }
+
+        .status.cleared {
+            background: #00b894;
+            color: white;
         }
 
         .modal {
@@ -177,164 +224,183 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0,0,0,0.7);
             z-index: 1000;
-            backdrop-filter: blur(5px);
+            backdrop-filter: blur(10px);
         }
 
         .modal-content {
             background: white;
-            margin: 5% auto;
+            margin: 2% auto;
             padding: 2rem;
             border-radius: 20px;
-            width: 90%;
-            max-width: 600px;
-            max-height: 80vh;
+            width: 95%;
+            max-width: 700px;
+            max-height: 85vh;
             overflow-y: auto;
+            position: relative;
         }
 
         .close {
-            float: right;
-            font-size: 2rem;
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            font-size: 2.5rem;
             cursor: pointer;
-            color: #aaa;
+            color: #999;
         }
 
         .close:hover {
             color: #333;
         }
 
-        @media (max-width: 768px) {
-            .container {
-                padding: 1rem;
-            }
-            .header h1 {
-                font-size: 1.5rem;
-            }
-            .dashboard {
-                grid-template-columns: 1fr;
-            }
+        .bill-preview {
+            border: 2px solid #ff6b35;
+            border-radius: 15px;
+            padding: 2rem;
+            background: #fff;
+            margin-top: 1rem;
         }
 
-        .profit-loan-display {
+        .profit-loan-bar {
             display: flex;
-            justify-content: space-between;
-            margin-top: 1rem;
-            padding: 1rem;
-            background: linear-gradient(135deg, #56ab2f, #a8e6cf);
+            gap: 2rem;
+            margin: 2rem 0;
+            padding: 2rem;
+            background: linear-gradient(135deg, #00b894, #00cec9);
+            border-radius: 20px;
             color: white;
-            border-radius: 15px;
-            font-size: 1.2rem;
-            font-weight: bold;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 { font-size: 1.8rem; }
+            .container { padding: 1rem; }
+            .action-buttons { grid-template-columns: 1fr; }
+            .profit-loan-bar { flex-direction: column; text-align: center; }
+        }
+
+        .whatsapp-share {
+            background: #25D366 !important;
+            margin-top: 1rem;
         }
     </style>
 </head>
 <body>
-    <div class="header">
-        <h1>
-            <i class="fas fa-store"></i>
-            AI Hub - Shop Management
-        </h1>
+    <header class="header">
+        <h1><i class="fas fa-store-alt"></i> AI Hub</h1>
+        <p class="tagline">दुकान प्रबंधन ऐप - लोन, बिल, प्रॉफिट ट्रैकिंग</p>
         <div class="founder">
-            Founder: Harshwardhan Singh Lodhi
-            <a href="https://www.instagram.com/_verma_karan08/" target="_blank" style="color: rgba(255,255,255,0.8); margin-left: 10px;">
+            👑 संस्थापक: Harshwardhan Singh Lodhi 
+            <a href="https://www.instagram.com/_verma_karan08/" target="_blank" style="color:white; font-size:1.2rem;">
                 <i class="fab fa-instagram"></i>
             </a>
         </div>
-    </div>
+    </header>
 
     <div class="container">
-        <!-- Stats Dashboard -->
+        <!-- Stats -->
         <div class="stats-grid">
             <div class="stat-card">
-                <i class="fas fa-rupee-sign"></i>
-                <div id="totalProfit">₹0</div>
+                <i class="fas fa-chart-line stat-icon" style="color: #00b894;"></i>
+                <div class="stat-value" id="totalProfit">₹0</div>
+                <div class="stat-label">कुल प्रॉफिट</div>
             </div>
             <div class="stat-card">
-                <i class="fas fa-money-check-alt"></i>
-                <div id="totalLoan">₹0</div>
+                <i class="fas fa-hand-holding-usd stat-icon" style="color: #e17055;"></i>
+                <div class="stat-value" id="totalLoan">₹0</div>
+                <div class="stat-label">बकाया लोन</div>
             </div>
             <div class="stat-card">
-                <i class="fas fa-users"></i>
-                <div id="totalCustomers">0</div>
+                <i class="fas fa-users stat-icon" style="color: #6c5ce7;"></i>
+                <div class="stat-value" id="totalCustomers">0</div>
+                <div class="stat-label">कुल ग्राहक</div>
             </div>
             <div class="stat-card">
-                <i class="fas fa-file-invoice"></i>
-                <div id="totalBills">0</div>
+                <i class="fas fa-file-invoice-dollar stat-icon" style="color: #fdcb6e;"></i>
+                <div class="stat-value" id="totalBills">0</div>
+                <div class="stat-label">कुल बिल</div>
             </div>
         </div>
 
-        <!-- Profit & Loan Display -->
-        <div class="profit-loan-display">
-            <div>📈 Total Profit: <span id="dashboardProfit">₹0</span></div>
-            <div>💰 Pending Loans: <span id="dashboardLoan">₹0</span></div>
+        <!-- Profit Loan Bar -->
+        <div class="profit-loan-bar">
+            <div>
+                <i class="fas fa-rupee-sign" style="font-size:2rem;"></i>
+                <div style="font-size:1.5rem; margin-top:0.5rem;">प्रॉफिट: <span id="dashProfit">₹0</span></div>
+            </div>
+            <div>
+                <i class="fas fa-exclamation-triangle" style="font-size:2rem;"></i>
+                <div style="font-size:1.5rem; margin-top:0.5rem;">लोन बाकी: <span id="dashLoan">₹0</span></div>
+            </div>
         </div>
 
-        <!-- Dashboard Cards -->
-        <div class="dashboard">
+        <!-- Action Buttons -->
+        <div class="action-buttons">
             <div class="card">
-                <h3><i class="fas fa-user-plus"></i> Add New Customer</h3>
+                <h3><i class="fas fa-user-plus"></i> नया ग्राहक जोड़ें</h3>
                 <div class="form-group">
-                    <label>Customer Name</label>
-                    <input type="text" id="customerName" placeholder="Enter customer name">
+                    <label>ग्राहक का नाम</label>
+                    <input type="text" id="custName" placeholder="ग्राहक का पूरा नाम लिखें">
                 </div>
                 <div class="form-group">
-                    <label>Phone Number</label>
-                    <input type="tel" id="customerPhone" placeholder="Enter phone number">
+                    <label>मोबाइल नंबर</label>
+                    <input type="tel" id="custPhone" placeholder="10 अंकों का नंबर">
                 </div>
                 <div class="form-group">
-                    <label>Loan Amount</label>
-                    <input type="number" id="loanAmount" placeholder="Enter loan amount">
+                    <label>लोन की राशि (वैकल्पिक)</label>
+                    <input type="number" id="loanAmt" placeholder="लोन दिया है तो राशि लिखें">
                 </div>
                 <button class="btn" onclick="addCustomer()">
-                    <i class="fas fa-plus"></i> Add Customer
+                    <i class="fas fa-plus"></i> ग्राहक जोड़ें
                 </button>
             </div>
 
             <div class="card">
-                <h3><i class="fas fa-file-invoice-dollar"></i> Create New Bill</h3>
+                <h3><i class="fas fa-receipt"></i> नया बिल बनाएं</h3>
                 <div class="form-group">
-                    <label>Customer Name</label>
-                    <select id="billCustomer">
-                        <option value="">Select Customer</option>
+                    <label>ग्राहक चुनें</label>
+                    <select id="billCust">
+                        <option value="">ग्राहक चुनें</option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label>Bill Amount</label>
-                    <input type="number" id="billAmount" placeholder="Enter bill amount">
+                    <label>बिल की राशि</label>
+                    <input type="number" id="billAmt" placeholder="कुल राशि">
                 </div>
                 <div class="form-group">
-                    <label>Items</label>
-                    <input type="text" id="billItems" placeholder="Enter items (comma separated)">
+                    <label>सामान (कॉमा से अलग करें)</label>
+                    <input type="text" id="billItems" placeholder="शर्ट, पैंट, जूते">
                 </div>
                 <button class="btn btn-success" onclick="createBill()">
-                    <i class="fas fa-receipt"></i> Generate Bill
-                </button>
-            </div>
-
-            <div class="card">
-                <h3><i class="fas fa-hand-holding-usd"></i> Close Loan</h3>
-                <select id="closeLoanCustomer" style="width: 100%; padding: 10px; margin-bottom: 1rem; border-radius: 10px;">
-                    <option value="">Select Customer to Close Loan</option>
-                </select>
-                <button class="btn btn-success" onclick="closeLoan()">
-                    <i class="fas fa-check"></i> Close Loan & Calculate Profit
+                    <i class="fas fa-file-invoice-dollar"></i> बिल बनाएं
                 </button>
             </div>
         </div>
 
-        <!-- Customers Table -->
         <div class="card">
-            <h3><i class="fas fa-users"></i> All Customers & Loans</h3>
-            <div class="table-container">
-                <table id="customersTable">
+            <h3><i class="fas fa-hand-holding-usd"></i> लोन बंद करें</h3>
+            <select id="closeLoanCust" style="width:100%; padding:15px; margin-bottom:1.5rem; border-radius:12px; font-size:1.1rem;">
+                <option value="">लोन बंद करने के लिए ग्राहक चुनें</option>
+            </select>
+            <button class="btn btn-success" onclick="closeLoan()" style="width:auto; padding:15px 40px;">
+                <i class="fas fa-check-circle"></i> लोन बंद करें + प्रॉफिट जोड़ें
+            </button>
+        </div>
+
+        <!-- Tables -->
+        <div class="card">
+            <h3><i class="fas fa-users"></i> सभी ग्राहक</h3>
+            <div class="table-responsive">
+                <table id="custTable">
                     <thead>
                         <tr>
-                            <th>Name</th>
-                            <th>Phone</th>
-                            <th>Loan Amount</th>
-                            <th>Status</th>
-                            <th>Actions</th>
+                            <th>नाम</th>
+                            <th>फोन</th>
+                            <th>लोन राशि</th>
+                            <th>स्थिति</th>
+                            <th>कार्रवाई</th>
                         </tr>
                     </thead>
                     <tbody></tbody>
@@ -342,18 +408,17 @@
             </div>
         </div>
 
-        <!-- Bills Table -->
         <div class="card">
-            <h3><i class="fas fa-file-invoice"></i> All Bills</h3>
-            <div class="table-container">
-                <table id="billsTable">
+            <h3><i class="fas fa-file-invoice"></i> सभी बिल</h3>
+            <div class="table-responsive">
+                <table id="billTable">
                     <thead>
                         <tr>
-                            <th>Customer</th>
-                            <th>Amount</th>
-                            <th>Items</th>
-                            <th>Date</th>
-                            <th>Action</th>
+                            <th>ग्राहक</th>
+                            <th>राशि</th>
+                            <th>सामान</th>
+                            <th>तारीख</th>
+                            <th>डाउनलोड</th>
                         </tr>
                     </thead>
                     <tbody></tbody>
@@ -367,178 +432,56 @@
         <div class="modal-content">
             <span class="close" onclick="closeModal()">&times;</span>
             <div id="billPreview"></div>
-            <button class="btn" onclick="downloadBill()" style="width: 100%; margin-top: 1rem;">
-                <i class="fas fa-download"></i> Download Bill (PDF)
+            <button class="btn whatsapp-share" onclick="shareWhatsApp()">
+                <i class="fab fa-whatsapp"></i> WhatsApp पर भेजें
+            </button>
+            <button class="btn" onclick="downloadPDF()" style="margin-top:1rem;">
+                <i class="fas fa-download"></i> PDF डाउनलोड करें
             </button>
         </div>
     </div>
 
     <script>
-        let customers = JSON.parse(localStorage.getItem('aiHubCustomers')) || [];
-        let bills = JSON.parse(localStorage.getItem('aiHubBills')) || [];
-        let totalProfit = parseFloat(localStorage.getItem('aiHubTotalProfit')) || 0;
+        let customers = JSON.parse(localStorage.getItem('aihub_customers')) || [];
+        let bills = JSON.parse(localStorage.getItem('aihub_bills')) || [];
+        let totalProfit = parseFloat(localStorage.getItem('aihub_profit')) || 0;
 
-        // Initialize app
-        document.addEventListener('DOMContentLoaded', function() {
+        // Page Load
+        window.onload = function() {
             updateDashboard();
-            renderCustomers();
-            renderBills();
-            updateCustomerSelects();
-        });
+            renderTables();
+            updateDropdowns();
+        };
 
-        function saveData() {
-            localStorage.setItem('aiHubCustomers', JSON.stringify(customers));
-            localStorage.setItem('aiHubBills', JSON.stringify(bills));
-            localStorage.setItem('aiHubTotalProfit', totalProfit);
+        function saveAll() {
+            localStorage.setItem('aihub_customers', JSON.stringify(customers));
+            localStorage.setItem('aihub_bills', JSON.stringify(bills));
+            localStorage.setItem('aihub_profit', totalProfit);
         }
 
         function updateDashboard() {
-            const totalLoan = customers.reduce((sum, customer) => sum + (customer.loanAmount || 0), 0);
-            const totalCustomers = customers.length;
-            const totalBillsCount = bills.length;
-
+            const totalLoan = customers.reduce((sum, c) => sum + (c.loan || 0), 0);
+            
             document.getElementById('totalProfit').textContent = `₹${totalProfit.toLocaleString()}`;
             document.getElementById('totalLoan').textContent = `₹${totalLoan.toLocaleString()}`;
-            document.getElementById('totalCustomers').textContent = totalCustomers;
-            document.getElementById('totalBills').textContent = totalBillsCount;
-            document.getElementById('dashboardProfit').textContent = totalProfit.toLocaleString();
-            document.getElementById('dashboardLoan').textContent = totalLoan.toLocaleString();
+            document.getElementById('totalCustomers').textContent = customers.length;
+            document.getElementById('totalBills').textContent = bills.length;
+            document.getElementById('dashProfit').textContent = totalProfit.toLocaleString();
+            document.getElementById('dashLoan').textContent = totalLoan.toLocaleString();
         }
 
         function addCustomer() {
-            const name = document.getElementById('customerName').value.trim();
-            const phone = document.getElementById('customerPhone').value.trim();
-            const loanAmount = parseFloat(document.getElementById('loanAmount').value) || 0;
+            const name = document.getElementById('custName').value.trim();
+            const phone = document.getElementById('custPhone').value.trim();
+            const loan = parseFloat(document.getElementById('loanAmt').value) || 0;
 
-            if (!name || !phone) {
-                alert('Please enter name and phone number');
+            if (!name || !phone || phone.length !== 10) {
+                alert('❌ नाम और 10 अंकों का मोबाइल नंबर भरें!');
                 return;
             }
 
-            const customer = {
+            customers.push({
                 id: Date.now(),
-                name,
-                phone,
-                loanAmount,
-                status: loanAmount > 0 ? 'Pending' : 'Cleared',
-                createdAt: new Date().toLocaleString()
-            };
-
-            customers.push(customer);
-            saveData();
-            updateDashboard();
-            renderCustomers();
-            updateCustomerSelects();
-            
-            // Clear form
-            document.getElementById('customerName').value = '';
-            document.getElementById('customerPhone').value = '';
-            document.getElementById('loanAmount').value = '';
-            
-            alert('Customer added successfully!');
-        }
-
-        function updateCustomerSelects() {
-            const billSelect = document.getElementById('billCustomer');
-            const loanSelect = document.getElementById('closeLoanCustomer');
-            
-            billSelect.innerHTML = '<option value="">Select Customer</option>';
-            loanSelect.innerHTML = '<option value="">Select Customer to Close Loan</option>';
-            
-            customers.forEach(customer => {
-                billSelect.innerHTML += `<option value="${customer.id}">${customer.name} (${customer.phone})</option>`;
-                if (customer.loanAmount > 0) {
-                    loanSelect.innerHTML += `<option value="${customer.id}">${customer.name} - ₹${customer.loanAmount}</option>`;
-                }
-            });
-        }
-
-        function renderCustomers() {
-            const tbody = document.querySelector('#customersTable tbody');
-            tbody.innerHTML = '';
-            
-            customers.forEach(customer => {
-                const row = tbody.insertRow();
-                row.innerHTML = `
-                    <td>${customer.name}</td>
-                    <td>${customer.phone}</td>
-                    <td>₹${customer.loanAmount.toLocaleString()}</td>
-                    <td>
-                        <span class="status ${customer.status === 'Cleared' ? 'success' : 'pending'}">
-                            ${customer.status}
-                        </span>
-                    </td>
-                    <td>
-                        <button class="btn btn-success" onclick="closeLoan(${customer.id})" ${customer.loanAmount === 0 ? 'disabled' : ''}>
-                            Close Loan
-                        </button>
-                    </td>
-                `;
-            });
-        }
-
-        function createBill() {
-            const customerId = parseInt(document.getElementById('billCustomer').value);
-            const amount = parseFloat(document.getElementById('billAmount').value);
-            const items = document.getElementById('billItems').value;
-
-            if (!customerId || !amount || !items) {
-                alert('Please fill all bill details');
-                return;
-            }
-
-            const customer = customers.find(c => c.id === customerId);
-            if (!customer) {
-                alert('Customer not found');
-                return;
-            }
-
-            const bill = {
-                id: Date.now(),
-                customerId,
-                customerName: customer.name,
-                customerPhone: customer.phone,
-                amount,
-                items: items.split(',').map(item => item.trim()),
-                date: new Date().toLocaleString(),
-                status: 'Pending'
-            };
-
-            bills.push(bill);
-            saveData();
-            updateDashboard();
-            renderBills();
-            
-            // Clear form
-            document.getElementById('billAmount').value = '';
-            document.getElementById('billItems').value = '';
-            
-            // Show bill preview
-            showBillPreview(bill);
-            alert('Bill created successfully!');
-        }
-
-        function renderBills() {
-            const tbody = document.querySelector('#billsTable tbody');
-            tbody.innerHTML = '';
-            
-            bills.forEach(bill => {
-                const row = tbody.insertRow();
-                row.innerHTML = `
-                    <td>${bill.customerName}</td>
-                    <td>₹${bill.amount.toLocaleString()}</td>
-                    <td>${bill.items.join(', ')}</td>
-                    <td>${bill.date}</td>
-                    <td>
-                        <button class="btn" onclick="showBillPreview(${bill.id})">
-                            <i class="fas fa-eye"></i> View
-                        </button>
-                    </td>
-                `;
-            });
-        }
-
-        function closeLoan(customerId) {
-            const customer = customers.find(c => c.id === customerId);
-            if (!customer || customer.loanAmount === 0) {
-                alert
+                name, phone, loan,
+                status: loan > 0 ? 'pending' : 'cleared',
+                date: new Date().toLocaleString
