@@ -3,484 +3,536 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🚀 THE AI HUB - Harshwardhan Singh Lodhi</title>
+    <title>THEAi Hub - Shopkeeper Management</title>
     <style>
-        :root {
-            --primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --success: linear-gradient(135deg, #56ab2f 0%, #a8e6cf 100%);
-            --danger: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
-            --warning: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { 
-            font-family: 'Segoe UI', Tahoma, sans-serif;
-            background: var(--primary);
-            min-height: 100vh; 
-            padding: 15px;
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
         }
 
         .header {
-            text-align: center; 
-            color: white; 
-            margin-bottom: 25px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-
-        .header h1 {
-            font-size: 2.8em; 
-            margin-bottom: 8px;
-            background: linear-gradient(45deg, #fff, #ffd700);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .header p { font-size: 1.2em; opacity: 0.95; }
-
-        .container {
-            max-width: 1400px; 
-            margin: 0 auto; 
-            background: rgba(255,255,255,0.97); 
-            border-radius: 25px; 
-            padding: 30px;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
-        }
-
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px; 
+            text-align: center;
+            color: white;
             margin-bottom: 30px;
         }
 
-        .stat-card {
-            background: white;
-            padding: 30px;
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.95);
             border-radius: 20px;
-            text-align: center;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
         }
-
-        .stat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
-        }
-
-        .stat-icon { font-size: 3em; margin-bottom: 15px; }
-        .stat-value { font-size: 2.5em; font-weight: bold; color: #333; margin-bottom: 5px; }
-        .stat-label { color: #666; font-size: 1.1em; }
-
-        .profit .stat-value { color: #28a745; }
-        .loan .stat-value { color: #ffc107; }
-        .customers .stat-value { color: #17a2b8; }
-        .pending .stat-value { color: #dc3545; }
 
         .tabs {
             display: flex;
             background: #f8f9fa;
             border-radius: 15px;
-            margin-bottom: 25px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            padding: 5px;
+            margin-bottom: 30px;
         }
 
         .tab-btn {
             flex: 1;
-            padding: 18px 25px;
+            padding: 15px;
             border: none;
             background: transparent;
-            font-size: 1.15em;
+            border-radius: 10px;
+            font-size: 16px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
-            color: #666;
         }
 
         .tab-btn.active {
-            background: var(--primary);
+            background: linear-gradient(135deg, #667eea, #764ba2);
             color: white;
         }
 
-        .tab-content { display: none; animation: slideIn 0.4s ease; }
-        .tab-content.active { display: block; }
-
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateX(20px); }
-            to { opacity: 1; transform: translateX(0); }
+        .tab-content {
+            display: none;
         }
 
-        .form-section {
-            background: white;
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            margin-bottom: 25px;
+        .tab-content.active {
+            display: block;
         }
 
-        .form-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-            margin-bottom: 25px;
+        .form-group {
+            margin-bottom: 20px;
         }
 
-        @media (max-width: 768px) {
-            .form-grid { grid-template-columns: 1fr; }
-        }
-
-        .input-group {
-            position: relative;
-            margin-bottom: 25px;
-        }
-
-        .input-group label {
+        label {
             display: block;
             margin-bottom: 8px;
             font-weight: 600;
             color: #333;
-            font-size: 1em;
         }
 
-        .input-group input,
-        .input-group select,
-        .input-group textarea {
+        input, select, button {
             width: 100%;
-            padding: 16px 20px;
-            border: 2px solid #e9ecef;
-            border-radius: 12px;
-            font-size: 1em;
+            padding: 12px 15px;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            font-size: 16px;
             transition: all 0.3s;
-            font-family: inherit;
-            background: #f8f9fa;
         }
 
-        .input-group input:focus,
-        .input-group select:focus,
-        .input-group textarea:focus {
+        input:focus, select:focus {
             outline: none;
             border-color: #667eea;
-            background: white;
-            box-shadow: 0 0 0 4px rgba(102,126,234,0.1);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
         }
-
-        .input-group textarea { resize: vertical; min-height: 80px; }
 
         .btn {
-            background: var(--primary);
+            background: linear-gradient(135deg, #667eea, #764ba2);
             color: white;
-            padding: 16px 32px;
             border: none;
-            border-radius: 12px;
-            font-size: 1.1em;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 16px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s;
-            width: 100%;
-            margin-top: 10px;
+            transition: transform 0.2s;
         }
 
-        .btn:hover { transform: translateY(-2px); box-shadow: 0 15px 35px rgba(102,126,234,0.4); }
-        .btn-success { background: var(--success); }
-        .btn-danger { background: var(--danger); }
-        .btn-small { width: auto; padding: 8px 20px; font-size: 0.9em; margin: 2px; }
+        .btn:hover {
+            transform: translateY(-2px);
+        }
 
-        table {
+        .btn-danger {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .card h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .card .value {
+            font-size: 2em;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .customers-table, .bills-table {
             width: 100%;
             border-collapse: collapse;
+            margin-top: 20px;
             background: white;
-            border-radius: 15px;
+            border-radius: 10px;
             overflow: hidden;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            margin-top: 20px;
         }
 
-        th {
-            background: var(--primary);
-            color: white;
-            padding: 18px 15px;
+        .customers-table th,
+        .customers-table td,
+        .bills-table th,
+        .bills-table td {
+            padding: 15px;
             text-align: left;
-            font-weight: 600;
+            border-bottom: 1px solid #eee;
         }
 
-        td { padding: 16px 15px; border-bottom: 1px solid #f1f3f4; }
-        tr:hover { background: #f8f9fa; }
-
-        .status {
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 0.85em;
-            font-weight: 600;
-        }
-
-        .status.paid { background: #d4edda; color: #155724; }
-        .status.pending { background: #fff3cd; color: #856404; }
-        .status.overdue { background: #f8d7da; color: #721c24; }
-
-        .alert {
-            padding: 18px 25px;
-            border-radius: 12px;
-            margin-bottom: 25px;
-            font-weight: 500;
-            display: none;
-        }
-
-        .alert-success { background: #d4edda; color: #155724; border-left: 5px solid #28a745; }
-        .alert-error { background: #f8d7da; color: #721c24; border-left: 5px solid #dc3545; }
-
-        .fab {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            background: var(--primary);
+        .customers-table th,
+        .bills-table th {
+            background: linear-gradient(135deg, #667eea, #764ba2);
             color: white;
-            border: none;
-            font-size: 1.8em;
-            cursor: pointer;
-            box-shadow: 0 10px 30px rgba(102,126,234,0.4);
-            transition: all 0.3s;
-            z-index: 1000;
+            font-weight: 600;
         }
 
-        .fab:hover { transform: scale(1.1); box-shadow: 0 15px 40px rgba(102,126,234,0.5); }
+        .search-box {
+            margin-bottom: 20px;
+        }
+
+        .action-btn {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            margin: 2px;
+        }
+
+        .btn-success { background: #28a745; color: white; }
+        .btn-warning { background: #ffc107; color: #333; }
+        .btn-info { background: #17a2b8; color: white; }
+
+        @media (max-width: 768px) {
+            .tabs { flex-direction: column; }
+            .dashboard-grid { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
     <div class="header">
-        <h1>🚀 THE AI HUB</h1>
-        <p>🔥 Complete Shop Management System | Harshwardhan Singh Lodhi</p>
-        <p><a href="https://www.instagram.com/_verma_karan08/" target="_blank" style="color: #ffd700; text-decoration: none;">📱 @_verma_karan08</a></p>
+        <h1>🛒 THEAi Hub</h1>
+        <p>Shopkeeper Management System | Founder: Harshwardhan Singh Lodhi</p>
+        <p><small>Follow: <a href="https://www.instagram.com/_verma_karan08/" target="_blank" style="color: #ffd700;">@_verma_karan08</a></small></p>
     </div>
 
     <div class="container">
-        <!-- DASHBOARD -->
-        <div class="dashboard-grid">
-            <div class="stat-card profit">
-                <div class="stat-icon">💰</div>
-                <div class="stat-value" id="totalProfit">₹0</div>
-                <div class="stat-label">Total Profit</div>
-            </div>
-            <div class="stat-card loan">
-                <div class="stat-icon">💳</div>
-                <div class="stat-value" id="totalLoans">₹0</div>
-                <div class="stat-label">Total Loans</div>
-            </div>
-            <div class="stat-card customers">
-                <div class="stat-icon">👥</div>
-                <div class="stat-value" id="totalCustomers">0</div>
-                <div class="stat-label">Customers</div>
-            </div>
-            <div class="stat-card pending">
-                <div class="stat-icon">⏳</div>
-                <div class="stat-value" id="pendingBills">0</div>
-                <div class="stat-label">Pending Bills</div>
-            </div>
-        </div>
-
-        <!-- TABS -->
         <div class="tabs">
-            <button class="tab-btn active" onclick="switchTab('customer-tab')">👤 Add Customer</button>
-            <button class="tab-btn" onclick="switchTab('bill-tab')">💰 New Bill</button>
-            <button class="tab-btn" onclick="switchTab('customers-tab')">📋 Customers</button>
-            <button class="tab-btn" onclick="switchTab('bills-tab')">📊 Bills</button>
+            <button class="tab-btn active" onclick="showTab('dashboard')">📊 Dashboard</button>
+            <button class="tab-btn" onclick="showTab('customers')">👥 Customers</button>
+            <button class="tab-btn" onclick="showTab('bills')">💰 Bills</button>
+            <button class="tab-btn" onclick="showTab('add')">➕ Add Entry</button>
         </div>
 
-        <!-- ALERT -->
-        <div id="alert" class="alert"></div>
-
-        <!-- ADD CUSTOMER -->
-        <div id="customer-tab" class="tab-content active">
-            <div class="form-section">
-                <h2 style="margin-bottom: 25px; color: #333;">➕ Add New Customer</h2>
-                <form id="customerForm">
-                    <div class="form-grid">
-                        <div class="input-group">
-                            <label>👤 Customer Name *</label>
-                            <input type="text" id="custName" placeholder="Enter customer name" required>
-                        </div>
-                        <div class="input-group">
-                            <label>📱 Phone Number *</label>
-                            <input type="tel" id="custPhone" placeholder="1234567890" maxlength="10" required>
-                        </div>
-                        <div class="input-group">
-                            <label>💰 Loan Amount</label>
-                            <input type="number" id="custLoan" placeholder="0.00" min="0" step="0.01">
-                        </div>
-                        <div class="input-group">
-                            <label>🏪 Address (Optional)</label>
-                            <input type="text" id="custAddress" placeholder="Shop/Street address">
-                        </div>
-                    </div>
-                    <button type="submit" class="btn btn-success">✅ Save Customer</button>
-                </form>
+        <!-- Dashboard Tab -->
+        <div id="dashboard" class="tab-content active">
+            <div class="dashboard-grid">
+                <div class="card">
+                    <h3>Total Profit</h3>
+                    <div class="value" id="totalProfit">₹0</div>
+                </div>
+                <div class="card">
+                    <h3>Total Loans</h3>
+                    <div class="value" id="totalLoans">₹0</div>
+                </div>
+                <div class="card">
+                    <h3>Total Customers</h3>
+                    <div class="value" id="totalCustomers">0</div>
+                </div>
+                <div class="card">
+                    <h3>Pending Bills</h3>
+                    <div class="value" id="pendingBills">0</div>
+                </div>
             </div>
         </div>
 
-        <!-- CREATE BILL -->
-        <div id="bill-tab" class="tab-content">
-            <div class="form-section">
-                <h2 style="margin-bottom: 25px; color: #333;">💳 Create New Bill</h2>
-                <form id="billForm">
-                    <div class="input-group">
-                        <label>👤 Select Customer *</label>
-                        <select id="billCustomer" required>
-                            <option value="">Choose customer...</option>
-                        </select>
-                    </div>
-                    <div class="form-grid">
-                        <div class="input-group">
-                            <label>💰 Bill Amount *</label>
-                            <input type="number" id="billAmount" placeholder="500.00" min="1" step="0.01" required>
-                        </div>
-                        <div class="input-group">
-                            <label>📝 Items Description</label>
-                            <textarea id="billItems" placeholder="What did they buy?"></textarea>
-                        </div>
-                    </div>
-                    <button type="submit" class="btn btn-success">📤 Create Bill</button>
-                </form>
+        <!-- Customers Tab -->
+        <div id="customers" class="tab-content">
+            <div class="search-box">
+                <input type="text" id="customerSearch" placeholder="🔍 Search customer by name..." onkeyup="searchCustomers()">
             </div>
+            <table class="customers-table" id="customersTable">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Phone</th>
+                        <th>Total Loan</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
         </div>
 
-        <!-- CUSTOMERS LIST -->
-        <div id="customers-tab" class="tab-content">
-            <h2 style="margin-bottom: 20px; color: #333;">👥 All Customers</h2>
-            <div style="overflow-x: auto;">
-                <table id="customersTable">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Phone</th>
-                            <th>Loan</th>
-                            <th>Total Bills</th>
-                            <th>Status</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
+        <!-- Bills Tab -->
+        <div id="bills" class="tab-content">
+            <div class="search-box">
+                <input type="text" id="billSearch" placeholder="🔍 Search bills by customer name..." onkeyup="searchBills()">
             </div>
+            <table class="bills-table" id="billsTable">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Customer</th>
+                        <th>Type</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
         </div>
 
-        <!-- BILLS LIST -->
-        <div id="bills-tab" class="tab-content">
-            <h2 style="margin-bottom: 20px; color: #333;">📊 All Bills</h2>
-            <div style="overflow-x: auto;">
-                <table id="billsTable">
-                    <thead>
-                        <tr>
-                            <th>Customer</th>
-                            <th>Amount</th>
-                            <th>Items</th>
-                            <th>Date</th>
-                            <th>Status</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
-            </div>
+        <!-- Add Entry Tab -->
+        <div id="add" class="tab-content">
+            <form id="entryForm">
+                <div class="form-group">
+                    <label>Customer Name *</label>
+                    <input type="text" id="customerName" required>
+                </div>
+                <div class="form-group">
+                    <label>Phone</label>
+                    <input type="tel" id="customerPhone">
+                </div>
+                <div class="form-group">
+                    <label>Transaction Type *</label>
+                    <select id="transactionType" required>
+                        <option value="">Select Type</option>
+                        <option value="loan">💸 Loan Given</option>
+                        <option value="payment">✅ Loan Payment</option>
+                        <option value="sale">🛒 Sale Bill</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Amount (₹) *</label>
+                    <input type="number" id="amount" required min="0" step="0.01">
+                </div>
+                <div class="form-group">
+                    <label>Notes</label>
+                    <textarea id="notes" rows="3" placeholder="Additional details..."></textarea>
+                </div>
+                <button type="submit" class="btn">💾 Save Entry</button>
+            </form>
         </div>
     </div>
 
-    <button class="fab" onclick="exportData()" title="Export Data">💾</button>
-
     <script>
-        // GLOBAL DATA
-        let customers = JSON.parse(localStorage.getItem('theAIHub_customers')) || [];
-        let bills = JSON.parse(localStorage.getItem('theAIHub_bills')) || [];
+        // Data Storage
+        let customers = JSON.parse(localStorage.getItem('customers')) || {};
+        let bills = JSON.parse(localStorage.getItem('bills')) || [];
+        let nextCustomerId = parseInt(localStorage.getItem('nextCustomerId')) || 1;
 
-        // INIT APP
+        // Initialize app
         document.addEventListener('DOMContentLoaded', function() {
-            initApp();
-        });
-
-        function initApp() {
-            setupEventListeners();
             updateDashboard();
-            populateCustomerSelect();
             renderCustomers();
             renderBills();
-        }
+        });
 
-        function setupEventListeners() {
-            document.getElementById('customerForm').onsubmit = addCustomer;
-            document.getElementById('billForm').onsubmit = createBill;
-            
-            // Phone number formatting
-            document.getElementById('custPhone').oninput = function(e) {
-                e.target.value = e.target.value.replace(/[^0-9]/g, '').slice(0, 10);
-            };
-        }
-
-        function switchTab(tabId) {
-            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            
-            document.getElementById(tabId).classList.add('active');
+        // Tab switching
+        function showTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.getElementById(tabName).classList.add('active');
             event.target.classList.add('active');
+            
+            if (tabName === 'customers') renderCustomers();
+            if (tabName === 'bills') renderBills();
         }
 
-        function showAlert(message, type = 'success') {
-            const alert = document.getElementById('alert');
-            alert.textContent = message;
-            alert.className = `alert alert-${type}`;
-            alert.style.display = 'block';
-            setTimeout(() => alert.style.display = 'none', 4000);
-        }
-
-        // CUSTOMER OPERATIONS
-        function addCustomer(e) {
+        // Add new entry
+        document.getElementById('entryForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            const name = document.getElementById('custName').value.trim();
-            const phone = document.getElementById('custPhone').value.trim();
-            const loan = parseFloat(document.getElementById('custLoan').value) || 0;
-            const address = document.getElementById('custAddress').value.trim();
+            const customerName = document.getElementById('customerName').value.trim();
+            const customerPhone = document.getElementById('customerPhone').value.trim();
+            const transactionType = document.getElementById('transactionType').value;
+            const amount = parseFloat(document.getElementById('amount').value);
+            const notes = document.getElementById('notes').value.trim();
+            const date = new Date().toLocaleDateString('en-IN');
 
-            if (!name || name.length < 2) {
-                showAlert('Please enter valid customer name (min 2 characters)', 'error');
-                return;
+            // Create or update customer
+            if (!customers[customerName]) {
+                customers[customerName] = {
+                    id: nextCustomerId++,
+                    phone: customerPhone,
+                    totalLoan: 0,
+                    name: customerName
+                };
             }
 
-            if (phone.length !== 10 || !/^\d{10}$/.test(phone)) {
-                showAlert('Please enter valid 10-digit phone number', 'error');
-                return;
+            // Update loan balance
+            if (transactionType === 'loan') {
+                customers[customerName].totalLoan += amount;
+            } else if (transactionType === 'payment') {
+                customers[customerName].totalLoan = Math.max(0, customers[customerName].totalLoan - amount);
             }
 
-            // Check duplicate
-            if (customers.find(c => c.phone === phone)) {
-                showAlert('Customer with this phone already exists!', 'error');
-                return;
-            }
-
-            const customer = {
+            // Add bill
+            const bill = {
                 id: Date.now(),
-                name,
-                phone,
-                address,
-                loan,
-                bills: [],
-                created: new Date().toLocaleDateString()
+                date: date,
+                customer: customerName,
+                type: transactionType,
+                amount: amount,
+                status: transactionType === 'sale' ? 'paid' : 'pending',
+                notes: notes
             };
+            bills.unshift(bill);
 
-            customers.push(customer);
-            saveData();
-            
-            e.target.reset();
-            showAlert(`✅ ${name} added successfully!`);
+            // Save to localStorage
+            localStorage.setItem('customers', JSON.stringify(customers));
+            localStorage.setItem('bills', JSON.stringify(bills));
+            localStorage.setItem('nextCustomerId', nextCustomerId);
+
+            // Reset form
+            this.reset();
             updateDashboard();
-            populateCustomerSelect();
-            renderCustomers();
+            
+            alert('✅ Entry added successfully!');
+        });
+
+        // Dashboard calculations
+        function updateDashboard() {
+            let totalProfit = 0;
+            let totalLoans = 0;
+            let totalCustomersCount = Object.keys(customers).length;
+            let pendingBillsCount = bills.filter(bill => bill.status === 'pending').length;
+
+            bills.forEach(bill => {
+                if (bill.type === 'sale') {
+                    totalProfit += bill.amount;
+                }
+            });
+
+            Object.values(customers).forEach(customer => {
+                totalLoans += customer.totalLoan;
+            });
+
+            document.getElementById('totalProfit').textContent = `₹${totalProfit.toLocaleString()}`;
+            document.getElementById('totalLoans').textContent = `₹${totalLoans.toLocaleString()}`;
+            document.getElementById('totalCustomers').textContent = totalCustomersCount;
+            document.getElementById('pendingBills').textContent = pendingBillsCount;
         }
 
-        function createBill(e) {
-            e.preventDefault();
+        // Render customers table
+        function renderCustomers() {
+            const tbody = document.querySelector('#customersTable tbody');
+            tbody.innerHTML = '';
+
+            Object.values(customers).forEach(customer => {
+                const row = tbody.insertRow();
+                row.innerHTML = `
+                    <td>${customer.name}</td>
+                    <td>${customer.phone || '-'}</td>
+                    <td>₹${customer.totalLoan.toLocaleString()}</td>
+                    <td>
+                        <button class="action-btn btn-info" onclick="viewCustomerBills('${customer.name}')">View Bills</button>
+                        <button class="action-btn btn-warning" onclick="editCustomer('${customer.name}')">Edit</button>
+                    </td>
+                `;
+            });
+        }
+
+        // Render bills table
+        function renderBills(filteredBills = bills) {
+            const tbody = document.querySelector('#billsTable tbody');
+            tbody.innerHTML = '';
+
+            filteredBills.forEach(bill => {
+                const row = tbody.insertRow();
+                const status = bill.status === 'paid' ? '✅ Paid' : '⏳ Pending';
+                row.innerHTML = `
+                    <td>${bill.date}</td>
+                    <td>${bill.customer}</td>
+                    <td>${bill.type === 'loan' ? '💸 Loan' : bill.type === 'payment' ? '✅ Payment' : '🛒 Sale'}</td>
+                    <td>₹${bill.amount.toLocaleString()}</td>
+                    <td>${status}</td>
+                    <td>
+                        <button class="action-btn btn-success" onclick="downloadBill(${bill.id})">📥 Download</button>
+                        ${bill.status === 'pending' ? `<button class="action-btn btn-success" onclick="markPaid(${bill.id})">Mark Paid</button>` : ''}
+                    </td>
+                `;
+            });
+        }
+
+        // Search functions
+        function searchCustomers() {
+            const searchTerm = document.getElementById('customerSearch').value.toLowerCase();
+            const filtered = Object.values(customers).filter(customer => 
+                customer.name.toLowerCase().includes(searchTerm)
+            );
             
-            const customerId = parseInt(document.getElementById('billCustomer').value);
-            const amount = parseFloat(document.getElementById('billAmount').value);
-            const items = document
+            const tbody = document.querySelector('#customersTable tbody');
+            tbody.innerHTML = '';
+            
+            filtered.forEach(customer => {
+                const row = tbody.insertRow();
+                row.innerHTML = `
+                    <td>${customer.name}</td>
+                    <td>${customer.phone || '-'}</td>
+                    <td>₹${customer.totalLoan.toLocaleString()}</td>
+                    <td>
+                        <button class="action-btn btn-info" onclick="viewCustomerBills('${customer.name}')">View Bills</button>
+                    </td>
+                `;
+            });
+        }
+
+        function searchBills() {
+            const searchTerm = document.getElementById('billSearch').value.toLowerCase();
+            const filtered = bills.filter(bill => 
+                bill.customer.toLowerCase().includes(searchTerm)
+            );
+            renderBills(filtered);
+        }
+
+        // Additional functions
+        function viewCustomerBills(customerName) {
+            const customerBills = bills.filter(bill => bill.customer === customerName);
+            renderBills(customerBills);
+            showTab('bills');
+        }
+
+        function markPaid(billId) {
+            const bill = bills.find(b => b.id === billId);
+            if (bill) {
+                bill.status = 'paid';
+                localStorage.setItem('bills', JSON.stringify(bills));
+                updateDashboard();
+                renderBills();
+            }
+        }
+
+        function downloadBill(billId) {
+            const bill = bills.find(b => b.id === billId);
+            if (bill) {
+                const billText = `
+THEAi Hub - Bill Receipt
+========================
+Date: ${bill.date}
+Customer: ${bill.customer}
+Type: ${bill.type === 'loan' ? 'Loan' : bill.type === 'payment' ? 'Payment' : 'Sale'}
+Amount: ₹${bill.amount.toLocaleString()}
+Status: ${bill.status === 'paid' ? 'PAID' : 'PENDING'}
+Notes: ${bill.notes || 'N/A'}
+========================
+Founder: Harshwardhan Singh Lodhi
+Instagram: @_verma_karan08
+                `;
+                
+                const blob = new Blob([billText], { type: 'text/plain' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `THEAiHub_${bill.customer}_${bill.date}.txt`;
+                a.click();
+                URL.revokeObjectURL(url);
+            }
+        }
+
+        function editCustomer(customerName) {
+            const customer = customers[customerName];
+            if (customer) {
+                document.getElementById('customerName').value = customer.name;
+                document.getElementById('customerPhone').value = customer.phone || '';
+                alert(`Edit customer details and save new transactions for ${customerName}`);
+            }
+        }
+    </script>
+</body>
+</html>
