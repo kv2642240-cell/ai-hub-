@@ -10,48 +10,28 @@
         input { width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: none; box-sizing: border-box; }
         button { width: 100%; padding: 12px; background: #7b2cbf; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; }
         .item { background: #242442; padding: 15px; margin-top: 10px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; }
+        .footer-link { margin-top: 20px; color: #7b2cbf; text-decoration: none; display: block; }
     </style>
 </head>
 <body>
-
 <div class="card">
     <h2>THE AI HUB</h2>
-    <div id="content">
-        <input type="text" id="name" placeholder="Customer Name">
-        <input type="text" id="service" placeholder="Service">
-        <input type="number" id="amt" placeholder="Amount">
-        <button onclick="addEntry()">ADD ENTRY</button>
-        <div id="history"></div>
-    </div>
+    <input type="text" id="name" placeholder="Customer Name">
+    <input type="text" id="service" placeholder="Service">
+    <input type="number" id="amt" placeholder="Amount">
+    <button onclick="addEntry()">ADD ENTRY</button>
+    <div id="history"></div>
+    <a href="about.html" class="footer-link">About Me</a>
 </div>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
-    // Name check: Agar naam save nahi hai, toh hi puchega
-    let userName = localStorage.getItem("userName");
-    if (!userName) {
-        userName = prompt("Swagat hai! The AI Hub mein entry karne ke liye apna naam daliye:");
-        if (userName) {
-            localStorage.setItem("userName", userName);
-        } else {
-            alert("Naam dalna zaroori hai!");
-            location.reload(); // Naam na dalne par page reload hoga
-        }
-    }
-
     function addEntry() {
-        let entry = { 
-            userName: localStorage.getItem("userName"), 
-            n: document.getElementById('name').value, 
-            s: document.getElementById('service').value, 
-            a: document.getElementById('amt').value 
-        };
+        let entry = { n: document.getElementById('name').value, s: document.getElementById('service').value, a: document.getElementById('amt').value };
         let data = JSON.parse(localStorage.getItem('ledger') || "[]");
         data.push(entry);
         localStorage.setItem('ledger', JSON.stringify(data));
         location.reload();
     }
-
     let data = JSON.parse(localStorage.getItem('ledger') || "[]");
     data.forEach((item, index) => {
         document.getElementById('history').innerHTML += `
@@ -60,7 +40,6 @@
             <button onclick="downloadBill(${index})" style="width:auto; background:#007bff;">Bill</button>
         </div>`;
     });
-
     function downloadBill(i) {
         let d = JSON.parse(localStorage.getItem('ledger'))[i];
         const { jsPDF } = window.jspdf;
@@ -69,7 +48,6 @@
         doc.text(`Customer: ${d.n}`, 20, 40);
         doc.text(`Service: ${d.s}`, 20, 50);
         doc.text(`Amount: ₹${d.a}`, 20, 60);
-        doc.text(`Entry By: ${d.userName}`, 20, 70);
         doc.save(`${d.n}_Bill.pdf`);
     }
 </script>
