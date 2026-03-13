@@ -1,153 +1,349 @@
-// Customer Model
-class Customer {
-  int? id;
-  String name;
-  String? phone;
-  String? address;
-  String? gstin;
-  String createdAt;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Hub - Shop Management | Harshwardhan Singh Lodhi</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-  Customer({
-    this.id,
-    required this.name,
-    this.phone,
-    this.address,
-    this.gstin,
-    required this.createdAt,
-  });
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
 
-  Map<String, dynamic> toMap() => {
-    'id': id,
-    'name': name,
-    'phone': phone,
-    'address': address,
-    'gstin': gstin,
-    'created_at': createdAt,
-  };
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
 
-  factory Customer.fromMap(Map<String, dynamic> map) => Customer(
-    id: map['id'],
-    name: map['name'],
-    phone: map['phone'],
-    address: map['address'],
-    gstin: map['gstin'],
-    createdAt: map['created_at'],
-  );
-}
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
 
-// Bill Model
-class BillItem {
-  String name;
-  double quantity;
-  double rate;
-  double amount;
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
 
-  BillItem({required this.name, required this.quantity, required this.rate, required this.amount});
-}
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
 
-class Bill {
-  int? id;
-  int customerId;
-  String billNo;
-  String date;
-  List<BillItem> items;
-  double totalAmount;
-  double gstAmount;
-  double grandTotal;
-  String paymentStatus;
-  String createdAt;
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
 
-  Bill({
-    this.id,
-    required this.customerId,
-    required this.billNo,
-    required this.date,
-    required this.items,
-    required this.totalAmount,
-    required this.gstAmount,
-    required this.grandTotal,
-    required this.paymentStatus,
-    required this.createdAt,
-  });
+        .card {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            font-size: 1.1em;
+            font-weight: bold;
+        }
 
-  Map<String, dynamic> toMap() => {
-    'id': id,
-    'customer_id': customerId,
-    'bill_no': billNo,
-    'date': date,
-    'items': items.map((i) => '${i.name}|${i.quantity}|${i.rate}|${i.amount}').join(','),
-    'total_amount': totalAmount,
-    'gst_amount': gstAmount,
-    'grand_total': grandTotal,
-    'payment_status': paymentStatus,
-    'created_at': createdAt,
-  };
+        .form-section {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
 
-  factory Bill.fromMap(Map<String, dynamic> map) {
-    List<BillItem> items = [];
-    if (map['items'] != null) {
-      items = (map['items'] as String).split(',').map((itemStr) {
-        final parts = itemStr.split('|');
-        return BillItem(
-          name: parts[0],
-          quantity: double.parse(parts[1]),
-          rate: double.parse(parts[2]),
-          amount: double.parse(parts[3]),
-        );
-      }).toList();
-    }
-    return Bill(
-      id: map['id'],
-      customerId: map['customer_id'],
-      billNo: map['bill_no'],
-      date: map['date'],
-      items: items,
-      totalAmount: map['total_amount'],
-      gstAmount: map['gst_amount'],
-      grandTotal: map['grand_total'],
-      paymentStatus: map['payment_status'],
-      createdAt: map['created_at'],
-    );
-  }
-}
+        .form-group {
+            margin-bottom: 20px;
+        }
 
-// Loan Model
-class Loan {
-  int? id;
-  int customerId;
-  double amount;
-  String status;
-  String date;
-  String? notes;
-  String createdAt;
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #333;
+        }
 
-  Loan({
-    this.id,
-    required this.customerId,
-    required this.amount,
-    required this.status,
-    required this.date,
-    this.notes,
-    required this.createdAt,
-  });
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
 
-  Map<String, dynamic> toMap() => {
-    'id': id,
-    'customer_id': customerId,
-    'amount': amount,
-    'status': status,
-    'date': date,
-    'notes': notes,
-    'created_at': createdAt,
-  };
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
 
-  factory Loan.fromMap(Map<String, dynamic> map) => Loan(
-    id: map['id'],
-    customerId: map['customer_id'],
-    amount: map['amount'],
-    status: map['status'],
-    date: map['date'],
-    notes: map['notes'],
-    createdAt: map['created_at'],
-  );
-}
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+        }
+
+        .customers-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .customer-item {
+            background: #f8f9fa;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            border-left: 5px solid #667eea;
+        }
+
+        .customer-name {
+            font-weight: bold;
+            font-size: 1.2em;
+            color: #333;
+        }
+
+        .customer-details {
+            color: #666;
+            margin: 5px 0;
+        }
+
+        .bill-download {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🛒 AI Hub</h1>
+        <p>Shop Management System | Founder: Harshwardhan Singh Lodhi</p>
+    </div>
+
+    <div class="container">
+        <!-- Dashboard Cards -->
+        <div class="dashboard">
+            <div class="card">
+                <div>Total Customers</div>
+                <div id="totalCustomers">0</div>
+            </div>
+            <div class="card">
+                <div>Total Profit</div>
+                <div id="totalProfit">₹0</div>
+            </div>
+            <div class="card">
+                <div>Total Loans</div>
+                <div id="totalLoans">₹0</div>
+            </div>
+            <div class="card">
+                <div>Pending Bills</div>
+                <div id="pendingBills">0</div>
+            </div>
+        </div>
+
+        <!-- Add New Customer -->
+        <div class="form-section">
+            <h2>➕ Add New Customer / Loan</h2>
+            <form id="customerForm">
+                <div class="form-group">
+                    <label>Customer Name:</label>
+                    <input type="text" id="customerName" required>
+                </div>
+                <div class="form-group">
+                    <label>Phone:</label>
+                    <input type="tel" id="customerPhone">
+                </div>
+                <div class="form-group">
+                    <label>Loan Amount:</label>
+                    <input type="number" id="loanAmount" placeholder="0">
+                </div>
+                <div class="form-group">
+                    <label>Item Description:</label>
+                    <textarea id="itemDesc" rows="3" placeholder="Describe items given..."></textarea>
+                </div>
+                <button type="submit" class="btn">Add Customer</button>
+            </form>
+        </div>
+
+        <!-- Customer List -->
+        <div class="form-section">
+            <h2>👥 Customers & Loans</h2>
+            <div id="customersList" class="customers-list"></div>
+        </div>
+
+        <!-- Bill Download -->
+        <div class="bill-download">
+            <button class="btn btn-success" onclick="downloadAllBills()">📥 Download All Bills (PDF)</button>
+            <p style="margin-top: 10px; color: #666; font-size: 0.9em;">
+                Follow us: <a href="https://www.instagram.com/_verma_karan08/" target="_blank">@_verma_karan08</a>
+            </p>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script>
+        let customers = JSON.parse(localStorage.getItem('aiHubCustomers')) || [];
+
+        function saveData() {
+            localStorage.setItem('aiHubCustomers', JSON.stringify(customers));
+            updateDashboard();
+        }
+
+        function updateDashboard() {
+            const totalCustomers = customers.length;
+            const totalProfit = customers.reduce((sum, c) => sum + (c.profit || 0), 0);
+            const totalLoans = customers.reduce((sum, c) => sum + (c.loanAmount || 0), 0);
+            const pendingBills = customers.filter(c => c.status === 'pending').length;
+
+            document.getElementById('totalCustomers').textContent = totalCustomers;
+            document.getElementById('totalProfit').textContent = `₹${totalProfit.toLocaleString()}`;
+            document.getElementById('totalLoans').textContent = `₹${totalLoans.toLocaleString()}`;
+            document.getElementById('pendingBills').textContent = pendingBills;
+        }
+
+        function renderCustomers() {
+            const container = document.getElementById('customersList');
+            container.innerHTML = '';
+
+            customers.forEach((customer, index) => {
+                const div = document.createElement('div');
+                div.className = 'customer-item';
+                div.innerHTML = `
+                    <div class="customer-name">${customer.name}</div>
+                    <div class="customer-details">📞 ${customer.phone || 'N/A'}</div>
+                    <div class="customer-details">💰 Loan: ₹${customer.loanAmount?.toLocaleString() || 0}</div>
+                    <div class="customer-details">💵 Profit: ₹${customer.profit?.toLocaleString() || 0}</div>
+                    <div class="customer-details">${customer.itemDesc || ''}</div>
+                    <div style="margin-top: 10px;">
+                        <button class="btn btn-success" onclick="markPaid(${index})" style="padding: 8px 15px; font-size: 14px; margin-right: 10px;">
+                            ✅ Mark Paid
+                        </button>
+                        <button class="btn btn-danger" onclick="deleteCustomer(${index})" style="padding: 8px 15px; font-size: 14px;">
+                            🗑️ Delete
+                        </button>
+                        <button class="btn" onclick="downloadBill(${index})" style="padding: 8px 15px; font-size: 14px; background: #4CAF50;">
+                            📄 Download Bill
+                        </button>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        document.getElementById('customerForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const customer = {
+                name: document.getElementById('customerName').value,
+                phone: document.getElementById('customerPhone').value,
+                loanAmount: parseFloat(document.getElementById('loanAmount').value) || 0,
+                itemDesc: document.getElementById('itemDesc').value,
+                profit: 0,
+                status: 'pending',
+                date: new Date().toLocaleDateString()
+            };
+
+            customers.push(customer);
+            saveData();
+            renderCustomers();
+            
+            // Reset form
+            e.target.reset();
+            alert('✅ Customer added successfully!');
+        });
+
+        function markPaid(index) {
+            customers[index].status = 'paid';
+            customers[index].paidDate = new Date().toLocaleDateString();
+            saveData();
+            renderCustomers();
+            alert('✅ Payment marked!');
+        }
+
+        function deleteCustomer(index) {
+            if (confirm('Are you sure you want to delete this customer?')) {
+                customers.splice(index, 1);
+                saveData();
+                renderCustomers();
+            }
+        }
+
+        function downloadBill(index) {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            
+            const customer = customers[index];
+            doc.setFontSize(20);
+            doc.text('AI Hub - Bill', 105, 20, { align: 'center' });
+            doc.setFontSize(12);
+            doc.text(`Founder: Harshwardhan Singh Lodhi`, 105, 35, { align: 'center' });
+            doc.text(`Instagram: @_verma_karan08`, 105, 45, { align: 'center' });
+            
+            doc.text('='.repeat(40), 20, 60);
+            doc.text(`Customer: ${customer.name}`, 20, 70);
+            doc.text(`Phone: ${customer.phone || 'N/A'}`, 20, 80);
+            doc.text(`Date: ${customer.date}`, 20, 90);
+            doc.text(`Items: ${customer.itemDesc}`, 20, 105);
+            doc.text(`Loan Amount: ₹${customer.loanAmount?.toLocaleString() || 0}`, 20, 120);
+            doc.text(`Profit: ₹${customer.profit?.toLocaleString() || 0}`, 20, 130);
+            doc.text(`Status: ${customer.status.toUpperCase()}`, 20, 140);
+            
+            doc.text('='.repeat(40), 20, 155);
+            doc.save(`${customer.name}_bill_${Date.now()}.pdf`);
+        }
+
+        function downloadAllBills() {
+            customers.forEach((customer, index) => {
+                setTimeout(() => downloadBill(index), index * 500);
+            });
+            alert('📥 All bills downloading...');
+        }
+
+        // Initialize
+        updateDashboard();
+        renderCustomers();
+    </script>
+</body>
+</html>
