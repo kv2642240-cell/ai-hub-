@@ -33,6 +33,33 @@
             line-height: 1.6;
         }
 
+        /* Notification */
+        .notification {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            padding: 1.5rem 2rem;
+            border-radius: 15px;
+            color: white;
+            font-weight: 600;
+            z-index: 10000;
+            transform: translateX(400px);
+            transition: all 0.4s ease;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification.success {
+            background: linear-gradient(135deg, var(--success), #059669);
+        }
+
+        .notification.error {
+            background: linear-gradient(135deg, var(--danger), #DC2626);
+        }
+
         /* Public Header */
         .public-header {
             background: linear-gradient(135deg, var(--primary-blue), #3B82F6);
@@ -82,6 +109,12 @@
             backdrop-filter: blur(15px);
             border: 1px solid var(--glass-border);
             transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .info-item a {
+            color: white;
+            text-decoration: none;
         }
 
         .info-item:hover {
@@ -94,6 +127,35 @@
             max-width: 1400px;
             margin: 3rem auto;
             padding: 0 2rem;
+        }
+
+        /* Stats */
+        .stats-bar {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            background: var(--glass-bg);
+            padding: 1.5rem 2.5rem;
+            border-radius: 20px;
+            text-align: center;
+            border: 1px solid var(--glass-border);
+            min-width: 180px;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-gold);
+            margin-bottom: 0.3rem;
+        }
+
+        .stat-label {
+            color: rgba(255,255,255,0.7);
+            font-size: 0.9rem;
         }
 
         /* Quick Actions */
@@ -118,19 +180,14 @@
             overflow: hidden;
         }
 
-        .action-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary-gold), #FFED4E);
-        }
-
         .action-card:hover {
             transform: translateY(-15px);
             box-shadow: 0 40px 80px rgba(0,0,0,0.4);
+        }
+
+        .action-card.active {
+            border-color: var(--primary-gold);
+            box-shadow: 0 0 0 3px rgba(255,215,0,0.3);
         }
 
         .action-icon {
@@ -157,6 +214,17 @@
             border: 1px solid var(--glass-border);
             box-shadow: 0 30px 60px rgba(0,0,0,0.4);
             margin-bottom: 3rem;
+            display: none;
+        }
+
+        .entry-section.active {
+            display: block;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .section-title {
@@ -243,34 +311,64 @@
             box-shadow: 0 20px 40px rgba(16,185,129,0.4);
         }
 
+        .btn-group {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
         /* Bill Preview */
         .bill-preview {
             background: white;
             color: #1a1a2e;
             padding: 3rem;
             border-radius: 25px;
-            margin-top: 2rem;
+            margin-top: 3rem;
             box-shadow: 0 25px 50px rgba(0,0,0,0.3);
             display: none;
+            text-align: center;
+        }
+
+        .bill-preview.show {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
         }
 
         .bill-header {
-            text-align: center;
             margin-bottom: 2rem;
-            border-bottom: 3px solid var(--primary-gold);
-            padding-bottom: 1.5rem;
+            border-bottom: 4px solid var(--primary-gold);
+            padding-bottom: 2rem;
         }
 
         .bill-title {
-            font-size: 2.5rem;
+            font-size: 3rem;
             font-weight: 800;
             color: var(--primary-blue);
             margin-bottom: 0.5rem;
         }
 
+        .bill-subtitle {
+            font-size: 1.3rem;
+            color: #666;
+            margin-bottom: 2rem;
+        }
+
         .bill-content {
             line-height: 2;
-            font-size: 1.2rem;
+            font-size: 1.3rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .bill-amount {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--success);
+            margin: 2rem 0;
         }
 
         /* Customer List */
@@ -304,10 +402,15 @@
         }
 
         .customer-amount {
-            font-size: 2rem;
+            font-size: 2.2rem;
             font-weight: 800;
             color: var(--success);
             margin: 1rem 0;
+        }
+
+        .customer-date {
+            color: rgba(255,255,255,0.7);
+            font-size: 1rem;
         }
 
         /* Search */
@@ -317,35 +420,54 @@
 
         .search-container {
             position: relative;
-            max-width: 500px;
-            margin: 0 auto 2rem;
+            max-width: 600px;
+            margin: 0 auto 3rem;
         }
 
         .search-input {
             width: 100%;
-            padding: 1.5rem 1.5rem 1.5rem 4.5rem;
+            padding: 1.8rem 1.5rem 1.8rem 5rem;
             border: 2px solid var(--glass-border);
-            border-radius: 25px;
+            border-radius: 30px;
             background: rgba(255,255,255,0.1);
             color: white;
             font-size: 1.2rem;
             backdrop-filter: blur(15px);
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            border-color: var(--primary-gold);
+            box-shadow: 0 0 30px rgba(255,215,0,0.3);
         }
 
         .search-icon {
             position: absolute;
-            left: 1.8rem;
+            left: 2rem;
             top: 50%;
             transform: translateY(-50%);
             color: var(--primary-gold);
-            font-size: 1.3rem;
+            font-size: 1.4rem;
+        }
+
+        .no-results {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 4rem 2rem;
+            color: rgba(255,255,255,0.5);
+        }
+
+        .no-results i {
+            font-size: 5rem;
+            margin-bottom: 2rem;
+            opacity: 0.3;
         }
 
         /* Responsive */
         @media (max-width: 768px) {
             .header-content, .shop-info {
                 flex-direction: column;
-                gap: 1rem;
+                gap: 1.5rem;
                 text-align: center;
             }
             
@@ -360,10 +482,17 @@
             .customers-list {
                 grid-template-columns: 1fr;
             }
+            
+            .stats-bar {
+                justify-content: center;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Notifications -->
+    <div id="notification" class="notification"></div>
+
     <!-- Public Header -->
     <header class="public-header">
         <div class="header-content">
@@ -374,7 +503,7 @@
             <div class="shop-info">
                 <div class="info-item">
                     <i class="fas fa-envelope"></i>
-                    <strong>KV2642240@gmail.com</strong>
+                    <a href="mailto:KV2642240@gmail.com">KV2642240@gmail.com</a>
                 </div>
                 <div class="info-item">
                     <i class="fab fa-instagram"></i>
@@ -382,130 +511,59 @@
                 </div>
                 <div class="info-item">
                     <i class="fas fa-user-tie"></i>
-                    <strong>Harshwardhan Singh Lodhi</strong>
+                    Harshwardhan Singh Lodhi
                 </div>
             </div>
         </div>
     </header>
 
     <div class="main-container">
+        <!-- Live Stats -->
+        <div class="stats-bar">
+            <div class="stat-item">
+                <div class="stat-value" id="totalBills">0</div>
+                <div class="stat-label">Total Bills</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" id="totalProfitStat">₹0</div>
+                <div class="stat-label">Total Profit</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" id="udhariPending">₹0</div>
+                <div class="stat-label">Pending Udhari</div>
+            </div>
+        </div>
+
         <!-- Quick Action Cards -->
         <div class="quick-actions">
-            <div class="action-card" onclick="showSection('bill-entry')">
+            <div class="action-card active" onclick="showSection('bill-entry')">
                 <div class="action-icon">
                     <i class="fas fa-receipt"></i>
                 </div>
-                <div class="action-title">New Bill Entry</div>
-                <p style="color: rgba(255,255,255,0.8);">Add customer bill & download PDF instantly</p>
+                <h3 class="action-title">New Bill Entry</h3>
+                <p style="color: rgba(255,255,255,0.8);">Add customer & download PDF instantly</p>
             </div>
             
             <div class="action-card" onclick="showSection('search-bills')">
                 <div class="action-icon">
                     <i class="fas fa-search"></i>
                 </div>
-                <div class="action-title">Search Bills</div>
-                <p style="color: rgba(255,255,255,0.8);">Find any customer bill by name</p>
+                <h3 class="action-title">Search Bills</h3>
+                <p style="color: rgba(255,255,255,0.8);">Find customer by name & download</p>
             </div>
             
             <div class="action-card" onclick="showSection('profit')">
                 <div class="action-icon">
-                    <i class="fas fa-chart-line"></i>
+                    <i class="fas fa-calculator"></i>
                 </div>
-                <div class="action-title">Profit Calc</div>
-                <p style="color: rgba(255,255,255,0.8);">Calculate daily profit automatically</p>
+                <h3 class="action-title">Profit Calculator</h3>
+                <p style="color: rgba(255,255,255,0.8);">Calculate daily business profit</p>
             </div>
         </div>
 
         <!-- Bill Entry Section -->
-        <section id="bill-entry" class="entry-section" style="display: block;">
+        <section id="bill-entry" class="entry-section active">
             <h2 class="section-title">
                 <i class="fas fa-receipt"></i> Create New Customer Bill
             </h2>
-            <p style="text-align: center; color: rgba(255,255,255,0.8); font-size: 1.2rem; margin-bottom: 3rem;">
-                Enter customer details and download professional PDF bill instantly!
-            </p>
-
-            <form id="billForm" class="form-grid">
-                <div class="form-group">
-                    <label><i class="fas fa-user"></i> Customer Name *</label>
-                    <input type="text" id="customerName" placeholder="Enter full name" required>
-                </div>
-                
-                <div class="form-group">
-                    <label><i class="fas fa-phone"></i> Phone Number</label>
-                    <input type="tel" id="customerPhone" placeholder="Enter phone number">
-                </div>
-                
-                <div class="form-group">
-                    <label><i class="fas fa-rupee-sign"></i> Total Amount (₹) *</label>
-                    <input type="number" id="billAmount" placeholder="Enter total amount" required>
-                </div>
-                
-                <div class="form-group">
-                    <label><i class="fas fa-credit-card"></i> Payment Method</label>
-                    <select id="paymentMethod">
-                        <option value="Cash">💰 Cash</option>
-                        <option value="UPI">📱 UPI</option>
-                        <option value="Card">💳 Card</option>
-                        <option value="Udhari">📝 Udhari</option>
-                    </select>
-                </div>
-                
-                <div class="form-group full-width">
-                    <label><i class="fas fa-list"></i> Items Purchased (Optional)</label>
-                    <textarea id="itemsList" rows="3" placeholder="Ex: Shirt x2 - ₹500, Pant x1 - ₹800, ..."></textarea>
-                </div>
-            </form>
-
-            <div style="text-align: center;">
-                <button type="button" class="btn btn-success" onclick="generateBill()">
-                    <i class="fas fa-file-pdf"></i> Generate & Download PDF Bill
-                </button>
-                <button type="button" class="btn" onclick="addBillEntry()">
-                    <i class="fas fa-save"></i> Save Entry Only
-                </button>
-            </div>
-
-            <!-- Bill Preview -->
-            <div id="billPreview" class="bill-preview"></div>
-        </section>
-
-        <!-- Search Bills Section -->
-        <section id="search-bills" class="entry-section" style="display: none;">
-            <h2 class="section-title">
-                <i class="fas fa-search"></i> Search Customer Bills
-            </h2>
-            
-            <div class="search-section">
-                <div class="search-container">
-                    <i class="fas fa-search search-icon"></i>
-                    <input type="text" class="search-input" id="customerSearch" placeholder="🔍 Search by customer name..." onkeyup="searchCustomers()">
-                </div>
-            </div>
-
-            <div id="searchResults" class="customers-list">
-                <div style="grid-column: 1 / -1; text-align: center; padding: 4rem; color: rgba(255,255,255,0.5);">
-                    <i class="fas fa-users" style="font-size: 4rem; margin-bottom: 1rem; opacity: 0.5;"></i>
-                    <p>No bills found. Create your first bill above!</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Profit Calculator Section -->
-        <section id="profit" class="entry-section" style="display: none;">
-            <h2 class="section-title">
-                <i class="fas fa-chart-line"></i> Smart Profit Calculator
-            </h2>
-            
-            <div class="form-grid">
-                <div class="form-group">
-                    <label><i class="fas fa-tag"></i> Selling Price (₹)</label>
-                    <input type="number" id="sellingPrice" placeholder="Enter selling price">
-                </div>
-                <div class="form-group">
-                    <label><i class="fas fa-coins"></i> Cost Price (₹)</label>
-                    <input type="number" id="costPrice" placeholder="Enter cost price">
-                </div>
-                <div class="form-group">
-                    <label><i class="fas fa-hashtag"></i> Quantity Sold</label>
-                    <input type="number" id="quantitySold" value="
+            <p style="text-align: center; color: rgba
