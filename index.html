@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The AI Hub</title>
     <link rel="manifest" href="manifest.json">
     <style>
@@ -17,32 +16,42 @@
 
 <div class="card">
     <h2>THE AI HUB</h2>
-    <input type="text" id="name" placeholder="Customer Name">
-    <input type="text" id="service" placeholder="Service">
-    <input type="number" id="amt" placeholder="Amount">
-    <button onclick="addEntry()">ADD ENTRY</button>
-    <div id="history"></div>
+    <div id="content">
+        <input type="text" id="name" placeholder="Customer Name">
+        <input type="text" id="service" placeholder="Service">
+        <input type="number" id="amt" placeholder="Amount">
+        <button onclick="addEntry()">ADD ENTRY</button>
+        <div id="history"></div>
+    </div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
-    // 1. Password Protection
-    let pass = prompt("Access Key daliye:");
-    if (pass !== "Karan2026") { 
-        alert("Access Denied!"); 
-        window.location.href = "about:blank"; 
+    // Name check: Agar naam save nahi hai, toh hi puchega
+    let userName = localStorage.getItem("userName");
+    if (!userName) {
+        userName = prompt("Swagat hai! The AI Hub mein entry karne ke liye apna naam daliye:");
+        if (userName) {
+            localStorage.setItem("userName", userName);
+        } else {
+            alert("Naam dalna zaroori hai!");
+            location.reload(); // Naam na dalne par page reload hoga
+        }
     }
 
-    // 2. Data Logic
     function addEntry() {
-        let entry = { n: document.getElementById('name').value, s: document.getElementById('service').value, a: document.getElementById('amt').value };
+        let entry = { 
+            userName: localStorage.getItem("userName"), 
+            n: document.getElementById('name').value, 
+            s: document.getElementById('service').value, 
+            a: document.getElementById('amt').value 
+        };
         let data = JSON.parse(localStorage.getItem('ledger') || "[]");
         data.push(entry);
         localStorage.setItem('ledger', JSON.stringify(data));
         location.reload();
     }
 
-    // 3. Render List
     let data = JSON.parse(localStorage.getItem('ledger') || "[]");
     data.forEach((item, index) => {
         document.getElementById('history').innerHTML += `
@@ -52,7 +61,6 @@
         </div>`;
     });
 
-    // 4. PDF Generation
     function downloadBill(i) {
         let d = JSON.parse(localStorage.getItem('ledger'))[i];
         const { jsPDF } = window.jspdf;
@@ -61,6 +69,7 @@
         doc.text(`Customer: ${d.n}`, 20, 40);
         doc.text(`Service: ${d.s}`, 20, 50);
         doc.text(`Amount: ₹${d.a}`, 20, 60);
+        doc.text(`Entry By: ${d.userName}`, 20, 70);
         doc.save(`${d.n}_Bill.pdf`);
     }
 </script>
