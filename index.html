@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Hub - Shop Management System</title>
+    <title>AI Hub - Shopkeeper Management System</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -15,48 +18,50 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            padding: 20px;
+            color: #333;
         }
 
         .header {
-            text-align: center;
+            background: linear-gradient(90deg, #ff6b6b, #4ecdc4);
+            padding: 1rem 2rem;
             color: white;
-            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
         .header h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            font-size: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 15px;
         }
 
-        .header p {
-            font-size: 1.2em;
+        .header .founder {
+            font-size: 0.9rem;
             opacity: 0.9;
+            margin-top: 5px;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
-            background: rgba(255,255,255,0.95);
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            padding: 2rem;
         }
 
         .dashboard {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
         }
 
         .card {
             background: white;
-            padding: 20px;
-            border-radius: 15px;
+            border-radius: 20px;
+            padding: 2rem;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            text-align: center;
             transition: transform 0.3s ease;
         }
 
@@ -64,62 +69,62 @@
             transform: translateY(-5px);
         }
 
-        .card h3 {
-            color: #667eea;
-            margin-bottom: 10px;
-            font-size: 1.3em;
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
         }
 
-        .card .amount {
-            font-size: 2em;
-            font-weight: bold;
-            color: #333;
+        .stat-card {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+
+        .stat-card i {
+            font-size: 2.5rem;
+            display: block;
+            margin-bottom: 0.5rem;
         }
 
         .btn {
-            background: linear-gradient(45deg, #667eea, #764ba2);
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
             color: white;
             border: none;
             padding: 12px 24px;
             border-radius: 25px;
             cursor: pointer;
-            font-size: 1em;
+            font-size: 1rem;
             transition: all 0.3s ease;
             margin: 5px;
         }
 
         .btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
 
-        .form-section {
-            display: none;
-            background: #f8f9ff;
-            padding: 25px;
-            border-radius: 15px;
-            margin-top: 20px;
+        .btn-success {
+            background: linear-gradient(45deg, #56ab2f, #a8e6cf);
         }
 
-        .form-section.active {
-            display: block;
-            animation: slideDown 0.3s ease;
-        }
-
-        @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
+        .btn-danger {
+            background: linear-gradient(45deg, #ff416c, #ff4b2b);
         }
 
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 1.5rem;
         }
 
         .form-group label {
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 0.5rem;
             font-weight: 600;
-            color: #333;
+            color: #555;
         }
 
         .form-group input, .form-group select {
@@ -127,7 +132,7 @@
             padding: 12px;
             border: 2px solid #e1e5e9;
             border-radius: 10px;
-            font-size: 1em;
+            font-size: 1rem;
             transition: border-color 0.3s ease;
         }
 
@@ -136,346 +141,404 @@
             border-color: #667eea;
         }
 
-        .customer-list {
-            margin-top: 20px;
-        }
-
-        .customer-item {
+        .table-container {
+            overflow-x: auto;
             background: white;
-            padding: 15px;
-            margin-bottom: 10px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .delete-btn {
-            background: #ff4757;
-            padding: 8px 15px;
-            font-size: 0.9em;
-        }
-
-        .profit-section {
-            background: linear-gradient(45deg, #2ed573, #1e90ff);
-            color: white;
-            text-align: center;
-            padding: 20px;
             border-radius: 15px;
-            margin-top: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            padding: 1rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        th {
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:hover {
+            background: #f8f9ff;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: white;
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .close {
+            float: right;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #aaa;
+        }
+
+        .close:hover {
+            color: #333;
         }
 
         @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            .header h1 {
+                font-size: 1.5rem;
+            }
             .dashboard {
                 grid-template-columns: 1fr;
             }
-            
-            .header h1 {
-                font-size: 2em;
-            }
+        }
+
+        .profit-loan-display {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1rem;
+            padding: 1rem;
+            background: linear-gradient(135deg, #56ab2f, #a8e6cf);
+            color: white;
+            border-radius: 15px;
+            font-size: 1.2rem;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
     <div class="header">
-        <h1>🧠 AI Hub</h1>
-        <p>Shop Management System | Founder: Harshwardhan Singh Lodhi</p>
-        <p>Follow: <a href="https://www.instagram.com/_verma_karan08/" target="_blank" style="color: #ffd700;">@_verma_karan08</a></p>
+        <h1>
+            <i class="fas fa-store"></i>
+            AI Hub - Shop Management
+        </h1>
+        <div class="founder">
+            Founder: Harshwardhan Singh Lodhi
+            <a href="https://www.instagram.com/_verma_karan08/" target="_blank" style="color: rgba(255,255,255,0.8); margin-left: 10px;">
+                <i class="fab fa-instagram"></i>
+            </a>
+        </div>
     </div>
 
     <div class="container">
+        <!-- Stats Dashboard -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <i class="fas fa-rupee-sign"></i>
+                <div id="totalProfit">₹0</div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-money-check-alt"></i>
+                <div id="totalLoan">₹0</div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-users"></i>
+                <div id="totalCustomers">0</div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-file-invoice"></i>
+                <div id="totalBills">0</div>
+            </div>
+        </div>
+
+        <!-- Profit & Loan Display -->
+        <div class="profit-loan-display">
+            <div>📈 Total Profit: <span id="dashboardProfit">₹0</span></div>
+            <div>💰 Pending Loans: <span id="dashboardLoan">₹0</span></div>
+        </div>
+
         <!-- Dashboard Cards -->
         <div class="dashboard">
             <div class="card">
-                <h3>Total Customers</h3>
-                <div class="amount" id="totalCustomers">0</div>
+                <h3><i class="fas fa-user-plus"></i> Add New Customer</h3>
+                <div class="form-group">
+                    <label>Customer Name</label>
+                    <input type="text" id="customerName" placeholder="Enter customer name">
+                </div>
+                <div class="form-group">
+                    <label>Phone Number</label>
+                    <input type="tel" id="customerPhone" placeholder="Enter phone number">
+                </div>
+                <div class="form-group">
+                    <label>Loan Amount</label>
+                    <input type="number" id="loanAmount" placeholder="Enter loan amount">
+                </div>
+                <button class="btn" onclick="addCustomer()">
+                    <i class="fas fa-plus"></i> Add Customer
+                </button>
             </div>
+
             <div class="card">
-                <h3>Total Loans</h3>
-                <div class="amount" id="totalLoans">₹0</div>
+                <h3><i class="fas fa-file-invoice-dollar"></i> Create New Bill</h3>
+                <div class="form-group">
+                    <label>Customer Name</label>
+                    <select id="billCustomer">
+                        <option value="">Select Customer</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Bill Amount</label>
+                    <input type="number" id="billAmount" placeholder="Enter bill amount">
+                </div>
+                <div class="form-group">
+                    <label>Items</label>
+                    <input type="text" id="billItems" placeholder="Enter items (comma separated)">
+                </div>
+                <button class="btn btn-success" onclick="createBill()">
+                    <i class="fas fa-receipt"></i> Generate Bill
+                </button>
             </div>
+
             <div class="card">
-                <h3>Total Profit</h3>
-                <div class="amount" id="totalProfit">₹0</div>
-            </div>
-            <div class="card">
-                <h3>Active Bills</h3>
-                <div class="amount" id="activeBills">0</div>
-            </div>
-        </div>
-
-        <!-- Action Buttons -->
-        <div style="text-align: center; margin-bottom: 30px;">
-            <button class="btn" onclick="showForm('addCustomer')">➕ Add Customer</button>
-            <button class="btn" onclick="showForm('addLoan')">💰 Add Loan</button>
-            <button class="btn" onclick="showForm('addBill')">📋 Create Bill</button>
-            <button class="btn" onclick="showForm('closeLoan')">✅ Close Loan</button>
-        </div>
-
-        <!-- Forms -->
-        <div id="addCustomerForm" class="form-section">
-            <h3>➕ Add New Customer</h3>
-            <div class="form-group">
-                <label>Customer Name</label>
-                <input type="text" id="customerName" placeholder="Enter customer name">
-            </div>
-            <div class="form-group">
-                <label>Phone Number</label>
-                <input type="tel" id="customerPhone" placeholder="Enter phone number">
-            </div>
-            <button class="btn" onclick="addCustomer()">Save Customer</button>
-        </div>
-
-        <div id="addLoanForm" class="form-section">
-            <h3>💰 Add Loan</h3>
-            <div class="form-group">
-                <label>Select Customer</label>
-                <select id="loanCustomer">
-                    <option value="">Choose customer</option>
+                <h3><i class="fas fa-hand-holding-usd"></i> Close Loan</h3>
+                <select id="closeLoanCustomer" style="width: 100%; padding: 10px; margin-bottom: 1rem; border-radius: 10px;">
+                    <option value="">Select Customer to Close Loan</option>
                 </select>
+                <button class="btn btn-success" onclick="closeLoan()">
+                    <i class="fas fa-check"></i> Close Loan & Calculate Profit
+                </button>
             </div>
-            <div class="form-group">
-                <label>Loan Amount</label>
-                <input type="number" id="loanAmount" placeholder="Enter loan amount">
-            </div>
-            <button class="btn" onclick="addLoan()">Add Loan</button>
         </div>
 
-        <div id="addBillForm" class="form-section">
-            <h3>📋 Create Bill</h3>
-            <div class="form-group">
-                <label>Select Customer</label>
-                <select id="billCustomer">
-                    <option value="">Choose customer</option>
-                </select>
+        <!-- Customers Table -->
+        <div class="card">
+            <h3><i class="fas fa-users"></i> All Customers & Loans</h3>
+            <div class="table-container">
+                <table id="customersTable">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Phone</th>
+                            <th>Loan Amount</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
             </div>
-            <div class="form-group">
-                <label>Bill Amount</label>
-                <input type="number" id="billAmount" placeholder="Enter bill amount">
-            </div>
-            <div class="form-group">
-                <label>Items</label>
-                <input type="text" id="billItems" placeholder="Enter items (comma separated)">
-            </div>
-            <button class="btn" onclick="addBill()">Create Bill</button>
         </div>
 
-        <div id="closeLoanForm" class="form-section">
-            <h3>✅ Close Loan</h3>
-            <div class="form-group">
-                <label>Select Customer with Loan</label>
-                <select id="closeLoanCustomer">
-                    <option value="">Choose customer with loan</option>
-                </select>
+        <!-- Bills Table -->
+        <div class="card">
+            <h3><i class="fas fa-file-invoice"></i> All Bills</h3>
+            <div class="table-container">
+                <table id="billsTable">
+                    <thead>
+                        <tr>
+                            <th>Customer</th>
+                            <th>Amount</th>
+                            <th>Items</th>
+                            <th>Date</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
             </div>
-            <button class="btn" onclick="closeLoan()">Close Selected Loan</button>
         </div>
+    </div>
 
-        <!-- Customer List -->
-        <div class="customer-list">
-            <h3>👥 Customer Records</h3>
-            <div id="customerRecords"></div>
-        </div>
-
-        <!-- Profit Summary -->
-        <div class="profit-section">
-            <h3>💹 Profit & Loan Summary</h3>
-            <p id="profitSummary">Loading...</p>
+    <!-- Bill Modal -->
+    <div id="billModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <div id="billPreview"></div>
+            <button class="btn" onclick="downloadBill()" style="width: 100%; margin-top: 1rem;">
+                <i class="fas fa-download"></i> Download Bill (PDF)
+            </button>
         </div>
     </div>
 
     <script>
         let customers = JSON.parse(localStorage.getItem('aiHubCustomers')) || [];
         let bills = JSON.parse(localStorage.getItem('aiHubBills')) || [];
-        let loans = JSON.parse(localStorage.getItem('aiHubLoans')) || [];
+        let totalProfit = parseFloat(localStorage.getItem('aiHubTotalProfit')) || 0;
+
+        // Initialize app
+        document.addEventListener('DOMContentLoaded', function() {
+            updateDashboard();
+            renderCustomers();
+            renderBills();
+            updateCustomerSelects();
+        });
 
         function saveData() {
             localStorage.setItem('aiHubCustomers', JSON.stringify(customers));
             localStorage.setItem('aiHubBills', JSON.stringify(bills));
-            localStorage.setItem('aiHubLoans', JSON.stringify(loans));
+            localStorage.setItem('aiHubTotalProfit', totalProfit);
         }
 
         function updateDashboard() {
+            const totalLoan = customers.reduce((sum, customer) => sum + (customer.loanAmount || 0), 0);
             const totalCustomers = customers.length;
-            const totalLoans = loans.reduce((sum, loan) => sum + loan.amount, 0);
-            const totalProfit = bills.reduce((sum, bill) => sum + bill.amount, 0);
-            const activeBills = bills.filter(bill => !bill.paid).length;
+            const totalBillsCount = bills.length;
 
-            document.getElementById('totalCustomers').textContent = totalCustomers;
-            document.getElementById('totalLoans').textContent = `₹${totalLoans.toLocaleString()}`;
             document.getElementById('totalProfit').textContent = `₹${totalProfit.toLocaleString()}`;
-            document.getElementById('activeBills').textContent = activeBills;
-
-            document.getElementById('profitSummary').innerHTML = `
-                Total Profit: ₹${totalProfit.toLocaleString()} | 
-                Total Loans: ₹${totalLoans.toLocaleString()} | 
-                Net Profit: ₹${(totalProfit - totalLoans).toLocaleString()}
-            `;
+            document.getElementById('totalLoan').textContent = `₹${totalLoan.toLocaleString()}`;
+            document.getElementById('totalCustomers').textContent = totalCustomers;
+            document.getElementById('totalBills').textContent = totalBillsCount;
+            document.getElementById('dashboardProfit').textContent = totalProfit.toLocaleString();
+            document.getElementById('dashboardLoan').textContent = totalLoan.toLocaleString();
         }
 
-        function showForm(formId) {
-            // Hide all forms
-            document.querySelectorAll('.form-section').forEach(form => {
-                form.classList.remove('active');
-            });
-            // Show selected form
-            document.getElementById(formId + 'Form').classList.add('active');
-            loadCustomerDropdowns();
+        function addCustomer() {
+            const name = document.getElementById('customerName').value.trim();
+            const phone = document.getElementById('customerPhone').value.trim();
+            const loanAmount = parseFloat(document.getElementById('loanAmount').value) || 0;
+
+            if (!name || !phone) {
+                alert('Please enter name and phone number');
+                return;
+            }
+
+            const customer = {
+                id: Date.now(),
+                name,
+                phone,
+                loanAmount,
+                status: loanAmount > 0 ? 'Pending' : 'Cleared',
+                createdAt: new Date().toLocaleString()
+            };
+
+            customers.push(customer);
+            saveData();
+            updateDashboard();
+            renderCustomers();
+            updateCustomerSelects();
+            
+            // Clear form
+            document.getElementById('customerName').value = '';
+            document.getElementById('customerPhone').value = '';
+            document.getElementById('loanAmount').value = '';
+            
+            alert('Customer added successfully!');
         }
 
-        function loadCustomerDropdowns() {
-            const selects = ['loanCustomer', 'billCustomer', 'closeLoanCustomer'];
-            selects.forEach(selectId => {
-                const select = document.getElementById(selectId);
-                select.innerHTML = '<option value="">Choose customer</option>';
-                
-                customers.forEach((customer, index) => {
-                    const option = document.createElement('option');
-                    option.value = index;
-                    option.textContent = `${customer.name} (${customer.phone})`;
-                    select.appendChild(option);
-                });
-
-                if (selectId === 'closeLoanCustomer') {
-                    // Only show customers with loans
-                    select.innerHTML = '<option value="">Choose customer with loan</option>';
-                    const customersWithLoans = customers.map((customer, index) => {
-                        const customerLoans = loans.filter(loan => loan.customerId == index);
-                        if (customerLoans.length > 0) {
-                            return { customer, index, totalLoan: customerLoans.reduce((sum, l) => sum + l.amount, 0) };
-                        }
-                    }).filter(Boolean);
-
-                    customersWithLoans.forEach(({ customer, index, totalLoan }) => {
-                        const option = document.createElement('option');
-                        option.value = index;
-                        option.textContent = `${customer.name} (${customer.phone}) - ₹${totalLoan.toLocaleString()}`;
-                        select.appendChild(option);
-                    });
+        function updateCustomerSelects() {
+            const billSelect = document.getElementById('billCustomer');
+            const loanSelect = document.getElementById('closeLoanCustomer');
+            
+            billSelect.innerHTML = '<option value="">Select Customer</option>';
+            loanSelect.innerHTML = '<option value="">Select Customer to Close Loan</option>';
+            
+            customers.forEach(customer => {
+                billSelect.innerHTML += `<option value="${customer.id}">${customer.name} (${customer.phone})</option>`;
+                if (customer.loanAmount > 0) {
+                    loanSelect.innerHTML += `<option value="${customer.id}">${customer.name} - ₹${customer.loanAmount}</option>`;
                 }
             });
         }
 
-        function addCustomer() {
-            const name = document.getElementById('customerName').value;
-            const phone = document.getElementById('customerPhone').value;
-
-            if (!name || !phone) {
-                alert('Please fill all fields');
-                return;
-            }
-
-            customers.push({ name, phone, bills: [], loans: [] });
-            saveData();
-            updateDashboard();
-            document.getElementById('addCustomerForm').classList.remove('active');
-            document.getElementById('customerName').value = '';
-            document.getElementById('customerPhone').value = '';
-            displayCustomers();
+        function renderCustomers() {
+            const tbody = document.querySelector('#customersTable tbody');
+            tbody.innerHTML = '';
+            
+            customers.forEach(customer => {
+                const row = tbody.insertRow();
+                row.innerHTML = `
+                    <td>${customer.name}</td>
+                    <td>${customer.phone}</td>
+                    <td>₹${customer.loanAmount.toLocaleString()}</td>
+                    <td>
+                        <span class="status ${customer.status === 'Cleared' ? 'success' : 'pending'}">
+                            ${customer.status}
+                        </span>
+                    </td>
+                    <td>
+                        <button class="btn btn-success" onclick="closeLoan(${customer.id})" ${customer.loanAmount === 0 ? 'disabled' : ''}>
+                            Close Loan
+                        </button>
+                    </td>
+                `;
+            });
         }
 
-        function addLoan() {
-            const customerId = document.getElementById('loanCustomer').value;
-            const amount = parseFloat(document.getElementById('loanAmount').value);
-
-            if (!customerId || !amount) {
-                alert('Please fill all fields');
-                return;
-            }
-
-            loans.push({ customerId: parseInt(customerId), amount, date: new Date().toLocaleDateString() });
-            saveData();
-            updateDashboard();
-            document.getElementById('addLoanForm').classList.remove('active');
-            document.getElementById('loanAmount').value = '';
-        }
-
-        function addBill() {
-            const customerId = document.getElementById('billCustomer').value;
+        function createBill() {
+            const customerId = parseInt(document.getElementById('billCustomer').value);
             const amount = parseFloat(document.getElementById('billAmount').value);
             const items = document.getElementById('billItems').value;
 
-            if (!customerId || !amount) {
-                alert('Please fill all fields');
+            if (!customerId || !amount || !items) {
+                alert('Please fill all bill details');
                 return;
             }
 
-            bills.push({ 
-                customerId: parseInt(customerId), 
-                amount, 
-                items: items || 'General items',
-                date: new Date().toLocaleDateString(),
-                paid: false
-            });
+            const customer = customers.find(c => c.id === customerId);
+            if (!customer) {
+                alert('Customer not found');
+                return;
+            }
+
+            const bill = {
+                id: Date.now(),
+                customerId,
+                customerName: customer.name,
+                customerPhone: customer.phone,
+                amount,
+                items: items.split(',').map(item => item.trim()),
+                date: new Date().toLocaleString(),
+                status: 'Pending'
+            };
+
+            bills.push(bill);
             saveData();
             updateDashboard();
-            document.getElementById('addBillForm').classList.remove('active');
+            renderBills();
+            
+            // Clear form
             document.getElementById('billAmount').value = '';
             document.getElementById('billItems').value = '';
+            
+            // Show bill preview
+            showBillPreview(bill);
+            alert('Bill created successfully!');
         }
 
-        function closeLoan() {
-            const customerId = document.getElementById('closeLoanCustomer').value;
-            if (!customerId) {
-                alert('Please select a customer with loan');
-                return;
-            }
-
-            const customerLoans = loans.filter(loan => loan.customerId == customerId);
-            if (customerLoans.length === 0) {
-                alert('No loans found for this customer');
-                return;
-            }
-
-            // Remove all loans for this customer
-            loans = loans.filter(loan => loan.customerId != customerId);
-            saveData();
-            updateDashboard();
-            document.getElementById('closeLoanForm').classList.remove('active');
-            alert('All loans for this customer closed successfully!');
-        }
-
-        function displayCustomers() {
-            const container = document.getElementById('customerRecords');
-            container.innerHTML = '';
-
-            customers.forEach((customer, index) => {
-                const customerLoans = loans.filter(loan => loan.customerId == index);
-                const customerBills = bills.filter(bill => bill.customerId == index);
-                const totalLoans = customerLoans.reduce((sum, loan) => sum + loan.amount, 0);
-                const totalBills = customerBills.reduce((sum, bill) => sum + bill.amount, 0);
-
-                const customerDiv = document.createElement('div');
-                customerDiv.className = 'customer-item';
-                customerDiv.innerHTML = `
-                    <div>
-                        <strong>${customer.name}</strong><br>
-                        📞 ${customer.phone}<br>
-                        💰 Loans: ₹${totalLoans.toLocaleString()} | 
-                        💵 Bills: ₹${totalBills.toLocaleString()}
-                    </div>
-                    <button class="btn delete-btn" onclick="deleteCustomer(${index})">Delete</button>
+        function renderBills() {
+            const tbody = document.querySelector('#billsTable tbody');
+            tbody.innerHTML = '';
+            
+            bills.forEach(bill => {
+                const row = tbody.insertRow();
+                row.innerHTML = `
+                    <td>${bill.customerName}</td>
+                    <td>₹${bill.amount.toLocaleString()}</td>
+                    <td>${bill.items.join(', ')}</td>
+                    <td>${bill.date}</td>
+                    <td>
+                        <button class="btn" onclick="showBillPreview(${bill.id})">
+                            <i class="fas fa-eye"></i> View
+                        </button>
+                    </td>
                 `;
-                container.appendChild(customerDiv);
             });
         }
 
-        function deleteCustomer(index) {
-            if (confirm('Are you sure you want to delete this customer and all their data?')) {
-                customers.splice(index, 1);
-                bills = bills.filter(bill => bill.customerId != index);
-                loans = loans.filter(loan => loan.customerId != index);
-                saveData();
-                updateDashboard();
-                displayCustomers();
-            }
-        }
-
-        // Initialize app
-        updateDashboard();
-        displayCustomers();
-        loadCustomerDropdowns();
-    </script>
-</body>
-</html>
+        function closeLoan(customerId) {
+            const customer = customers.find(c => c.id === customerId);
+            if (!customer || customer.loanAmount === 0) {
+                alert
