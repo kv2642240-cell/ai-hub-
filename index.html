@@ -1,18 +1,76 @@
 <!DOCTYPE html>
-<html>
-<body style="background:#0f0f1a; color:white; padding:40px; font-family:sans-serif; text-align:center;">
-<div style="background:#1a1a2e; padding:30px; border-radius:15px; max-width:400px; margin:auto;">
-    <h1 style="color:#7b2cbf;">Founder</h1>
-    <h2 style="margin: 10px 0;">Harshwardhan Singh Lodhi (Karan)</h2>
-    <p>AI/ML Scholar at IIT Patna.</p>
-    <p>Founder of <em>The AI Hub</em>, dedicated to simplifying AI solutions.</p>
-    
-    <div style="margin-top:20px; border-top:1px solid #333; padding-top:20px; text-align:left;">
-        <p>📧 <strong>Email:</strong> kv2642240@gmail.com</p>
-        <p>📸 <strong>Instagram:</strong> <a href="https://www.instagram.com/_verma_karan08" style="color:#28a745; text-decoration:none;">@_verma_karan08</a></p>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>The AI Hub</title>
+    <style>
+        body { font-family: sans-serif; background: #0f0f1a; color: white; padding: 20px; }
+        .card { background: #1a1a2e; padding: 20px; border-radius: 15px; max-width: 450px; margin: auto; }
+        input, select { width: 100%; padding: 12px; margin: 8px 0; border-radius: 8px; border: none; box-sizing: border-box; }
+        button { width: 100%; padding: 12px; background: #7b2cbf; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; }
+        .search-box { background: #333; color: white; }
+        .stats { display: flex; justify-content: space-between; margin: 20px 0; background: #242442; padding: 15px; border-radius: 10px; }
+        .item { background: #242442; padding: 10px; margin-top: 10px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; }
+    </style>
+</head>
+<body>
+<div class="card">
+    <h2>THE AI HUB</h2>
+    <input type="text" id="search" placeholder="🔍 Search Customer..." onkeyup="filterEntries()" class="search-box">
+    <input type="text" id="name" placeholder="Customer Name">
+    <input type="text" id="service" placeholder="Service">
+    <input type="number" id="amt" placeholder="Amount">
+    <select id="type"><option value="Profit">Profit (Paid)</option><option value="Udhari">Udhari (Due)</option></select>
+    <button onclick="addEntry()">ADD ENTRY</button>
+    <div class="stats">
+        <div>Profit: ₹<span id="totalProfit">0</span></div>
+        <div>Udhari: ₹<span id="totalUdhari">0</span></div>
     </div>
-
-    <a href="index.html" style="color:#7b2cbf; display:block; margin-top:20px; text-decoration:none; font-weight:bold;">← Back to Dashboard</a>
+    <div id="history"></div>
+    <a href="about.html" style="color:#7b2cbf; display:block; margin-top:20px; text-align:center;">About Founder</a>
 </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+    function addEntry() {
+        let entry = { n: document.getElementById('name').value, s: document.getElementById('service').value, a: document.getElementById('amt').value, t: document.getElementById('type').value };
+        let data = JSON.parse(localStorage.getItem('ledger') || "[]");
+        data.push(entry);
+        localStorage.setItem('ledger', JSON.stringify(data));
+        location.reload();
+    }
+    function filterEntries() {
+        let query = document.getElementById('search').value.toLowerCase();
+        let items = document.querySelectorAll('.item');
+        items.forEach(item => {
+            let text = item.innerText.toLowerCase();
+            item.style.display = text.includes(query) ? 'flex' : 'none';
+        });
+    }
+    let data = JSON.parse(localStorage.getItem('ledger') || "[]");
+    let p = 0, u = 0;
+    data.forEach((item, i) => {
+        if(item.t === "Profit") p += parseInt(item.a); else u += parseInt(item.a);
+        document.getElementById('history').innerHTML += `
+        <div class="item">
+            <div><strong>${item.n}</strong> (${item.t})<br>${item.s} - ₹${item.a}</div>
+            <button onclick="downloadBill(${i})" style="padding:5px 10px; background:#007bff; border:none; border-radius:4px; color:white;">Bill</button>
+        </div>`;
+    });
+    document.getElementById('totalProfit').innerText = p;
+    document.getElementById('totalUdhari').innerText = u;
+    function downloadBill(i) {
+        let d = JSON.parse(localStorage.getItem('ledger'))[i];
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+        doc.text("THE AI HUB BILL", 70, 20);
+        doc.text(`Customer: ${d.n}`, 20, 40);
+        doc.text(`Type: ${d.t}`, 20, 50);
+        doc.text(`Service: ${d.s}`, 20, 60);
+        doc.text(`Amount: ₹${d.a}`, 20, 70);
+        doc.text(`Founder: Harshwardhan Singh Lodhi (Karan)`, 20, 90);
+        doc.save(`${d.n}_Bill.pdf`);
+    }
+</script>
 </body>
 </html>
