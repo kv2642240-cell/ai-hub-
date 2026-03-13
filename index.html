@@ -3,531 +3,484 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Hub - Shop Management | Founded by Harshwardhan Singh Lodhi</title>
+    <title>🚀 THE AI HUB - Harshwardhan Singh Lodhi</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root {
+            --primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --success: linear-gradient(135deg, #56ab2f 0%, #a8e6cf 100%);
+            --danger: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+            --warning: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
         }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background: var(--primary);
+            min-height: 100vh; 
+            padding: 15px;
         }
 
         .header {
-            text-align: center;
-            color: white;
-            margin-bottom: 30px;
-        }
-
-        .header h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
+            text-align: center; 
+            color: white; 
+            margin-bottom: 25px;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
 
-        .header p {
-            font-size: 1.1em;
-            opacity: 0.9;
+        .header h1 {
+            font-size: 2.8em; 
+            margin-bottom: 8px;
+            background: linear-gradient(45deg, #fff, #ffd700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
+
+        .header p { font-size: 1.2em; opacity: 0.95; }
 
         .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background: rgba(255,255,255,0.95);
-            border-radius: 20px;
+            max-width: 1400px; 
+            margin: 0 auto; 
+            background: rgba(255,255,255,0.97); 
+            border-radius: 25px; 
             padding: 30px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
         }
 
-        .dashboard {
+        .dashboard-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px; 
             margin-bottom: 30px;
         }
 
-        .card {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            color: white;
-            padding: 25px;
-            border-radius: 15px;
+        .stat-card {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
             text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
         }
 
-        .card h3 {
-            font-size: 1.5em;
-            margin-bottom: 10px;
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
         }
 
-        .card-value {
-            font-size: 2em;
-            font-weight: bold;
-        }
+        .stat-icon { font-size: 3em; margin-bottom: 15px; }
+        .stat-value { font-size: 2.5em; font-weight: bold; color: #333; margin-bottom: 5px; }
+        .stat-label { color: #666; font-size: 1.1em; }
+
+        .profit .stat-value { color: #28a745; }
+        .loan .stat-value { color: #ffc107; }
+        .customers .stat-value { color: #17a2b8; }
+        .pending .stat-value { color: #dc3545; }
 
         .tabs {
             display: flex;
             background: #f8f9fa;
-            border-radius: 10px;
-            margin-bottom: 20px;
+            border-radius: 15px;
+            margin-bottom: 25px;
             overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
 
         .tab-btn {
             flex: 1;
-            padding: 15px;
-            background: transparent;
+            padding: 18px 25px;
             border: none;
-            font-size: 1.1em;
+            background: transparent;
+            font-size: 1.15em;
+            font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
+            color: #666;
         }
 
         .tab-btn.active {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: var(--primary);
             color: white;
         }
 
-        .tab-content {
-            display: none;
-            animation: fadeIn 0.3s;
+        .tab-content { display: none; animation: slideIn 0.4s ease; }
+        .tab-content.active { display: block; }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
         }
 
-        .tab-content.active {
-            display: block;
+        .form-section {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 25px;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 25px;
         }
 
-        form {
-            background: #f8f9fa;
-            padding: 25px;
-            border-radius: 15px;
-            margin-bottom: 20px;
+        @media (max-width: 768px) {
+            .form-grid { grid-template-columns: 1fr; }
         }
 
-        .form-group {
-            margin-bottom: 20px;
+        .input-group {
+            position: relative;
+            margin-bottom: 25px;
         }
 
-        label {
+        .input-group label {
             display: block;
             margin-bottom: 8px;
             font-weight: 600;
             color: #333;
-        }
-
-        input, select {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #e1e5e9;
-            border-radius: 8px;
             font-size: 1em;
-            transition: border-color 0.3s;
         }
 
-        input:focus, select:focus {
+        .input-group input,
+        .input-group select,
+        .input-group textarea {
+            width: 100%;
+            padding: 16px 20px;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            font-size: 1em;
+            transition: all 0.3s;
+            font-family: inherit;
+            background: #f8f9fa;
+        }
+
+        .input-group input:focus,
+        .input-group select:focus,
+        .input-group textarea:focus {
             outline: none;
             border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(102,126,234,0.1);
         }
+
+        .input-group textarea { resize: vertical; min-height: 80px; }
 
         .btn {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: var(--primary);
             color: white;
-            padding: 12px 30px;
+            padding: 16px 32px;
             border: none;
-            border-radius: 8px;
+            border-radius: 12px;
             font-size: 1.1em;
+            font-weight: 600;
             cursor: pointer;
-            transition: transform 0.3s;
+            transition: all 0.3s;
+            width: 100%;
+            margin-top: 10px;
         }
 
-        .btn:hover {
-            transform: translateY(-2px);
-        }
-
-        .btn-danger {
-            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
-        }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 15px 35px rgba(102,126,234,0.4); }
+        .btn-success { background: var(--success); }
+        .btn-danger { background: var(--danger); }
+        .btn-small { width: auto; padding: 8px 20px; font-size: 0.9em; margin: 2px; }
 
         table {
             width: 100%;
             border-collapse: collapse;
             background: white;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-
-        th, td {
-            padding: 15px;
-            text-align: left;
-            border-bottom: 1px solid #eee;
-        }
-
-        th {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }
-
-        tr:hover {
-            background: #f8f9fa;
-        }
-
-        .status-paid { color: #28a745; font-weight: bold; }
-        .status-pending { color: #ffc107; font-weight: bold; }
-        .status-overdue { color: #dc3545; font-weight: bold; }
-
-        .total-section {
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            color: white;
-            padding: 20px;
             border-radius: 15px;
-            text-align: center;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             margin-top: 20px;
         }
 
-        @media (max-width: 768px) {
-            .dashboard {
-                grid-template-columns: 1fr;
-            }
-            
-            .header h1 {
-                font-size: 2em;
-            }
+        th {
+            background: var(--primary);
+            color: white;
+            padding: 18px 15px;
+            text-align: left;
+            font-weight: 600;
         }
+
+        td { padding: 16px 15px; border-bottom: 1px solid #f1f3f4; }
+        tr:hover { background: #f8f9fa; }
+
+        .status {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        .status.paid { background: #d4edda; color: #155724; }
+        .status.pending { background: #fff3cd; color: #856404; }
+        .status.overdue { background: #f8d7da; color: #721c24; }
+
+        .alert {
+            padding: 18px 25px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            font-weight: 500;
+            display: none;
+        }
+
+        .alert-success { background: #d4edda; color: #155724; border-left: 5px solid #28a745; }
+        .alert-error { background: #f8d7da; color: #721c24; border-left: 5px solid #dc3545; }
+
+        .fab {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            border: none;
+            font-size: 1.8em;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(102,126,234,0.4);
+            transition: all 0.3s;
+            z-index: 1000;
+        }
+
+        .fab:hover { transform: scale(1.1); box-shadow: 0 15px 40px rgba(102,126,234,0.5); }
     </style>
 </head>
 <body>
     <div class="header">
-        <h1>🛒 AI Hub</h1>
-        <p>Shop Management System | Founded by Harshwardhan Singh Lodhi</p>
-        <p><small>Follow: <a href="https://www.instagram.com/_verma_karan08/" target="_blank" style="color: #ffd700;">@_verma_karan08</a></small></p>
+        <h1>🚀 THE AI HUB</h1>
+        <p>🔥 Complete Shop Management System | Harshwardhan Singh Lodhi</p>
+        <p><a href="https://www.instagram.com/_verma_karan08/" target="_blank" style="color: #ffd700; text-decoration: none;">📱 @_verma_karan08</a></p>
     </div>
 
     <div class="container">
-        <!-- Dashboard Cards -->
-        <div class="dashboard">
-            <div class="card">
-                <h3>Total Profit</h3>
-                <div class="card-value" id="totalProfit">₹0</div>
+        <!-- DASHBOARD -->
+        <div class="dashboard-grid">
+            <div class="stat-card profit">
+                <div class="stat-icon">💰</div>
+                <div class="stat-value" id="totalProfit">₹0</div>
+                <div class="stat-label">Total Profit</div>
             </div>
-            <div class="card">
-                <h3>Total Loans</h3>
-                <div class="card-value" id="totalLoans">₹0</div>
+            <div class="stat-card loan">
+                <div class="stat-icon">💳</div>
+                <div class="stat-value" id="totalLoans">₹0</div>
+                <div class="stat-label">Total Loans</div>
             </div>
-            <div class="card">
-                <h3>Active Customers</h3>
-                <div class="card-value" id="activeCustomers">0</div>
+            <div class="stat-card customers">
+                <div class="stat-icon">👥</div>
+                <div class="stat-value" id="totalCustomers">0</div>
+                <div class="stat-label">Customers</div>
             </div>
-            <div class="card">
-                <h3>Pending Bills</h3>
-                <div class="card-value" id="pendingBills">0</div>
+            <div class="stat-card pending">
+                <div class="stat-icon">⏳</div>
+                <div class="stat-value" id="pendingBills">0</div>
+                <div class="stat-label">Pending Bills</div>
             </div>
         </div>
 
-        <!-- Tabs -->
+        <!-- TABS -->
         <div class="tabs">
-            <button class="tab-btn active" onclick="switchTab('customers')">Add Customer</button>
-            <button class="tab-btn" onclick="switchTab('bills')">Create Bill</button>
-            <button class="tab-btn" onclick="switchTab('customers-list')">Customers List</button>
-            <button class="tab-btn" onclick="switchTab('bills-list')">Bills List</button>
+            <button class="tab-btn active" onclick="switchTab('customer-tab')">👤 Add Customer</button>
+            <button class="tab-btn" onclick="switchTab('bill-tab')">💰 New Bill</button>
+            <button class="tab-btn" onclick="switchTab('customers-tab')">📋 Customers</button>
+            <button class="tab-btn" onclick="switchTab('bills-tab')">📊 Bills</button>
         </div>
 
-        <!-- Add Customer Tab -->
-        <div id="customers" class="tab-content active">
-            <form onsubmit="addCustomer(event)">
-                <h2>👤 Add New Customer</h2>
-                <div class="form-group">
-                    <label>Customer Name</label>
-                    <input type="text" id="customerName" required>
-                </div>
-                <div class="form-group">
-                    <label>Phone Number</label>
-                    <input type="tel" id="customerPhone" required>
-                </div>
-                <div class="form-group">
-                    <label>Initial Loan Amount (₹)</label>
-                    <input type="number" id="initialLoan" min="0" step="0.01">
-                </div>
-                <button type="submit" class="btn">Add Customer</button>
-            </form>
+        <!-- ALERT -->
+        <div id="alert" class="alert"></div>
+
+        <!-- ADD CUSTOMER -->
+        <div id="customer-tab" class="tab-content active">
+            <div class="form-section">
+                <h2 style="margin-bottom: 25px; color: #333;">➕ Add New Customer</h2>
+                <form id="customerForm">
+                    <div class="form-grid">
+                        <div class="input-group">
+                            <label>👤 Customer Name *</label>
+                            <input type="text" id="custName" placeholder="Enter customer name" required>
+                        </div>
+                        <div class="input-group">
+                            <label>📱 Phone Number *</label>
+                            <input type="tel" id="custPhone" placeholder="1234567890" maxlength="10" required>
+                        </div>
+                        <div class="input-group">
+                            <label>💰 Loan Amount</label>
+                            <input type="number" id="custLoan" placeholder="0.00" min="0" step="0.01">
+                        </div>
+                        <div class="input-group">
+                            <label>🏪 Address (Optional)</label>
+                            <input type="text" id="custAddress" placeholder="Shop/Street address">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-success">✅ Save Customer</button>
+                </form>
+            </div>
         </div>
 
-        <!-- Create Bill Tab -->
-        <div id="bills" class="tab-content">
-            <form onsubmit="createBill(event)">
-                <h2>💰 Create New Bill</h2>
-                <div class="form-group">
-                    <label>Select Customer</label>
-                    <select id="billCustomer" required>
-                        <option value="">Choose Customer</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Bill Amount (₹)</label>
-                    <input type="number" id="billAmount" min="0" step="0.01" required>
-                </div>
-                <div class="form-group">
-                    <label>Items Description</label>
-                    <input type="text" id="billItems" placeholder="e.g., Groceries, Electronics...">
-                </div>
-                <button type="submit" class="btn">Create & Send Bill</button>
-            </form>
+        <!-- CREATE BILL -->
+        <div id="bill-tab" class="tab-content">
+            <div class="form-section">
+                <h2 style="margin-bottom: 25px; color: #333;">💳 Create New Bill</h2>
+                <form id="billForm">
+                    <div class="input-group">
+                        <label>👤 Select Customer *</label>
+                        <select id="billCustomer" required>
+                            <option value="">Choose customer...</option>
+                        </select>
+                    </div>
+                    <div class="form-grid">
+                        <div class="input-group">
+                            <label>💰 Bill Amount *</label>
+                            <input type="number" id="billAmount" placeholder="500.00" min="1" step="0.01" required>
+                        </div>
+                        <div class="input-group">
+                            <label>📝 Items Description</label>
+                            <textarea id="billItems" placeholder="What did they buy?"></textarea>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-success">📤 Create Bill</button>
+                </form>
+            </div>
         </div>
 
-        <!-- Customers List Tab -->
-        <div id="customers-list" class="tab-content">
-            <h2>👥 Customers List</h2>
-            <table id="customersTable">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Phone</th>
-                        <th>Loan Amount</th>
-                        <th>Total Bills</th>
-                        <th>Status</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
+        <!-- CUSTOMERS LIST -->
+        <div id="customers-tab" class="tab-content">
+            <h2 style="margin-bottom: 20px; color: #333;">👥 All Customers</h2>
+            <div style="overflow-x: auto;">
+                <table id="customersTable">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Phone</th>
+                            <th>Loan</th>
+                            <th>Total Bills</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
         </div>
 
-        <!-- Bills List Tab -->
-        <div id="bills-list" class="tab-content">
-            <h2>📋 All Bills</h2>
-            <table id="billsTable">
-                <thead>
-                    <tr>
-                        <th>Customer</th>
-                        <th>Amount</th>
-                        <th>Items</th>
-                        <th>Date</th>
-                        <th>Status</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
-        </div>
-
-        <!-- Total Summary -->
-        <div class="total-section">
-            <h3>📊 Business Summary</h3>
-            <div style="font-size: 1.5em; margin-top: 10px;">
-                Profit: <span id="summaryProfit">₹0</span> | 
-                Loans: <span id="summaryLoans">₹0</span> | 
-                Total Revenue: <span id="totalRevenue">₹0</span>
+        <!-- BILLS LIST -->
+        <div id="bills-tab" class="tab-content">
+            <h2 style="margin-bottom: 20px; color: #333;">📊 All Bills</h2>
+            <div style="overflow-x: auto;">
+                <table id="billsTable">
+                    <thead>
+                        <tr>
+                            <th>Customer</th>
+                            <th>Amount</th>
+                            <th>Items</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
             </div>
         </div>
     </div>
 
-    <script>
-        // Data Storage
-        let customers = JSON.parse(localStorage.getItem('aiHubCustomers')) || [];
-        let bills = JSON.parse(localStorage.getItem('aiHubBills')) || [];
+    <button class="fab" onclick="exportData()" title="Export Data">💾</button>
 
-        // Initialize app
+    <script>
+        // GLOBAL DATA
+        let customers = JSON.parse(localStorage.getItem('theAIHub_customers')) || [];
+        let bills = JSON.parse(localStorage.getItem('theAIHub_bills')) || [];
+
+        // INIT APP
         document.addEventListener('DOMContentLoaded', function() {
-            updateDashboard();
-            populateCustomerDropdown();
-            renderCustomersTable();
-            renderBillsTable();
+            initApp();
         });
 
-        function switchTab(tabName) {
-            // Hide all tabs
-            document.querySelectorAll('.tab-content').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
+        function initApp() {
+            setupEventListeners();
+            updateDashboard();
+            populateCustomerSelect();
+            renderCustomers();
+            renderBills();
+        }
 
-            // Show selected tab
-            document.getElementById(tabName).classList.add('active');
+        function setupEventListeners() {
+            document.getElementById('customerForm').onsubmit = addCustomer;
+            document.getElementById('billForm').onsubmit = createBill;
+            
+            // Phone number formatting
+            document.getElementById('custPhone').oninput = function(e) {
+                e.target.value = e.target.value.replace(/[^0-9]/g, '').slice(0, 10);
+            };
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById(tabId).classList.add('active');
             event.target.classList.add('active');
         }
 
-        function addCustomer(event) {
-            event.preventDefault();
-            
-            const customer = {
-                id: Date.now(),
-                name: document.getElementById('customerName').value,
-                phone: document.getElementById('customerPhone').value,
-                loan: parseFloat(document.getElementById('initialLoan').value) || 0,
-                bills: [],
-                createdAt: new Date().toLocaleDateString()
-            };
-
-            customers.push(customer);
-            localStorage.setItem('aiHubCustomers', JSON.stringify(customers));
-            
-            document.getElementById('customerName').value = '';
-            document.getElementById('customerPhone').value = '';
-            document.getElementById('initialLoan').value = '';
-            
-            alert('✅ Customer added successfully!');
-            updateDashboard();
-            populateCustomerDropdown();
-            renderCustomersTable();
+        function showAlert(message, type = 'success') {
+            const alert = document.getElementById('alert');
+            alert.textContent = message;
+            alert.className = `alert alert-${type}`;
+            alert.style.display = 'block';
+            setTimeout(() => alert.style.display = 'none', 4000);
         }
 
-        function createBill(event) {
-            event.preventDefault();
+        // CUSTOMER OPERATIONS
+        function addCustomer(e) {
+            e.preventDefault();
             
-            const customerId = parseInt(document.getElementById('billCustomer').value);
-            const customer = customers.find(c => c.id === customerId);
-            
-            if (!customer) {
-                alert('❌ Please select a valid customer');
+            const name = document.getElementById('custName').value.trim();
+            const phone = document.getElementById('custPhone').value.trim();
+            const loan = parseFloat(document.getElementById('custLoan').value) || 0;
+            const address = document.getElementById('custAddress').value.trim();
+
+            if (!name || name.length < 2) {
+                showAlert('Please enter valid customer name (min 2 characters)', 'error');
                 return;
             }
 
-            const bill = {
+            if (phone.length !== 10 || !/^\d{10}$/.test(phone)) {
+                showAlert('Please enter valid 10-digit phone number', 'error');
+                return;
+            }
+
+            // Check duplicate
+            if (customers.find(c => c.phone === phone)) {
+                showAlert('Customer with this phone already exists!', 'error');
+                return;
+            }
+
+            const customer = {
                 id: Date.now(),
-                customerId: customerId,
-                customerName: customer.name,
-                amount: parseFloat(document.getElementById('billAmount').value),
-                items: document.getElementById('billItems').value,
-                date: new Date().toLocaleDateString(),
-                status: 'pending'
+                name,
+                phone,
+                address,
+                loan,
+                bills: [],
+                created: new Date().toLocaleDateString()
             };
 
-            bills.push(bill);
-            customer.bills.push(bill.id);
+            customers.push(customer);
+            saveData();
             
-            localStorage.setItem('aiHubBills', JSON.stringify(bills));
-            localStorage.setItem('aiHubCustomers', JSON.stringify(customers));
-            
-            document.getElementById('billAmount').value = '';
-            document.getElementById('billItems').value = '';
-            
-            alert('✅ Bill created successfully! 💌 Sent to customer.');
+            e.target.reset();
+            showAlert(`✅ ${name} added successfully!`);
             updateDashboard();
-            renderBillsTable();
-            renderCustomersTable();
+            populateCustomerSelect();
+            renderCustomers();
         }
 
-        function markPaid(billId) {
-            const bill = bills.find(b => b.id === billId);
-            if (bill) {
-                bill.status = 'paid';
-                localStorage.setItem('aiHubBills', JSON.stringify(bills));
-                updateDashboard();
-                renderBillsTable();
-                renderCustomersTable();
-                alert('✅ Bill marked as PAID!');
-            }
-        }
-
-        function closeLoan(customerId) {
-            const customer = customers.find(c => c.id === customerId);
-            if (customer) {
-                customer.loan = 0;
-                localStorage.setItem('aiHubCustomers', JSON.stringify(customers));
-                updateDashboard();
-                renderCustomersTable();
-                alert('✅ Loan closed successfully!');
-            }
-        }
-
-        function populateCustomerDropdown() {
-            const select = document.getElementById('billCustomer');
-            select.innerHTML = '<option value="">Choose Customer</option>';
+        function createBill(e) {
+            e.preventDefault();
             
-            customers.forEach(customer => {
-                const option = document.createElement('option');
-                option.value = customer.id;
-                option.textContent = `${customer.name} (Loan: ₹${customer.loan})`;
-                select.appendChild(option);
-            });
-        }
-
-        function renderCustomersTable() {
-            const tbody = document.querySelector('#customersTable tbody');
-            tbody.innerHTML = '';
-
-            customers.forEach(customer => {
-                const totalBills = customer.bills.reduce((sum, billId) => {
-                    const bill = bills.find(b => b.id === billId);
-                    return sum + (bill ? bill.amount : 0);
-                }, 0);
-
-                const row = tbody.insertRow();
-                row.innerHTML = `
-                    <td>${customer.name}</td>
-                    <td>${customer.phone}</td>
-                    <td>₹${customer.loan.toFixed(2)}</td>
-                    <td>₹${totalBills.toFixed(2)}</td>
-                    <td class="status-${customer.loan > 0 ? 'pending' : 'paid'}">
-                        ${customer.loan > 0 ? 'Pending' : 'Cleared'}
-                    </td>
-                    <td>
-                        ${customer.loan > 0 ? `<button class="btn" onclick="closeLoan(${customer.id})" style="padding: 5px 10px; font-size: 0.9em;">Close Loan</button>` : ''}
-                    </td>
-                `;
-            });
-        }
-
-        function renderBillsTable() {
-            const tbody = document.querySelector('#billsTable tbody');
-            tbody.innerHTML = '';
-
-            bills.forEach(bill => {
-                const row = tbody.insertRow();
-                row.innerHTML = `
-                    <td>${bill.customerName}</td>
-                    <td>₹${bill.amount.toFixed(2)}</td>
-                    <td>${bill.items || 'General'}</td>
-                    <td>${bill.date}</td>
-                    <td class="status-${bill.status}">${bill.status.toUpperCase()}</td>
-                    <td>
-                        ${bill.status === 'pending' ? 
-                            `<button class="btn" onclick="markPaid(${bill.id})" style="padding: 5px 10px; font-size: 0.9em;">Mark Paid</button>` : 
-                            '✓ Paid'
-                        }
-                    </td>
-                `;
-            });
-        }
-
-        function updateDashboard() {
-            const totalProfit = bills.reduce((sum, bill) => bill.status === 'paid' ? sum + bill.amount : sum, 0);
-            const totalLoans = customers.reduce((sum, customer) => sum + customer.loan, 0);
-            const activeCustomers = customers.length;
-            const pendingBills = bills.filter(bill => bill.status === 'pending').length;
-            const totalRevenue = totalProfit;
-
-            document.getElementById('totalProfit').textContent = `₹${totalProfit.toFixed(2)}`;
-            document.getElementById('totalLoans').textContent = `₹${totalLoans.toFixed(2)}`;
-            document.getElementById('activeCustomers').textContent = activeCustomers;
-            document.getElementById('pendingBills').textContent = pendingBills;
-            document.getElementById('summaryProfit').textContent = totalProfit.toFixed(2);
-            document.getElementById('summaryLoans').textContent = totalLoans.toFixed(2);
-            document.getElementById('totalRevenue').textContent = totalRevenue.toFixed(2);
-        }
-
-        // Export data functionality
-        function exportData() {
-            const data = {
-                customers,
-                bills,
-                timestamp: new Date().toISOString()
-            };
-            const dataStr = JSON.stringify(data, null, 2);
-            const dataBlob = new Blob([dataStr], {type: 'application/json'});
-            const url = URL.createObjectURL(dataBlob);
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = `AI_Hub_Backup_${new Date().toISOString().split('T')[0]
+            const customerId = parseInt(document.getElementById('billCustomer').value);
+            const amount = parseFloat(document.getElementById('billAmount').value);
+            const items = document
