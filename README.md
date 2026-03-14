@@ -1,24 +1,20 @@
-🎉 AI HUB - SHOP MANAGEMENT APP
-===============================
+# 🚀 The AI Hub - Smart Business Ledger
 
-Founder: Harshwardhan Singh Lodhi
-Instagram: https://www.instagram.com/_verma_karan08/
+A modern, AI-powered digital ledger system built specifically for local shopkeepers to simplify their daily accounting and debt management.
 
-HOW TO USE:
-1. Save all 3 files in same folder
-2. Open index.html 
-3. Click "Use AI Hub Now"
-4. Add customers, loans, bills
-5. Track profit & pending loans!
+## ✨ Key Features
+- **Transaction Tracking:** Record 'Paid' (Profit) and 'Due' (Udhari) entries instantly.
+- **Auto-Billing:** Generate professional PDF invoices for customers with one click.
+- **Search System:** Search customers or services in real-time.
+- **Financial Insights:** View real-time totals of your profits and pending debts.
 
-FEATURES:
-✅ Add Customers
-✅ Loan Management  
-✅ Bill Creation
-✅ Close Loans
-✅ Profit Tracking
-✅ Data Export
-✅ Works Offline!
+## 🛠 Tech Stack
+- **Frontend:** HTML5, CSS3, JavaScript (Vanilla)
+- **Data Storage:** Browser LocalStorage (Secure & Fast)
+- **PDF Generation:** jsPDF Library
 
-SHARE WITH SHOPKEEPERS!
-Everyone scores runs! 🏏💰
+## 👤 About the Founder
+Hi! I'm **Harshwardhan Singh Lodhi (Karan)**. I am an AI/ML Scholar at **IIT Patna**. My mission is to digitize 100+ local businesses in Chhattisgarh by 2027.
+
+---
+*Built with passion at The AI Hub.*
