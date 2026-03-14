@@ -90,6 +90,39 @@
             -webkit-text-fill-color: transparent;
         }
 
+        /* --- SEARCH BARS --- */
+        .search-container {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px 20px;
+            padding-left: 45px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            color: white;
+            font-size: 0.9rem;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        .search-input:focus {
+            border-color: var(--primary);
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 15px rgba(251, 191, 36, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: 0.5;
+        }
+
         /* --- TABS --- */
         .tabs {
             display: flex;
@@ -243,6 +276,10 @@
 
             <!-- Client List -->
             <div id="clients" class="tab-section hidden">
+                <div class="search-container">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" class="search-input" id="search-clients" placeholder="Search customer by name..." onkeyup="renderClients()">
+                </div>
                 <div class="content-card">
                     <table id="table-clients">
                         <thead><tr><th>Client Name</th><th>Current Balance</th><th>Status</th></tr></thead>
@@ -253,6 +290,10 @@
 
             <!-- Ledger -->
             <div id="ledger" class="tab-section hidden">
+                <div class="search-container">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" class="search-input" id="search-ledger" placeholder="Search by customer name..." onkeyup="renderLedger()">
+                </div>
                 <div class="content-card">
                     <table id="table-ledger">
                         <thead><tr><th>Date</th><th>Client</th><th>Amount</th><th>Status</th><th>Actions</th></tr></thead>
@@ -373,8 +414,14 @@
         }
 
         function renderClients() {
+            const searchTerm = document.getElementById('search-clients').value.toLowerCase();
             const body = document.querySelector('#table-clients tbody');
-            body.innerHTML = Object.values(customers).map(c => `
+            
+            const filtered = Object.values(customers).filter(c => 
+                c.name.toLowerCase().includes(searchTerm)
+            );
+
+            body.innerHTML = filtered.map(c => `
                 <tr class="animate__animated animate__fadeInUp">
                     <td><b>${c.name}</b></td>
                     <td style="color:${c.balance > 0 ? 'var(--primary)' : 'var(--success)'}">₹${c.balance.toLocaleString('en-IN')}</td>
@@ -384,8 +431,14 @@
         }
 
         function renderLedger() {
+            const searchTerm = document.getElementById('search-ledger').value.toLowerCase();
             const body = document.querySelector('#table-ledger tbody');
-            body.innerHTML = records.map(r => `
+            
+            const filtered = records.filter(r => 
+                r.name.toLowerCase().includes(searchTerm)
+            );
+
+            body.innerHTML = filtered.map(r => `
                 <tr class="animate__animated animate__fadeInUp">
                     <td style="font-size: 0.75rem; color: var(--text-dim)">${r.date.split(',')[0]}</td>
                     <td>${r.name}</td>
@@ -420,11 +473,9 @@
             const doc = new jsPDF();
             const item = records.find(x => x.id === id);
 
-            // PDF Theme
             doc.setFillColor(2, 6, 23); 
             doc.rect(0, 0, 210, 297, 'F');
 
-            // Header Branding
             doc.setTextColor(251, 191, 36);
             doc.setFontSize(28);
             doc.setFont("helvetica", "bold");
@@ -434,25 +485,20 @@
             doc.setTextColor(148, 163, 184);
             doc.text("OFFICIAL CORPORATE INVOICE", 105, 38, { align: "center" });
 
-            // Accent Line
             doc.setDrawColor(251, 191, 36);
             doc.setLineWidth(1);
             doc.line(20, 45, 190, 45);
 
-            // Client Info Section
             doc.setTextColor(255, 255, 255);
             doc.setFontSize(12);
             doc.text(`Invoice ID : ${item.id}`, 20, 60);
             doc.text(`Timestamp  : ${item.date}`, 20, 70);
             doc.text(`Recipient  : ${item.name}`, 20, 80);
 
-            // Transaction Detail Box
             doc.setFillColor(15, 23, 42);
-            doc.setDrawColor(30, 41, 59);
             doc.rect(20, 95, 170, 45, 'FD');
 
             doc.setTextColor(251, 191, 36);
-            doc.setFontSize(13);
             doc.text("SETTLEMENT DETAILS", 25, 106);
             
             doc.setTextColor(255, 255, 255);
@@ -462,13 +508,9 @@
             
             const isUdhari = item.status === 'DUE/UDHARI';
             doc.setTextColor(isUdhari ? 239 : 16, isUdhari ? 68 : 185, isUdhari ? 68 : 129);
-            doc.setFont("helvetica", "bold");
             doc.text(`PAYMENT STATUS: ${item.status}`, 130, 128);
 
-            // Founder Signature Area
             doc.setTextColor(148, 163, 184);
-            doc.setFont("helvetica", "normal");
-            doc.setFontSize(9);
             doc.text("----------------------------------------------------------------", 105, 180, {align:"center"});
             
             doc.setTextColor(251, 191, 36);
@@ -480,15 +522,10 @@
             doc.setFontSize(9);
             doc.text("FOUNDER & CEO", 105, 196, {align:"center"});
 
-            // Contact info
             doc.setTextColor(148, 163, 184);
             doc.text(`Support: kv2642240@gmail.com | Insta: @_verma_karan08`, 105, 210, {align:"center"});
 
-            doc.setTextColor(251, 191, 36);
-            doc.setFontSize(14);
-            doc.text("STRATEGIC EXCELLENCE DELIVERED", 105, 240, {align:"center"});
-
-            doc.save(`Invoice_${item.name}_${item.id}.pdf`);
+            doc.save(`Invoice_${item.name}.pdf`);
         }
     </script>
 </body>
