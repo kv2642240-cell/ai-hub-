@@ -3,11 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Google Site Verification -->
+    <meta name="google-site-verification" content="ryKoSefcaCa9KEmGunISRagpfvqKzwgavcKRk7J2Njo" />
+    
     <title>THEAi Hub 6.0 - Elite CEO Edition</title>
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
     <style>
         :root {
             --primary: #fbbf24; 
@@ -106,7 +111,7 @@
             color: #444;
         }
 
-        /* --- BILLING --- */
+        /* --- FORM ELEMENTS --- */
         .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px; }
         input, select {
             background: #000; border: 1px solid #222; padding: 12px;
@@ -186,7 +191,7 @@
                         <p id="pv-date"></p>
                     </div>
                 </div>
-                <p class="ceo-tag" style="margin-top: 5px;">FOUNDER & CEO: Harshwardhan Singh Lodhi</p>
+                <p class="ceo-tag" style="margin-top: 5px;">FOUNDER & CEO: <span class="dynamic-ceo-name">Harshwardhan Singh Lodhi</span></p>
             </div>
 
             <div style="margin: 20px 0;">
@@ -207,7 +212,7 @@
             </div>
 
             <div style="margin-top: 40px; text-align: center; border-top: 1px dotted #222; padding-top: 20px; font-size: 0.7rem; color: #555;">
-                <p style="margin-bottom: 5px; font-weight: bold; color: var(--primary);">FOUNDER & CEO: Harshwardhan Singh Lodhi</p>
+                <p style="margin-bottom: 5px; font-weight: bold; color: var(--primary);">FOUNDER & CEO: <span class="dynamic-ceo-name">Harshwardhan Singh Lodhi</span></p>
                 <div class="ceo-links">
                     <a href="#" id="pv-insta-link" class="ceo-link-btn" target="_blank">Connect on Instagram</a>
                     <a href="#" id="pv-mail-link" class="ceo-link-btn">Contact via Mail</a>
@@ -226,7 +231,7 @@
             <nav class="nav-bar">
                 <div class="brand-info">
                     <h1>THEAi HUB <span>V6.0</span></h1>
-                    <div class="ceo-tag">FOUNDER & CEO: Harshwardhan Singh Lodhi</div>
+                    <div class="ceo-tag">FOUNDER & CEO: <span class="dynamic-ceo-name">Harshwardhan Singh Lodhi</span></div>
                 </div>
                 <div class="tabs">
                     <button class="tab-btn active" onclick="switchTab('dash', this)">DASHBOARD</button>
@@ -409,7 +414,6 @@
             document.getElementById('v6-item-list').appendChild(div);
         }
 
-        // Live Calculation Logic
         function calculateLiveTotal() {
             const type = document.getElementById('v6-type').value;
             let grandTotal = 0;
@@ -419,9 +423,13 @@
                     const q = parseFloat(row.querySelector('.v6-i-qty')?.value || 0);
                     const p = parseFloat(row.querySelector('.v6-i-price')?.value || 0);
                     const sub = q * p;
-                    row.querySelector('.v6-i-subtotal').value = `₹${sub.toLocaleString()}`;
+                    const subtotalInput = row.querySelector('.v6-i-subtotal');
+                    if(subtotalInput) subtotalInput.value = `₹${sub.toLocaleString()}`;
                     grandTotal += sub;
                 });
+                document.getElementById('live-total-display').innerText = `₹${grandTotal.toLocaleString()}`;
+            } else {
+                grandTotal = parseFloat(document.getElementById('v6-amt').value || 0);
                 document.getElementById('live-total-display').innerText = `₹${grandTotal.toLocaleString()}`;
             }
         }
@@ -445,11 +453,18 @@
             }
 
             if(total <= 0 && type !== 'recovery') {
-                alert("Kam se kam ek item ya amount toh daaliye boss!");
+                showToast("Boss, please enter an amount first.");
                 return;
             }
 
-            const record = { id: Date.now(), date: new Date().toLocaleDateString('en-GB'), client: document.getElementById('v6-client').value, type, items, total };
+            const record = { 
+                id: Date.now(), 
+                date: new Date().toLocaleDateString('en-GB'), 
+                client: document.getElementById('v6-client').value, 
+                type, 
+                items, 
+                total 
+            };
             showV6Preview(record);
         };
 
@@ -465,7 +480,7 @@
             const tbody = document.getElementById('pv-tbody');
             tbody.innerHTML = '';
             r.items.forEach(i => {
-                tbody.innerHTML += `<tr><td>${i.name}</td><td>${i.qty}</td><td>₹${i.price}</td><td>₹${i.sub}</td></tr>`;
+                tbody.innerHTML += `<tr><td>${i.name}</td><td>${i.qty}</td><td>₹${i.price.toLocaleString()}</td><td>₹${i.sub.toLocaleString()}</td></tr>`;
             });
 
             document.getElementById('preview-overlay').style.display = 'flex';
@@ -486,6 +501,8 @@
         function generateV6PDF(r) {
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
+            
+            // Background & Style
             doc.setFillColor(0, 0, 0); doc.rect(0, 0, 210, 297, 'F');
             doc.setTextColor(251, 191, 36); doc.setFontSize(26); doc.text("THEAi HUB V6.0", 20, 35);
             doc.setFontSize(9); doc.setTextColor(150); doc.text(`FOUNDER & CEO: ${v6_db.profile.name.toUpperCase()}`, 20, 45);
@@ -495,20 +512,25 @@
             doc.setDrawColor(50); doc.line(20, 55, 190, 55);
             doc.setTextColor(200); doc.text("BILL TO:", 20, 70);
             doc.setTextColor(255); doc.setFontSize(14); doc.text(r.client.toUpperCase(), 20, 80);
+            
+            // Table
             doc.autoTable({
                 startY: 95,
                 head: [['ITEM', 'QTY', 'RATE', 'SUBTOTAL']],
-                body: r.items.map(i => [i.name, i.qty, i.price, i.sub]),
+                body: r.items.map(i => [i.name, i.qty, i.price.toLocaleString(), i.sub.toLocaleString()]),
                 styles: { fillColor: [10, 10, 10], textColor: [255, 255, 255], fontSize: 9 },
                 headStyles: { fillColor: [20, 20, 20], textColor: [251, 191, 36] },
                 alternateRowStyles: { fillColor: [15, 15, 15] },
                 margin: { left: 20, right: 20 }
             });
+            
             const finalY = doc.lastAutoTable.finalY + 15;
             doc.setFontSize(14); doc.setTextColor(251, 191, 36);
             doc.text(`TOTAL AMOUNT: INR ${r.total.toLocaleString()}`, 115, finalY);
+            
             doc.setFontSize(8); doc.setTextColor(100);
-            doc.text(`Founder & CEO: ${v6_db.profile.name}`, 105, 275, {align: 'center'});
+            doc.text(`Founder & CEO: ${v6_db.profile.name}`, 105, 285, {align: 'center'});
+            
             doc.save(`V6_Bill_${r.client}.pdf`);
         }
 
@@ -525,10 +547,12 @@
             let s=0, l=0, recov=0;
             const body = document.getElementById('v6-ledger-body');
             body.innerHTML = '';
+            
             v6_db.records.forEach(rec => {
                 if(rec.type==='sale') s+=rec.total; 
                 else if(rec.type==='loan') l+=rec.total; 
                 else { recov+=rec.total; l-=rec.total; }
+                
                 body.innerHTML += `
                     <tr style="border-bottom: 1px solid #111; font-size: 0.85rem;">
                         <td style="padding:15px; color:#555;">${rec.date}</td>
@@ -539,14 +563,20 @@
                     </tr>
                 `;
             });
+
             document.getElementById('stat-sales').innerText = `₹${s.toLocaleString()}`;
             document.getElementById('stat-loan').innerText = `₹${Math.max(0, l).toLocaleString()}`;
             document.getElementById('stat-recovery').innerText = `₹${recov.toLocaleString()}`;
+            
+            // Sync dynamic CEO name displays
+            document.querySelectorAll('.dynamic-ceo-name').forEach(el => el.innerText = v6_db.profile.name);
+            
             document.getElementById('cfg-name').value = v6_db.profile.name;
             document.getElementById('cfg-insta').value = v6_db.profile.insta;
             document.getElementById('cfg-email').value = v6_db.profile.email;
             document.getElementById('profile-insta-link').href = v6_db.profile.insta;
             document.getElementById('profile-mail-link').href = `mailto:${v6_db.profile.email}`;
+            
             initV6Chart();
         }
 
@@ -559,10 +589,20 @@
             v6_db.profile.name = document.getElementById('cfg-name').value;
             v6_db.profile.insta = document.getElementById('cfg-insta').value;
             v6_db.profile.email = document.getElementById('cfg-email').value;
-            saveAll(); updateUI(); alert("Elite Profile Updated Successfully.");
+            saveAll(); 
+            updateUI(); 
+            showToast("Elite Profile Updated Successfully.");
         }
 
         function saveAll() { localStorage.setItem('theai_v6_data', JSON.stringify(v6_db)); }
+
+        function showToast(msg) {
+            const toast = document.createElement('div');
+            toast.style = "position:fixed; bottom:20px; right:20px; background:var(--primary); color:#000; padding:12px 24px; border-radius:8px; font-weight:bold; z-index:100000; box-shadow:0 0 20px rgba(0,0,0,0.5); animate:fadeInUp 0.3s;";
+            toast.innerText = msg;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
 
         function initV6Chart() {
             const ctx = document.getElementById('v6Chart').getContext('2d');
@@ -581,7 +621,10 @@
                 },
                 options: { 
                     plugins: { legend: { display: false } },
-                    scales: { y: { grid: { color: '#111' }, ticks: { color: '#444' } }, x: { grid: { display: false }, ticks: { color: '#444' } } }
+                    scales: { 
+                        y: { grid: { color: '#111' }, ticks: { color: '#444' } }, 
+                        x: { grid: { display: false }, ticks: { color: '#444' } } 
+                    }
                 }
             });
         }
